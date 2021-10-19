@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import { Link } from "react-router-dom";
+import { Button, Col, Container, Row } from "react-bootstrap";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Container style={{ marginTop: "15rem", marginLeft: "10rem" }}>
+        <Row>
+          <Col>
+            <Button variant="primary" as={Link} to="/darling_pretty_photo">
+              Darling Pretty Photography
+            </Button>
+          </Col>
+          <Col>
+            <Button variant="primary" as={Link} to="/pawparazzi_photo">
+              Pawparazzi Photography
+            </Button>
+          </Col>
+        </Row>
+      </Container>
+    </>
   );
-}
+};
 
 export default App;
