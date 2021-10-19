@@ -21,3 +21,14 @@
 .App-link {
   color: #61dafb;
 }
+
+/* --------------------------- */
+
+img.float_left {
+  float: right;
+
+  margin: 10px 10px 10px 0;
+}
+.react-datepicker-wrapper {
+  width: auto !important;
+}

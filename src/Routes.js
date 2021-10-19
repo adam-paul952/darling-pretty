@@ -4,7 +4,9 @@ import App from "./App";
 import DarlingPrettyHome from "./screens/DarlingPrettyHome";
 import PawparazziPhotoHome from "./screens/PawparazziPhotoHome";
 import Calendar from "./Calendar";
-import Cart from "./screens/Cart";
+import Contact from "./screens/Contact";
+import Checkout from "./screens/Checkout";
+import PictureDescription from "./screens/PictureDescription";
 
 const Routes = () => {
   return (
@@ -14,7 +16,12 @@ const Routes = () => {
         <Route path="/darling_pretty_photo" component={DarlingPrettyHome} />
         <Route path="/pawparazzi_photo" component={PawparazziPhotoHome} />
         <Route path="/calendar" component={Calendar} />
-        <Route path="/order/checkout" component={Cart} />
+        <Route path="/contact" component={Contact} />
+        <Route path="/order/checkout" component={Checkout} />
+        <Route
+          path="/darling_pretty_photodesc"
+          component={PictureDescription}
+        />
       </Switch>
     </Router>
   );
