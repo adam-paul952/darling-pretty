@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import { Button, Container } from "react-bootstrap";
 
 import { ShowAvailableTimeDay1 } from "../Calendar";
@@ -37,7 +39,14 @@ const PictureDescription = () => {
       <hr />
       <ShowAvailableTimeDay1 />
       <div className="d-grid gap-2">
-        <Button className="mt-4">Add to Cart</Button>
+        <Button
+          className="mt-4"
+          style={{ width: "50%" }}
+          as={Link}
+          to="/order/checkout"
+        >
+          Add to Cart
+        </Button>
       </div>
     </>
   );

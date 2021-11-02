@@ -9,7 +9,8 @@ const App = () => {
           margin: "10px",
           maxWidth: "100%",
           maxHeight: "100%",
-          height: "95%",
+          height: "90%",
+          marginTop: "60px",
         }}
       >
         <Row style={{ height: "100%" }}>
@@ -18,7 +19,7 @@ const App = () => {
               backgroundImage: "url(darling-pretty1.jpg)",
               backgroundSize: "100% 100%",
               width: "50%",
-              height: "100%",
+              height: "90%",
               border: "2px solid",
               backgroundRepeat: "no-repeat",
               textAlign: "center",
@@ -27,7 +28,10 @@ const App = () => {
           >
             <Button
               style={{
-                marginTop: "30%",
+                marginTop: "75%",
+                width: "100%",
+                border: "2px solid black",
+                height: "3rem",
               }}
               variant="primary"
               as={Link}
@@ -41,7 +45,7 @@ const App = () => {
               backgroundImage: "url(darling-pretty.jpg)",
               backgroundSize: "100% 100%",
               width: "50%",
-              height: "100%",
+              height: "90%",
               border: "2px solid",
               backgroundRepeat: "no-repeat",
               textAlign: "center",
@@ -49,7 +53,12 @@ const App = () => {
             }}
           >
             <Button
-              style={{ marginTop: "30%" }}
+              style={{
+                marginTop: "75%",
+                width: "100%",
+                border: "2px solid black",
+                height: "3rem",
+              }}
               variant="primary"
               as={Link}
               to="/pawparazzi_photo"
