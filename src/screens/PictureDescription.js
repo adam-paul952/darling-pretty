@@ -3,10 +3,12 @@ import { Link } from "react-router-dom";
 import { Button, Container } from "react-bootstrap";
 
 import { ShowAvailableTimeDay1 } from "../Calendar";
+import Header from "../components/Header";
 
 const PictureDescription = () => {
   return (
     <>
+      <Header />
       <Container>
         <img
           className="float_left"

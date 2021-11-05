@@ -28,7 +28,7 @@ const App = () => {
           >
             <Button
               style={{
-                marginTop: "75%",
+                marginTop: "100%",
                 width: "100%",
                 border: "2px solid black",
                 height: "3rem",
@@ -54,7 +54,7 @@ const App = () => {
           >
             <Button
               style={{
-                marginTop: "75%",
+                marginTop: "100%",
                 width: "100%",
                 border: "2px solid black",
                 height: "3rem",
