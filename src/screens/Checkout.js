@@ -162,7 +162,13 @@ const ShippingInformation = ({ clientInfo, setClientInfo }) => {
               placeholder="1234 Main St"
               value={address1}
               onChange={(e) => {
-                setClientInfo({ ...clientInfo, address1: e.target.value });
+                setClientInfo((prevState) => ({
+                  ...prevState,
+                  billing: {
+                    ...prevState.billing,
+                    address1: e.target.value,
+                  },
+                }));
               }}
             />
           </Form.Group>
@@ -174,7 +180,13 @@ const ShippingInformation = ({ clientInfo, setClientInfo }) => {
               placeholder="Apartment, studio, or floor"
               value={address2}
               onChange={(e) => {
-                setClientInfo({ ...clientInfo, address2: e.target.value });
+                setClientInfo((prevState) => ({
+                  ...prevState,
+                  billing: {
+                    ...prevState.billing,
+                    address2: e.target.value,
+                  },
+                }));
               }}
             />
           </Form.Group>
@@ -186,7 +198,13 @@ const ShippingInformation = ({ clientInfo, setClientInfo }) => {
             <Form.Control
               value={city}
               onChange={(e) => {
-                setClientInfo({ ...clientInfo, city: e.target.value });
+                setClientInfo((prevState) => ({
+                  ...prevState,
+                  billing: {
+                    ...prevState.billing,
+                    city: e.target.value,
+                  },
+                }));
               }}
             />
           </Form.Group>
@@ -195,24 +213,36 @@ const ShippingInformation = ({ clientInfo, setClientInfo }) => {
             <Form.Label>Province</Form.Label>
             <Form.Control
               as="select"
+              defaultValue="Newfoundland and Labrador"
               value={province}
               onChange={(e) => {
-                setClientInfo({ ...clientInfo, province: e.target.value });
+                console.log(e.target.value);
+                setClientInfo((prevState) => ({
+                  ...prevState,
+                  billing: {
+                    ...prevState.billing,
+                    province: e.target.value,
+                  },
+                }));
               }}
             >
-              <option>Newfoundland and Labrador</option>
-              <option>Alberta</option>
-              <option>British Columbia</option>
-              <option>Manitoba</option>
-              <option>New Brunswick</option>
-              <option>Northwest Territories</option>
-              <option>Nova Scotia</option>
-              <option>Nunavut</option>
-              <option>Ontario</option>
-              <option>Prince Edward Island</option>
-              <option>Quebec</option>
-              <option>Saskatchewan</option>
-              <option>Yukon</option>
+              <option value="Alberta">Alberta</option>
+              <option value="British Columbia">British Columbia</option>
+              <option value="Manitoba">Manitoba</option>
+              <option value="New Brunswick">New Brunswick</option>
+              <option value="Newfoundland and Labrador">
+                Newfoundland and Labrador
+              </option>
+              <option value="Northwest Territories">
+                Northwest Territories
+              </option>
+              <option value="Nova Scotia">Nova Scotia</option>
+              <option value="Nunavut">Nunavut</option>
+              <option value="Ontario">Ontario</option>
+              <option value="Prince Edward Island">Prince Edward Island</option>
+              <option value="Quebec">Quebec</option>
+              <option value="Saskatchewan">Saskatchewan</option>
+              <option value="Yukon">Yukon</option>
             </Form.Control>
           </Form.Group>
         </Row>
@@ -223,7 +253,13 @@ const ShippingInformation = ({ clientInfo, setClientInfo }) => {
             <Form.Control
               value={postalCode}
               onChange={(e) => {
-                setClientInfo({ ...clientInfo, postalCode: e.target.value });
+                setClientInfo((prevState) => ({
+                  ...prevState,
+                  billing: {
+                    ...prevState.billing,
+                    postalCode: e.target.value,
+                  },
+                }));
               }}
             />
           </Form.Group>
