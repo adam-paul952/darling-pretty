@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-import { Button, Container } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 
 import { ShowAvailableTimeDay1 } from "../Calendar";
 import Header from "../components/Header";
@@ -9,16 +9,13 @@ const PictureDescription = () => {
   return (
     <>
       <Header />
-      <Container>
-        <img
-          className="float_left"
-          src="darling-pretty1.jpg"
-          alt=""
-          width="450"
-          height="350"
-        />
-      </Container>
-      <br />
+      <img
+        className="float_left"
+        src="darling-pretty1.jpg"
+        alt=""
+        width="450"
+        height="350"
+      />
       <h2>Price</h2>
       <hr />
       <h3>Date</h3>
@@ -39,14 +36,9 @@ const PictureDescription = () => {
         arcu non odio euismod lacinia. Morbi leo urna molestie at elementum.
       </p>
       <hr />
-      <ShowAvailableTimeDay1 />
-      <div className="d-grid gap-2">
-        <Button
-          className="mt-4"
-          style={{ width: "50%" }}
-          as={Link}
-          to="/order/checkout"
-        >
+      <div className="centerText">
+        <ShowAvailableTimeDay1 />
+        <Button as={Link} to="/order/checkout">
           Add to Cart
         </Button>
       </div>

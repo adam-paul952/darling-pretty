@@ -1,12 +1,3 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -33,18 +24,25 @@ img.float_left {
   width: auto !important;
 }
 
-html {
+html,
+body,
+#root,
+#root > div {
   height: 100%;
 }
 
-body {
-  height: 100%;
+.centerItems {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-div#root {
-  height: 100%; /* remove this line to see div.app is no more 100% height */
+.centerButton {
+  width: 25%;
+  margin-left: 37%;
+  margin-right: 25%;
 }
 
-div.app {
-  height: 100%;
+.centerText {
+  text-align: center;
 }

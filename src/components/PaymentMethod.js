@@ -11,8 +11,9 @@ const PaymentMethod = () => {
       {checkout ? (
         <Paypal />
       ) : (
-        <div className="d-grid gap-2">
+        <div>
           <Button
+            className="centerButton"
             onClick={() => {
               setCheckout(true);
             }}

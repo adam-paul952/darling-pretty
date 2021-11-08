@@ -2,8 +2,11 @@ import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 
 import Header from "../components/Header";
+import useContactForm from "../utils/useContactForm";
 
 const Contact = () => {
+  const { sendContactForm } = useContactForm();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
@@ -11,10 +14,11 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    sendContactForm({ name, email, subject, message });
     console.log(`
-      Name: ${name}, 
-      Email: ${email}, 
-      Subject: ${subject}, 
+      Name: ${name}
+      Email: ${email}
+      Subject: ${subject}
       Message: ${message}
       `);
   };

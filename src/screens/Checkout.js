@@ -1,10 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 
 import Header from "../components/Header";
 import PaymentMethod from "../components/PaymentMethod";
+import useClientInfo from "../utils/useClientInfo";
 
 const Checkout = () => {
+  const { createClientData } = useClientInfo();
+
   const [clientInfo, setClientInfo] = useState({
     name: { firstName: "", lastName: "" },
     email: "",
@@ -13,24 +16,25 @@ const Checkout = () => {
       address1: "",
       address2: "",
       city: "",
-      province: "",
+      province: "NL",
       postalCode: "",
       country: "Canada",
     },
   });
 
-  useEffect(() => {
+  const handleSubmit = () => {
+    createClientData(clientInfo);
     console.log(clientInfo);
-  }, [clientInfo]);
+  };
 
   return (
     <>
       <Header title="Checkout" />
       <div className="my-3">
-        <p style={{ textAlign: "center" }}>
+        <p className="centerText">
           Returning Customer? Log in for faster checkout!
         </p>
-        <Button>Log In</Button>
+        <Button className="centerButton">Log In</Button>
         <ContactInformation
           clientInfo={clientInfo}
           setClientInfo={setClientInfo}
@@ -39,6 +43,7 @@ const Checkout = () => {
         <ShippingInformation
           clientInfo={clientInfo}
           setClientInfo={setClientInfo}
+          handleSubmit={handleSubmit}
         />
         <hr />
         <SummaryInformation
@@ -56,12 +61,7 @@ const ContactInformation = ({ clientInfo, setClientInfo }) => {
   const { firstName, lastName, email, phoneNumber } = clientInfo;
   return (
     <>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
+      <div className="centerItems">
         <h2 className="m-3">Contact Information</h2>
       </div>
       <Form>
@@ -141,17 +141,12 @@ const ContactInformation = ({ clientInfo, setClientInfo }) => {
   );
 };
 
-const ShippingInformation = ({ clientInfo, setClientInfo }) => {
+const ShippingInformation = ({ clientInfo, setClientInfo, handleSubmit }) => {
   const { address1, address2, city, province, postalCode, country } =
     clientInfo;
   return (
     <>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
+      <div className="centerItems">
         <h2 className="m-3">Shipping</h2>
       </div>
       <Form>
@@ -208,42 +203,13 @@ const ShippingInformation = ({ clientInfo, setClientInfo }) => {
               }}
             />
           </Form.Group>
-
           <Form.Group as={Col} controlId="province">
             <Form.Label>Province</Form.Label>
             <Form.Control
-              as="select"
               defaultValue="Newfoundland and Labrador"
               value={province}
-              onChange={(e) => {
-                console.log(e.target.value);
-                setClientInfo((prevState) => ({
-                  ...prevState,
-                  billing: {
-                    ...prevState.billing,
-                    province: e.target.value,
-                  },
-                }));
-              }}
-            >
-              <option value="Alberta">Alberta</option>
-              <option value="British Columbia">British Columbia</option>
-              <option value="Manitoba">Manitoba</option>
-              <option value="New Brunswick">New Brunswick</option>
-              <option value="Newfoundland and Labrador">
-                Newfoundland and Labrador
-              </option>
-              <option value="Northwest Territories">
-                Northwest Territories
-              </option>
-              <option value="Nova Scotia">Nova Scotia</option>
-              <option value="Nunavut">Nunavut</option>
-              <option value="Ontario">Ontario</option>
-              <option value="Prince Edward Island">Prince Edward Island</option>
-              <option value="Quebec">Quebec</option>
-              <option value="Saskatchewan">Saskatchewan</option>
-              <option value="Yukon">Yukon</option>
-            </Form.Control>
+              disabled={true}
+            />
           </Form.Group>
         </Row>
 
@@ -277,6 +243,9 @@ const ShippingInformation = ({ clientInfo, setClientInfo }) => {
           </Form.Group>
         </Row>
       </Form>
+      <Button className="centerButton" onClick={() => handleSubmit()}>
+        Submit User Data
+      </Button>
     </>
   );
 };
@@ -284,12 +253,7 @@ const ShippingInformation = ({ clientInfo, setClientInfo }) => {
 const SummaryInformation = () => {
   return (
     <>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
+      <div className="centerItems">
         <h2 className="m-3">Summary</h2>
       </div>
     </>
