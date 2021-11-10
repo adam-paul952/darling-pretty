@@ -7,6 +7,7 @@ import Calendar from "./Calendar";
 import Contact from "./screens/Contact";
 import Checkout from "./screens/Checkout";
 import PictureDescription from "./screens/PictureDescription";
+import RegisterUser from "./screens/Register";
 
 const Routes = () => {
   return (
@@ -22,6 +23,7 @@ const Routes = () => {
           path="/darling_pretty_photodesc"
           component={PictureDescription}
         />
+        <Route path="/register" component={RegisterUser} />
       </Switch>
     </Router>
   );
