@@ -20,7 +20,6 @@ const App = () => {
               backgroundSize: "100% 100%",
               width: "50%",
               height: "90%",
-              border: "2px solid",
               backgroundRepeat: "no-repeat",
               textAlign: "center",
               marginRight: "1px",
@@ -30,7 +29,6 @@ const App = () => {
               style={{
                 marginTop: "100%",
                 width: "100%",
-                border: "2px solid black",
                 height: "3rem",
               }}
               variant="primary"
@@ -46,7 +44,6 @@ const App = () => {
               backgroundSize: "100% 100%",
               width: "50%",
               height: "90%",
-              border: "2px solid",
               backgroundRepeat: "no-repeat",
               textAlign: "center",
               marginLeft: "1px",
@@ -56,7 +53,6 @@ const App = () => {
               style={{
                 marginTop: "100%",
                 width: "100%",
-                border: "2px solid black",
                 height: "3rem",
               }}
               variant="primary"

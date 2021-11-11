@@ -218,6 +218,31 @@ const ShippingInformation = ({ clientInfo, setClientInfo, handleSubmit }) => {
   const { address1, address2, city, province, postalCode, country } =
     clientInfo;
 
+  const formatPostalCode = (value) => {
+    if (!value) {
+      return value;
+    }
+    const postalCodeRegex =
+      /^[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z]?\d[ABCEGHJ-NPRSTV-Z]\d$/i;
+    const postalCode = value.replace(postalCodeRegex, "");
+
+    if (postalCode.length < 2) {
+      return postalCode;
+    }
+
+    return `${postalCode.slice(0, 3)} ${postalCode.slice(3, 6)}`;
+  };
+
+  const handlePostalCodeInput = (e) => {
+    setClientInfo((prevState) => ({
+      ...prevState,
+      billing: {
+        ...prevState.billing,
+        postalCode: formatPostalCode(e.target.value),
+      },
+    }));
+  };
+
   return (
     <>
       <h2 className="m-3">Shipping</h2>
@@ -292,13 +317,7 @@ const ShippingInformation = ({ clientInfo, setClientInfo, handleSubmit }) => {
             <Form.Control
               value={postalCode}
               onChange={(e) => {
-                setClientInfo((prevState) => ({
-                  ...prevState,
-                  billing: {
-                    ...prevState.billing,
-                    postalCode: e.target.value,
-                  },
-                }));
+                handlePostalCodeInput(e);
               }}
             />
           </Form.Group>
