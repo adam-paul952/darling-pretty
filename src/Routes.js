@@ -7,7 +7,7 @@ import Calendar from "./Calendar";
 import Contact from "./screens/Contact";
 import Checkout from "./screens/Checkout";
 import PictureDescription from "./screens/PictureDescription";
-import RegisterUser from "./screens/Register";
+import RegisterUser from "./screens/register/Register";
 
 const Routes = () => {
   return (
