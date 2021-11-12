@@ -1,4 +1,5 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 
 import { Button, Col, Form, Row } from "react-bootstrap";
 
@@ -71,3 +72,8 @@ const LoginInformation = ({ clientInfo, setClientInfo }) => {
 };
 
 export default LoginInformation;
+
+LoginInformation.propTypes = {
+  clientInfo: PropTypes.object.isRequired,
+  setClientInfo: PropTypes.func.isRequired,
+};

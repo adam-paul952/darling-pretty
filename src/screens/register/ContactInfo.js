@@ -1,3 +1,5 @@
+import React from "react";
+import PropTypes from "prop-types";
 import { Button, Col, Form, Row } from "react-bootstrap";
 
 const ContactInformation = ({ clientInfo, setClientInfo }) => {
@@ -99,3 +101,8 @@ const ContactInformation = ({ clientInfo, setClientInfo }) => {
 };
 
 export default ContactInformation;
+
+ContactInformation.propTypes = {
+  clientInfo: PropTypes.object.isRequired,
+  setClientInfo: PropTypes.func.isRequired,
+};

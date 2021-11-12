@@ -1,3 +1,5 @@
+import React from "react";
+import PropTypes from "prop-types";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap/";
 
 const Header = ({ title }) => {
@@ -40,3 +42,7 @@ const Header = ({ title }) => {
 };
 
 export default Header;
+
+Header.propTypes = {
+  title: PropTypes.string.isRequired,
+};

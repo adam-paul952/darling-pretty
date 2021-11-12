@@ -6,6 +6,7 @@ const useContactForm = () => {
   const sendContactForm = (data) => {
     axios
       .post(URL, data)
+      // eslint-disable-next-line
       .then((res) => {
         console.log(`Successfully sent mail`);
       })

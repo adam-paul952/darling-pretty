@@ -6,6 +6,7 @@ const Paypal = () => {
   useEffect(() => {
     window.paypal
       .Buttons({
+        // eslint-disable-next-line
         createOrder: (data, actions, err) => {
           return actions.order.create({
             intent: "CAPTURE",

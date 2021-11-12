@@ -1,3 +1,5 @@
+import React from "react";
+import PropTypes from "prop-types";
 import { Button, Col, Form, Row } from "react-bootstrap";
 
 const ShippingInformation = ({ clientInfo, setClientInfo, handleSubmit }) => {
@@ -114,7 +116,7 @@ const ShippingInformation = ({ clientInfo, setClientInfo, handleSubmit }) => {
               defaultValue="Canada"
               disabled={true}
               value={country}
-              onChange={(e) => {
+              onChange={() => {
                 setClientInfo({ ...clientInfo, country: "Canada" });
               }}
             />
@@ -129,3 +131,9 @@ const ShippingInformation = ({ clientInfo, setClientInfo, handleSubmit }) => {
 };
 
 export default ShippingInformation;
+
+ShippingInformation.propTypes = {
+  clientInfo: PropTypes.object.isRequired,
+  setClientInfo: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+};
