@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap/";
 
+import AuthenticationButton from "./AuthenticationButton";
+
 const Header = ({ title }) => {
   return (
     <>
@@ -35,6 +37,7 @@ const Header = ({ title }) => {
               Checkout
             </Nav.Link>
           </Nav>
+          <AuthenticationButton />
         </Container>
       </Navbar>
     </>
@@ -44,5 +47,5 @@ const Header = ({ title }) => {
 export default Header;
 
 Header.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
 };

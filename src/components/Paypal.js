@@ -33,7 +33,7 @@ const Paypal = () => {
   }, []);
   return (
     <div>
-      <div ref={paypal}></div>
+      <div className="centerButton" ref={paypal}></div>
     </div>
   );
 };

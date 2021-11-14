@@ -5,11 +5,17 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import Routes from "./Routes";
 import reportWebVitals from "./reportWebVitals";
+import { BrowserRouter as Router } from "react-router-dom";
+import Auth0ProviderWithHistory from "./context/Auth0WithHistory";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Routes />
-  </React.StrictMode>,
+  <Router>
+    <Auth0ProviderWithHistory>
+      <React.StrictMode>
+        <Routes />
+      </React.StrictMode>
+    </Auth0ProviderWithHistory>
+  </Router>,
   document.getElementById("root")
 );
 

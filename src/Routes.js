@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 
 import App from "./App";
 import DarlingPrettyHome from "./screens/DarlingPrettyHome";
@@ -9,24 +9,21 @@ import Contact from "./screens/Contact";
 import Checkout from "./screens/Checkout";
 import PictureDescription from "./screens/PictureDescription";
 import RegisterUser from "./screens/register/Register";
+import Profile from "./screens/Profile";
 
 const Routes = () => {
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/" component={App} />
-        <Route path="/darling_pretty_photo" component={DarlingPrettyHome} />
-        <Route path="/pawparazzi_photo" component={PawparazziPhotoHome} />
-        <Route path="/calendar" component={Calendar} />
-        <Route path="/contact" component={Contact} />
-        <Route path="/order/checkout" component={Checkout} />
-        <Route
-          path="/darling_pretty_photodesc"
-          component={PictureDescription}
-        />
-        <Route path="/register" component={RegisterUser} />
-      </Switch>
-    </Router>
+    <Switch>
+      <Route exact path="/" component={App} />
+      <Route path="/darling_pretty_photo" component={DarlingPrettyHome} />
+      <Route path="/pawparazzi_photo" component={PawparazziPhotoHome} />
+      <Route path="/calendar" component={Calendar} />
+      <Route path="/contact" component={Contact} />
+      <Route path="/order/checkout" component={Checkout} />
+      <Route path="/darling_pretty_photodesc" component={PictureDescription} />
+      <Route path="/register" component={RegisterUser} />
+      <Route path="/profile" component={Profile} />
+    </Switch>
   );
 };
 

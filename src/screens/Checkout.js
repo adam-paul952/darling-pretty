@@ -1,9 +1,10 @@
 import React from "react";
-import { Button } from "react-bootstrap";
+import { Button, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 import Header from "../components/Header";
 import PaymentMethod from "../components/PaymentMethod";
+import LoginButton from "../components/LoginButton";
 
 const Checkout = () => {
   return (
@@ -16,7 +17,11 @@ const Checkout = () => {
         <p className="centerText">
           Returning Customer? Log in for faster checkout!
         </p>
-        <Button className="centerButton">Log In</Button>
+        <Row>
+          <Col>
+            <LoginButton />
+          </Col>
+        </Row>
         <hr />
         <SummaryInformation />
         <hr />
