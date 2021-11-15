@@ -11,6 +11,8 @@ import PictureDescription from "./screens/PictureDescription";
 import RegisterUser from "./screens/register/Register";
 import Profile from "./screens/Profile";
 
+import ProtectedRoute from "./auth/ProtectedRoute";
+
 const Routes = () => {
   return (
     <Switch>
@@ -22,7 +24,7 @@ const Routes = () => {
       <Route path="/order/checkout" component={Checkout} />
       <Route path="/darling_pretty_photodesc" component={PictureDescription} />
       <Route path="/register" component={RegisterUser} />
-      <Route path="/profile" component={Profile} />
+      <ProtectedRoute path="/profile" component={Profile} />
     </Switch>
   );
 };
