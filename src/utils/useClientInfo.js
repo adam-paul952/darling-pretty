@@ -1,11 +1,20 @@
 import axios from "axios";
 
+import { useAuth0 } from "@auth0/auth0-react";
+
 const URL = "http://localhost:8080/clientinfo/";
 
 const useClientInfo = () => {
-  const createClientData = (newClient) => {
+  const { getAccessTokenSilently } = useAuth0();
+
+  const createClientData = async (newClient) => {
+    let token = await getAccessTokenSilently();
     axios
-      .post(URL, newClient)
+      .post(URL, newClient, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => {
         console.log(res.data);
       })

@@ -23,7 +23,7 @@ const Routes = () => {
       <Route path="/contact" component={Contact} />
       <Route path="/order/checkout" component={Checkout} />
       <Route path="/darling_pretty_photodesc" component={PictureDescription} />
-      <Route path="/register" component={RegisterUser} />
+      <ProtectedRoute path="/register" component={RegisterUser} />
       <ProtectedRoute path="/profile" component={Profile} />
     </Switch>
   );
