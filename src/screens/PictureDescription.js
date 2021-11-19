@@ -1,14 +1,32 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import { Link, useParams } from "react-router-dom";
 
 import { Button } from "react-bootstrap";
 
 import { ShowAvailableTimeDay1 } from "../Calendar";
 import Header from "../components/Header";
 
-const PictureDescription = () => {
+const PictureDescription = ({ sessionInfo }) => {
+  const { id } = useParams();
   return (
     <>
+      {sessionInfo
+        .filter((session) => session.id === id)
+        .map((session) => {
+          <SessionInfo session={session} />;
+        })}
+    </>
+  );
+};
+
+PictureDescription.propTypes = {
+  sessionInfo: PropTypes.array.isRequired,
+};
+
+const SessionInfo = ({ session }) => {
+  return (
+    <div key={session.id}>
       <Header />
       <img
         className="float_left"
@@ -21,7 +39,7 @@ const PictureDescription = () => {
       <hr />
       <h3>Date</h3>
       <p>
-        <b>November 27, 2021</b>
+        <b>{session.date}</b>
       </p>
       <hr />
       <h2>Session Includes:</h2>
@@ -37,14 +55,18 @@ const PictureDescription = () => {
         arcu non odio euismod lacinia. Morbi leo urna molestie at elementum.
       </p>
       <hr />
-      <div className="centerText">
+      <div>
         <ShowAvailableTimeDay1 />
         <Button as={Link} to="/order/checkout">
           Add to Cart
         </Button>
       </div>
-    </>
+    </div>
   );
+};
+
+SessionInfo.propTypes = {
+  session: PropTypes.object.isRequired,
 };
 
 export default PictureDescription;

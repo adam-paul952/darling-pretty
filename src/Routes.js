@@ -11,16 +11,21 @@ import RegisterUser from "./screens/register/Register";
 import Profile from "./screens/Profile";
 
 import ProtectedRoute from "./auth/ProtectedRoute";
+import { sessionInfo } from "./sessionInfo/sessionInfo";
 
 const Routes = () => {
   return (
     <Switch>
       <Route exact path="/" component={App} />
-      <Route path="/darling_pretty_photo" component={DarlingPrettyHome} />
+      <Route path="/darling_pretty_photo">
+        <DarlingPrettyHome sessionInfo={sessionInfo} />
+      </Route>
       <Route path="/pawparazzi_photo" component={PawparazziPhotoHome} />
       <Route path="/contact" component={Contact} />
       <Route path="/order/checkout" component={Checkout} />
-      <Route path="/darling_pretty_photodesc" component={PictureDescription} />
+      <Route path="/darling_pretty_photodesc/:id">
+        <PictureDescription sessionInfo={sessionInfo} />
+      </Route>
       <Route path="/register" component={RegisterUser} />
       <ProtectedRoute path="/profile" component={Profile} />
     </Switch>
