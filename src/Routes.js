@@ -23,7 +23,7 @@ const Routes = () => {
       <Route path="/pawparazzi_photo" component={PawparazziPhotoHome} />
       <Route path="/contact" component={Contact} />
       <Route path="/order/checkout" component={Checkout} />
-      <Route path="/darling_pretty_photodesc/:id">
+      <Route path="/photoDescription/:id">
         <PictureDescription sessionInfo={sessionInfo} />
       </Route>
       <Route path="/register" component={RegisterUser} />

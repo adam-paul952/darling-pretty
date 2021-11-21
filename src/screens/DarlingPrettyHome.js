@@ -30,17 +30,14 @@ const ShowAvailablePhotos = ({ sessionInfo }) => {
             <CardGroup>
               <Col className="mb-4">
                 <Card>
-                  <Card.Link
-                    as={Link}
-                    to={`/darling_pretty_photodesc/${session.id}`}
-                  >
+                  <Card.Link as={Link} to={`/photoDescription/${session.id}`}>
                     <Card.Img variant="top" src="darling-pretty1.jpg" />
                   </Card.Link>
                   <Card.Body>
                     <Card.Title>{session.sessionName}</Card.Title>
                     <Card.Text>{session.date}</Card.Text>
                     <hr />
-                    <Card.Text>$XXX.xx</Card.Text>
+                    <Card.Text>{session.price}</Card.Text>
                   </Card.Body>
                 </Card>
               </Col>
