@@ -2,7 +2,15 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Button, Col, Form, Row } from "react-bootstrap";
 
-const ContactInformation = ({ clientInfo, setClientInfo }) => {
+import { useAuth0 } from "@auth0/auth0-react";
+
+const ContactInformation = ({
+  clientInfo,
+  setClientInfo,
+  showAddressInfo,
+  setShowAddressInfo,
+}) => {
+  const { isAuthenticated } = useAuth0();
   const { firstName, lastName, phoneNumber } = clientInfo;
 
   const formatPhoneNumber = (value) => {
@@ -95,7 +103,16 @@ const ContactInformation = ({ clientInfo, setClientInfo }) => {
           <Col></Col>
         </Row>
       </Form>
-      <Button className="mt-1 centerButton">Next: Adress Information</Button>
+      {!showAddressInfo && !isAuthenticated && (
+        <Button
+          className="mt-1 centerButton"
+          onClick={() => {
+            setShowAddressInfo(true);
+          }}
+        >
+          Next: Address Information
+        </Button>
+      )}
     </>
   );
 };
@@ -105,4 +122,6 @@ export default ContactInformation;
 ContactInformation.propTypes = {
   clientInfo: PropTypes.object.isRequired,
   setClientInfo: PropTypes.func.isRequired,
+  showAddressInfo: PropTypes.bool.isRequired,
+  setShowAddressInfo: PropTypes.func.isRequired,
 };

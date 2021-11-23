@@ -1,8 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import { Button, Col, Form, Row } from "react-bootstrap";
 
+import { useAuth0 } from "@auth0/auth0-react";
+
 const ShippingInformation = ({ clientInfo, setClientInfo, handleSubmit }) => {
+  const { isAuthenticated } = useAuth0();
   const { address1, address2, city, province, postalCode, country } =
     clientInfo;
 
@@ -123,9 +127,15 @@ const ShippingInformation = ({ clientInfo, setClientInfo, handleSubmit }) => {
           </Form.Group>
         </Row>
       </Form>
-      <Button className="centerButton" onClick={() => handleSubmit()}>
-        Submit User Data
-      </Button>
+      {isAuthenticated ? (
+        <Button as={Link} to="/order/checkout" className="centerButton">
+          Confirm Billing Information
+        </Button>
+      ) : (
+        <Button className="centerButton" onClick={() => handleSubmit()}>
+          Submit Information
+        </Button>
+      )}
     </>
   );
 };

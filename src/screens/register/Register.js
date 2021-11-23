@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
 
-import Header from "../../components/Header";
 import useClientInfo from "../../utils/useClientInfo";
 
 import ShippingInformation from "./ShippingInfo";
 import ContactInformation from "./ContactInfo";
-import LoginInformation from "./LoginInformation";
 
 const RegisterUser = () => {
   const { createClientData } = useClientInfo();
 
+  const [showAddressInfo, setShowAddressInfo] = useState(false);
+
   const [clientInfo, setClientInfo] = useState({
-    login: { email: "", password: "" },
     name: { firstName: "", lastName: "" },
     phoneNumber: "",
     billing: {
@@ -33,19 +32,21 @@ const RegisterUser = () => {
   }, [clientInfo]);
   return (
     <>
-      <Header title="Register" />
-      <LoginInformation clientInfo={clientInfo} setClientInfo={setClientInfo} />
       <ContactInformation
         clientInfo={clientInfo}
         setClientInfo={setClientInfo}
+        showAddressInfo={showAddressInfo}
+        setShowAddressInfo={setShowAddressInfo}
       />
-      <hr />
-      <ShippingInformation
-        clientInfo={clientInfo}
-        setClientInfo={setClientInfo}
-        handleSubmit={handleSubmit}
-      />
-      <hr />
+      {showAddressInfo && (
+        <>
+          <ShippingInformation
+            clientInfo={clientInfo}
+            setClientInfo={setClientInfo}
+            handleSubmit={handleSubmit}
+          />
+        </>
+      )}
     </>
   );
 };
