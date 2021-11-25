@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import { Card, CardGroup, Col, Container, Row } from "react-bootstrap";
 
-// import { sessionInfo } from "../sessionInfo/sessionInfo";
+import useSessionInfo from "../utils/useSessionInfo";
 
 const DarlingPrettyHome = ({ sessionInfo }) => {
   return (
@@ -22,6 +22,7 @@ DarlingPrettyHome.propTypes = {
 };
 
 const ShowAvailablePhotos = ({ sessionInfo }) => {
+  const { setSessionDate } = useSessionInfo();
   return (
     <>
       {sessionInfo.map((session) => {
@@ -30,7 +31,13 @@ const ShowAvailablePhotos = ({ sessionInfo }) => {
             <CardGroup>
               <Col className="mb-4">
                 <Card>
-                  <Card.Link as={Link} to={`/photoDescription/${session.id}`}>
+                  <Card.Link
+                    as={Link}
+                    to={`/photoDescription/${session.id}`}
+                    onClick={() => {
+                      setSessionDate(session.date);
+                    }}
+                  >
                     <Card.Img variant="top" src="darling-pretty1.jpg" />
                   </Card.Link>
                   <Card.Body>

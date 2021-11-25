@@ -7,8 +7,11 @@ import setMinutes from "date-fns/setMinutes";
 import addMinutes from "date-fns/addMinutes";
 
 import "react-datepicker/dist/react-datepicker.css";
+import useSessionInfo from "./utils/useSessionInfo";
 
 export const ShowAvailableTime = ({ session }) => {
+  const { sessionDate, setSessionDate, sessionTime } = useSessionInfo();
+
   const [startDate, setStartDate] = useState(
     setHours(
       setMinutes(new Date(session.date), session.startMinute),
