@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link, useParams } from "react-router-dom";
 
@@ -7,16 +7,29 @@ import { Button } from "react-bootstrap";
 import { ShowAvailableTime } from "../Calendar";
 import Header from "../components/Header";
 
+import useSessionInfo from "../utils/useSessionInfo";
+
 const PictureDescription = ({ sessionInfo }) => {
+  const { sessionDate, setSessionDate } = useSessionInfo();
+
   const { id } = useParams();
 
   return (
     <>
-      <Header />
       {sessionInfo
         .filter((session) => session.id === id)
         .map((session) => {
-          return <SessionInfo key={session.id} session={session} />;
+          return (
+            <>
+              <Header title={session.date} />
+              <SessionInfo
+                key={session.id}
+                session={session}
+                sessionDate={sessionDate}
+                setSessionDate={setSessionDate}
+              />
+            </>
+          );
         })}
     </>
   );
@@ -26,7 +39,7 @@ PictureDescription.propTypes = {
   sessionInfo: PropTypes.array.isRequired,
 };
 
-const SessionInfo = ({ session }) => {
+const SessionInfo = ({ session, sessionDate, setSessionDate }) => {
   return (
     <div key={session.id}>
       <img
@@ -50,8 +63,14 @@ const SessionInfo = ({ session }) => {
       <p>{session.details}</p>
       <hr />
       <div className="centerItems">
-        <ShowAvailableTime session={session} />
-        <Button as={Link} to="/order/checkout">
+        <ShowAvailableTime session={session} setSessionDate={setSessionDate} />
+        <Button
+          as={Link}
+          to="/order/checkout"
+          onClick={() => {
+            setSessionDate(sessionDate);
+          }}
+        >
           Add to Cart
         </Button>
       </div>
@@ -61,6 +80,8 @@ const SessionInfo = ({ session }) => {
 
 SessionInfo.propTypes = {
   session: PropTypes.object.isRequired,
+  sessionDate: PropTypes.date,
+  setSessionDate: PropTypes.func.isRequired,
 };
 
 export default PictureDescription;

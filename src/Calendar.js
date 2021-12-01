@@ -7,11 +7,8 @@ import setMinutes from "date-fns/setMinutes";
 import addMinutes from "date-fns/addMinutes";
 
 import "react-datepicker/dist/react-datepicker.css";
-import useSessionInfo from "./utils/useSessionInfo";
 
-export const ShowAvailableTime = ({ session }) => {
-  const { sessionDate, setSessionDate, sessionTime } = useSessionInfo();
-
+export const ShowAvailableTime = ({ session, setSessionDate }) => {
   const [startDate, setStartDate] = useState(
     setHours(
       setMinutes(new Date(session.date), session.startMinute),
@@ -27,17 +24,22 @@ export const ShowAvailableTime = ({ session }) => {
     startDayTime = addMinutes(startDayTime, 20);
   }
 
+  const handleChange = (date) => {
+    setStartDate(date);
+    setSessionDate(date);
+  };
+
   return (
     <>
       <DatePicker
         selected={startDate}
-        onChange={(date) => setStartDate(date)}
+        onChange={(date) => handleChange(date)}
         showTimeSelect
         showTimeSelectOnly
-        timeIntervals={20}
+        timeIntervals={session.lengthOfSessions}
         timeCaption="Time"
         dateFormat="h:mm aa"
-        includeDates={[new Date(2021, 10, 27)]} // November 27th, 2021
+        includeDates={[new Date(session.date)]} // November 27th, 2021
         includeTimes={timeIntervals}
       />
     </>
@@ -46,4 +48,5 @@ export const ShowAvailableTime = ({ session }) => {
 
 ShowAvailableTime.propTypes = {
   session: PropTypes.object.isRequired,
+  setSessionDate: PropTypes.func.isRequired,
 };
