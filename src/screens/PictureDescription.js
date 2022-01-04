@@ -1,13 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link, useParams } from "react-router-dom";
 
-import { Button } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 
 import { ShowAvailableTime } from "../Calendar";
 import Header from "../components/Header";
 
 import useSessionInfo from "../utils/useSessionInfo";
+
+import setHours from "date-fns/setHours";
+import setMinutes from "date-fns/setMinutes";
 
 const PictureDescription = ({ sessionInfo }) => {
   const { sessionDate, setSessionDate } = useSessionInfo();
@@ -40,8 +43,17 @@ PictureDescription.propTypes = {
 };
 
 const SessionInfo = ({ session, sessionDate, setSessionDate }) => {
+  const [startDate, setStartDate] = useState(
+    setHours(
+      setMinutes(new Date(session.date), session.startMinute),
+      session.startHour
+    )
+  );
+  useEffect(() => {
+    console.log(startDate);
+  }, [startDate]);
   return (
-    <div key={session.id}>
+    <Container key={session.id}>
       <img
         className="float_left"
         src="/darling-pretty1.jpg"
@@ -63,18 +75,26 @@ const SessionInfo = ({ session, sessionDate, setSessionDate }) => {
       <p>{session.details}</p>
       <hr />
       <div className="centerItems">
-        <ShowAvailableTime session={session} setSessionDate={setSessionDate} />
+        <ShowAvailableTime
+          session={session}
+          setSessionDate={setSessionDate}
+          startDate={startDate}
+          setStartDate={setStartDate}
+        />
         <Button
           as={Link}
-          to="/order/checkout"
-          onClick={() => {
-            setSessionDate(sessionDate);
+          to={{
+            pathname: "/order/checkout",
+            state: { startDate: startDate, price: session.price },
           }}
+          // onClick={() => {
+          //   setSessionDate(sessionDate);
+          // }}
         >
           Add to Cart
         </Button>
       </div>
-    </div>
+    </Container>
   );
 };
 

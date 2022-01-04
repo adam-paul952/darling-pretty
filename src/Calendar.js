@@ -8,13 +8,18 @@ import addMinutes from "date-fns/addMinutes";
 
 import "react-datepicker/dist/react-datepicker.css";
 
-export const ShowAvailableTime = ({ session, setSessionDate }) => {
-  const [startDate, setStartDate] = useState(
-    setHours(
-      setMinutes(new Date(session.date), session.startMinute),
-      session.startHour
-    )
-  );
+export const ShowAvailableTime = ({
+  session,
+  setSessionDate,
+  startDate,
+  setStartDate,
+}) => {
+  // const [startDate, setStartDate] = useState(
+  //   setHours(
+  //     setMinutes(new Date(session.date), session.startMinute),
+  //     session.startHour
+  //   )
+  // );
 
   let startDayTime = startDate;
   const timeIntervals = [];
@@ -49,4 +54,6 @@ export const ShowAvailableTime = ({ session, setSessionDate }) => {
 ShowAvailableTime.propTypes = {
   session: PropTypes.object.isRequired,
   setSessionDate: PropTypes.func.isRequired,
+  startDate: PropTypes.object,
+  setStartDate: PropTypes.func,
 };

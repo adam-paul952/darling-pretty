@@ -8,23 +8,10 @@ const App = () => {
       <Container className="mt-5">
         <Row style={{ height: "60%" }}>
           <Col
-            style={{
-              backgroundImage: "url(darling-pretty1.jpg)",
-              backgroundSize: "100% 100%",
-              width: "100%",
-              backgroundRepeat: "no-repeat",
-              marginRight: "1px",
-            }}
+            style={{ backgroundImage: "/darling-pretty1.jpg" }}
+            className="darlingPrettyBackground"
           ></Col>
-          <Col
-            style={{
-              backgroundImage: "url(darling-pretty.jpg)",
-              backgroundSize: "100% 100%",
-              width: "50%",
-              backgroundRepeat: "no-repeat",
-              marginLeft: "1px",
-            }}
-          ></Col>
+          <Col></Col>
         </Row>
         <Row>
           <Col className="d-grid gap-2">

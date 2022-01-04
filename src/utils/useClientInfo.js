@@ -45,7 +45,7 @@ const useClientInfo = () => {
       });
   };
 
-  const deleteCLientData = () => {
+  const deleteClientData = () => {
     axios
       .delete(URL)
       .then((res) => {
@@ -60,7 +60,7 @@ const useClientInfo = () => {
     createClientData,
     findAllClientData,
     findClientDataById,
-    deleteCLientData,
+    deleteClientData,
   };
 };
 

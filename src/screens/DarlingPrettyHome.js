@@ -33,7 +33,10 @@ const ShowAvailablePhotos = ({ sessionInfo }) => {
                 <Card>
                   <Card.Link
                     as={Link}
-                    to={`/photoDescription/${session.id}`}
+                    to={{
+                      pathname: `/photoDescription/${session.id}`,
+                      state: { sessionDate: session.date },
+                    }}
                     onClick={() => {
                       setSessionDate(session.date);
                     }}

@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button, Row, Col, Container } from "react-bootstrap";
+import { useLocation } from "react-router-dom";
 
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -8,17 +9,14 @@ import PaymentMethod from "../components/PaymentMethod";
 import LoginButton from "../components/LoginButton";
 
 import RegisterUser from "./register/Register";
-import useSessionInfo from "../utils/useSessionInfo";
 
 const Checkout = () => {
   const { isAuthenticated } = useAuth0();
   const [showRegister, setShowRegister] = useState(false);
 
-  const { sessionDate } = useSessionInfo();
-
-  useEffect(() => {
-    console.log(`Session set time is: ${sessionDate}`);
-  }, [sessionDate]);
+  const location = useLocation();
+  const sessionDateTime = location.state?.startDate;
+  const sessionPrice = location.state?.price;
 
   return (
     <>
@@ -74,6 +72,20 @@ const Checkout = () => {
         )}
         <SummaryInformation />
         <hr />
+        <Row>
+          <Col>When: {sessionDateTime.toDateString()}</Col>
+          <Col>
+            What time: {sessionDateTime.getHours()}:
+            {sessionDateTime.getMinutes()}{" "}
+            {sessionDateTime.getHours() < 12 ? "AM" : "PM"}
+          </Col>
+          <Col>Price: {sessionPrice}</Col>
+        </Row>
+        <Row>
+          <Col></Col>
+          <Col></Col>
+          <Col></Col>
+        </Row>
         <PaymentMethod />
       </Container>
     </>

@@ -9,9 +9,12 @@ import Checkout from "./screens/Checkout";
 import PictureDescription from "./screens/PictureDescription";
 import RegisterUser from "./screens/register/Register";
 import Profile from "./screens/Profile";
+import AdminDashboard from "./admin/AdminDashBoard";
+import SessionCalendar from "./admin/SessionCalendar";
 
 import ProtectedRoute from "./auth/ProtectedRoute";
 import { sessionInfo } from "./sessionInfo/sessionInfo";
+import EditSessionInfo from "./admin/EditSession";
 
 const Routes = () => {
   return (
@@ -28,6 +31,9 @@ const Routes = () => {
       </Route>
       <Route path="/register" component={RegisterUser} />
       <ProtectedRoute path="/profile" component={Profile} />
+      <Route exact path="/admin" component={AdminDashboard} />
+      <Route path="/admin/calendar" component={SessionCalendar} />
+      <Route path="/admin/editsession" component={EditSessionInfo} />
     </Switch>
   );
 };
