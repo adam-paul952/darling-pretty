@@ -1,0 +1,12 @@
+img.float_left {
+  float: right;
+  margin: 10px 10px 10px 0;
+}
+
+.buttonLink,
+.buttonLink:hover,
+.buttonLink:active,
+.buttonLink:focus {
+  text-decoration: none;
+  color: white;
+}
