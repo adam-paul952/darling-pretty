@@ -4,7 +4,7 @@ const useSessionInfo = () => {
   const [sessionDate, setSessionDate] = React.useState<null | Date | undefined>(
     null
   );
-  const [sessionTime, setSessionTime] = React.useState(null);
+  const [sessionTime, setSessionTime] = React.useState<string | null>(null);
   const [sessionPrice, setSessionPrice] = React.useState(0);
 
   return {

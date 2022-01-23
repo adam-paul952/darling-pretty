@@ -89,7 +89,11 @@ const SessionInfo: React.FC<Session> = ({ session, setSessionDate }) => {
         //   setSessionDate(sessionDate);
         // }}
         >
-          <Link className="buttonLink" to="/">
+          <Link
+            className="buttonLink"
+            to="/register"
+            state={{ startDate: startDate, price: session.price }}
+          >
             Add to Cart
           </Link>
         </Button>

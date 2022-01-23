@@ -20,6 +20,9 @@ const ShowAvailableTime: React.FC<Props> = ({
   setStartDate,
 }) => {
   let startDayTime = startDate;
+  React.useEffect(() => {
+    console.log(startDate);
+  }, [startDate]);
   const timeIntervals: Date[] = [];
 
   for (let i = 0; i < session.numberOfSessions; i++) {
@@ -35,7 +38,9 @@ const ShowAvailableTime: React.FC<Props> = ({
     <>
       <DatePicker
         selected={startDate}
-        onChange={() => {}}
+        onChange={(date: Date) => {
+          handleChange(date);
+        }}
         showTimeSelect
         showTimeSelectOnly
         timeIntervals={session.lengthOfSessions}
