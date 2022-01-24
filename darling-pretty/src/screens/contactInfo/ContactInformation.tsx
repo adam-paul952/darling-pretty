@@ -1,13 +1,17 @@
 import React from "react";
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
 
-import { ClientInfoProps } from "../Register";
+import { ClientInfoProps } from "../../hooks/useSessionInfo";
 
 interface Props {
   clientInfo: ClientInfoProps;
   setClientInfo: React.Dispatch<React.SetStateAction<ClientInfoProps>>;
   showClientAddress: boolean;
   setShowClientAddress: React.Dispatch<React.SetStateAction<boolean>>;
+  showClientContact: boolean;
+  setShowClientContact: React.Dispatch<React.SetStateAction<boolean>>;
+  showContactStatus: boolean;
+  setShowContactStatus: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ClientInformation: React.FC<Props> = ({
@@ -15,12 +19,18 @@ const ClientInformation: React.FC<Props> = ({
   setClientInfo,
   showClientAddress,
   setShowClientAddress,
+  showClientContact,
+  setShowClientContact,
+  showContactStatus,
+  setShowContactStatus,
 }) => {
-  React.useEffect(() => {
-    console.log(clientInfo);
-  }, [clientInfo]);
-
   const { name, contact } = clientInfo;
+
+  const handleClick = () => {
+    setShowClientAddress(!showClientAddress);
+    setShowClientContact(!showClientContact);
+    setShowContactStatus(!showContactStatus);
+  };
 
   const formatPhoneNumber = (value: string) => {
     if (!value) {
@@ -125,9 +135,7 @@ const ClientInformation: React.FC<Props> = ({
           </Col>
         </Row>
       </Form>
-      <Button onClick={() => setShowClientAddress(!showClientAddress)}>
-        Save Contact Info
-      </Button>
+      <Button onClick={() => handleClick()}>Save Contact Info</Button>
     </>
   );
 };

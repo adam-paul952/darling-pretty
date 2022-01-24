@@ -1,15 +1,35 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Button, Col, Form, Row } from "react-bootstrap";
 
-import { ClientInfoProps } from "../Register";
+import { ClientInfoProps } from "../../hooks/useSessionInfo";
 
 interface Props {
   clientInfo: ClientInfoProps;
   setClientInfo: React.Dispatch<React.SetStateAction<ClientInfoProps>>;
+  showClientAddress: boolean;
+  setShowClientAddress: React.Dispatch<React.SetStateAction<boolean>>;
+  showAddressStatus: boolean;
+  setShowAddressStatus: React.Dispatch<React.SetStateAction<boolean>>;
+  startDate: Date;
+  price: string;
 }
 
-const BillingInformation: React.FC<Props> = ({ clientInfo, setClientInfo }) => {
+const BillingInformation: React.FC<Props> = ({
+  clientInfo,
+  setClientInfo,
+  showClientAddress,
+  setShowClientAddress,
+  showAddressStatus,
+  setShowAddressStatus,
+  startDate,
+  price,
+}) => {
   const { billing } = clientInfo;
+  const handleClick = () => {
+    setShowClientAddress(!showClientAddress);
+    setShowAddressStatus(!showAddressStatus);
+  };
   return (
     <>
       <Form>
@@ -95,6 +115,15 @@ const BillingInformation: React.FC<Props> = ({ clientInfo, setClientInfo }) => {
           </Form.Group>
         </Row>
       </Form>
+      <Button onClick={() => handleClick()}>
+        <Link
+          className="buttonLink"
+          to="/checkout"
+          state={{ startDate: startDate, price: price, clientInfo: clientInfo }}
+        >
+          Continue to Checkout
+        </Link>
+      </Button>
     </>
   );
 };

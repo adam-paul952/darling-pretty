@@ -84,11 +84,7 @@ const SessionInfo: React.FC<Session> = ({ session, setSessionDate }) => {
           startDate={startDate}
           setStartDate={setStartDate}
         />
-        <Button
-        // onClick={() => {
-        //   setSessionDate(sessionDate);
-        // }}
-        >
+        <Button>
           <Link
             className="buttonLink"
             to="/register"
