@@ -19,17 +19,21 @@ interface ClientInfoBilling {
   country: string;
 }
 
+interface ClientInfoBookingDetails {
+  sessionDate: string;
+  sessionTime: string;
+}
+
 export interface ClientInfoProps {
   name: ClientInfoName;
   contact: ClientInfoContact;
   billing: ClientInfoBilling;
+  bookingDetails: ClientInfoBookingDetails;
 }
 
 const useSessionInfo = () => {
-  const [sessionDate, setSessionDate] = React.useState<null | Date | undefined>(
-    null
-  );
-  const [sessionTime, setSessionTime] = React.useState<string | null>(null);
+  const [sessionDate, setSessionDate] = React.useState<Date | null>();
+  const [sessionTime, setSessionTime] = React.useState<string>("");
   const [sessionPrice, setSessionPrice] = React.useState(0);
 
   const [clientInfo, setClientInfo] = React.useState<ClientInfoProps>({
@@ -42,6 +46,10 @@ const useSessionInfo = () => {
       province: "NL",
       postalCode: "",
       country: "Canada",
+    },
+    bookingDetails: {
+      sessionDate: "",
+      sessionTime: sessionTime,
     },
   });
 

@@ -5,10 +5,21 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import reportWebVitals from "./reportWebVitals";
 import DarlingPrettyRouter from "./Routes";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import Background from "./components/Background";
 
 ReactDOM.render(
   <React.StrictMode>
-    <DarlingPrettyRouter />
+    {/* <Background> */}
+    <PayPalScriptProvider
+      options={{
+        "client-id": process.env.REACT_APP_PAYPAL_CLIENT_ID,
+        currency: "CAD",
+      }}
+    >
+      <DarlingPrettyRouter />
+    </PayPalScriptProvider>
+    {/* </Background> */}
   </React.StrictMode>,
   document.getElementById("root")
 );

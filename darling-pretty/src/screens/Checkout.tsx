@@ -1,8 +1,8 @@
-import React from "react";
 import { useLocation } from "react-router-dom";
-import { Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 
 import { ClientInfoProps } from "../hooks/useSessionInfo";
+import Paypal from "./Paypal";
 
 interface LocationState {
   startDate: Date;
@@ -29,6 +29,18 @@ const Checkout = () => {
           </Col>
         </Row>
       </Container>
+      <Button
+        onClick={() => {
+          const timeString =
+            startDate.getHours() + ":" + startDate.getMinutes();
+          clientInfo.bookingDetails.sessionDate = startDate.toDateString();
+          clientInfo.bookingDetails.sessionTime = timeString.toString();
+          console.log(clientInfo);
+        }}
+      >
+        Add Client to DB
+      </Button>
+      <Paypal />
     </>
   );
 };
