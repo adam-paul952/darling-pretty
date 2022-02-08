@@ -6,7 +6,7 @@ import "./App.css";
 import reportWebVitals from "./reportWebVitals";
 import DarlingPrettyRouter from "./Routes";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
-import Background from "./components/Background";
+// import Background from "./components/Background";
 
 ReactDOM.render(
   <React.StrictMode>

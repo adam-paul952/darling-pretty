@@ -5,7 +5,7 @@ import { sessionInfo } from "../sessionInfo";
 
 import { Button, Container } from "react-bootstrap";
 
-import ShowAvailableTime from "../Calendar";
+import ShowAvailableTime from "../components/Calendar";
 import Header from "../components/Header";
 import { ISessionInfo } from "../sessionInfo";
 import darlingPretty from "../images/darling-pretty1.jpg";

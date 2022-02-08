@@ -1,16 +1,16 @@
 import React from "react";
-import { Row, Col, Form } from "react-bootstrap";
+import { Col, Form, Row } from "react-bootstrap";
 
 const EditSessionInfo = () => {
-  const [date, setDate] = React.useState("");
-  const [startHour, setStartHour] = React.useState("");
-  const [startMinute, setStartMinute] = React.useState("");
-  const [numberOfSessions, setNumberOfSessions] = React.useState("");
-  const [lengthOfSessions, setLengthOfSessions] = React.useState("");
-  const [sessionName, setSessionName] = React.useState("");
-  const [sessionInfo, setSessionInfo] = React.useState("");
-  const [sessionPrice, setSessionPrice] = React.useState("");
-  const [sessionDetails, setSessionDetails] = React.useState("");
+  const [date, setDate] = React.useState<string>("");
+  const [startHour, setStartHour] = React.useState<string>("");
+  const [startMinute, setStartMinute] = React.useState<string>("");
+  const [numberOfSessions, setNumberOfSessions] = React.useState<string>("");
+  const [lengthOfSessions, setLengthOfSessions] = React.useState<string>("");
+  const [sessionName, setSessionName] = React.useState<string>("");
+  const [sessionInfo, setSessionInfo] = React.useState<string>("");
+  const [sessionPrice, setSessionPrice] = React.useState<string>("");
+  const [sessionDetails, setSessionDetails] = React.useState<string>("");
 
   return (
     <>
