@@ -19,16 +19,18 @@ interface ClientInfoBilling {
   country: string;
 }
 
-interface ClientInfoBookingDetails {
-  sessionDate: string;
-  sessionTime: string;
-}
+// interface ClientInfoBookingDetails {
+
+//   // sessionDate: string;
+//   // sessionTime: string;
+//   // lengthOfSession: string;
+// }
 
 export interface ClientInfoProps {
   name: ClientInfoName;
   contact: ClientInfoContact;
   billing: ClientInfoBilling;
-  bookingDetails: ClientInfoBookingDetails;
+  bookingDetails: string;
 }
 
 const useSessionInfo = () => {
@@ -47,10 +49,7 @@ const useSessionInfo = () => {
       postalCode: "",
       country: "Canada",
     },
-    bookingDetails: {
-      sessionDate: "",
-      sessionTime: sessionTime,
-    },
+    bookingDetails: "",
   });
 
   return {

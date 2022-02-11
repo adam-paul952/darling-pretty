@@ -4,7 +4,7 @@ import DatePicker from "react-datepicker";
 import addMinutes from "date-fns/addMinutes";
 import "react-datepicker/dist/react-datepicker.css";
 
-import { ISessionInfo } from "../sessionInfo";
+import { ISessionInfo } from "../util/sessionInfo";
 
 interface Props {
   session: ISessionInfo;

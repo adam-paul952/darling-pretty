@@ -8,10 +8,12 @@ interface LocationState {
   startDate: Date;
   price: string;
   clientInfo: ClientInfoProps;
+  sessionLength: number;
 }
 
 const Checkout = () => {
-  const { startDate, price, clientInfo } = useLocation().state as LocationState;
+  const { startDate, price, clientInfo, sessionLength } = useLocation()
+    .state as LocationState;
   return (
     <>
       <Container className="my-5">
@@ -33,8 +35,9 @@ const Checkout = () => {
         onClick={() => {
           const timeString =
             startDate.getHours() + ":" + startDate.getMinutes();
-          clientInfo.bookingDetails.sessionDate = startDate.toDateString();
-          clientInfo.bookingDetails.sessionTime = timeString.toString();
+          clientInfo.bookingDetails = startDate.toDateString();
+          // clientInfo.bookingDetails.sessionTime = timeString.toString();
+          // clientInfo.bookingDetails.lengthOfSession = sessionLength.toString();
           console.log(clientInfo);
         }}
       >

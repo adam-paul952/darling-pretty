@@ -12,10 +12,12 @@ import useSessionInfo from "../hooks/useSessionInfo";
 interface LocationProps {
   startDate: Date;
   price: string;
+  sessionLength: number;
 }
 
 const Register = () => {
-  const { startDate, price } = useLocation().state as LocationProps;
+  const { startDate, price, sessionLength } = useLocation()
+    .state as LocationProps;
   const { clientInfo, setClientInfo } = useSessionInfo();
 
   const [showClientContact, setShowClientContact] = React.useState(false);
@@ -87,6 +89,7 @@ const Register = () => {
                 setShowAddressStatus={setShowAddressStatus}
                 startDate={startDate}
                 price={price}
+                sessionLength={sessionLength}
               />
             )}
           </Col>

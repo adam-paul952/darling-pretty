@@ -1,13 +1,13 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 
-import { sessionInfo } from "../sessionInfo";
+import { sessionInfo } from "../util/sessionInfo";
 
 import { Button, Container } from "react-bootstrap";
 
 import ShowAvailableTime from "../components/Calendar";
 import Header from "../components/Header";
-import { ISessionInfo } from "../sessionInfo";
+import { ISessionInfo } from "../util/sessionInfo";
 import darlingPretty from "../images/darling-pretty1.jpg";
 
 import useSessionInfo from "../hooks/useSessionInfo";
@@ -88,7 +88,11 @@ const SessionInfo: React.FC<Session> = ({ session, setSessionDate }) => {
           <Link
             className="buttonLink"
             to="/register"
-            state={{ startDate: startDate, price: session.price }}
+            state={{
+              startDate: startDate,
+              price: session.price,
+              sessionLength: session.lengthOfSessions,
+            }}
           >
             Add to Cart
           </Link>

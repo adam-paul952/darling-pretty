@@ -1,19 +1,34 @@
 import React from "react";
-import FullCalendar, {
-  EventApi,
-  DateSelectArg,
-  EventClickArg,
-  EventContentArg,
-  formatDate,
-} from "@fullcalendar/react";
+import FullCalendar, { EventInput } from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 
+import clients from "../util/clientInfo";
+import addMinutes from "date-fns/addMinutes";
+
+interface IEvents {
+  date: Date;
+  title: string;
+}
+
+const clientEvents: EventInput[] = clients.map((client) => {
+  const { name, contact, bookingDetails } = client;
+
+  let startTime = new Date(bookingDetails);
+  let endTime = addMinutes(startTime, 20);
+
+  return {
+    title: `${name.firstName} ${name.lastName} - ${contact.phoneNumber}`,
+    start: startTime,
+    end: endTime,
+  };
+});
 const SessionCalendar = () => {
+  const [events, setEvents] = React.useState(clients);
+
   return (
     <>
-      <h1>Hello</h1>
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         headerToolbar={{
@@ -21,14 +36,16 @@ const SessionCalendar = () => {
           center: "title",
           right: "dayGridMonth,timeGridWeek,timeGridDay",
         }}
-        initialView="dayGridMonth"
+        initialView="timeGridWeek"
         editable={true}
         selectable={true}
         selectMirror={true}
         dayMaxEvents={true}
         initialDate={new Date()}
-        events={[{ title: "event 1", date: "2022-02-05" }]}
+        events={clientEvents}
+        // events={[{ title: "Test", date: new Date() }]}
         nowIndicator={true}
+        slotDuration="00:20:00"
         // weekends={this.state.weekendsVisible}
         // initialEvents={INITIAL_EVENTS} // alternatively, use the `events` setting to fetch from a feed
         // select={this.handleDateSelect}

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Card, CardGroup, Col, Container, Row } from "react-bootstrap";
 
-import { sessionInfo } from "./sessionInfo";
+import { sessionInfo } from "./util/sessionInfo";
 import darlingPretty from "./images/darling-pretty1.jpg";
 
 import Header from "./components/Header";

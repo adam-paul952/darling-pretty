@@ -13,6 +13,7 @@ interface Props {
   setShowAddressStatus: React.Dispatch<React.SetStateAction<boolean>>;
   startDate: Date;
   price: string;
+  sessionLength: number;
 }
 
 const BillingInformation: React.FC<Props> = ({
@@ -24,6 +25,7 @@ const BillingInformation: React.FC<Props> = ({
   setShowAddressStatus,
   startDate,
   price,
+  sessionLength,
 }) => {
   const { billing } = clientInfo;
   const handleClick = () => {
@@ -119,7 +121,12 @@ const BillingInformation: React.FC<Props> = ({
         <Link
           className="buttonLink"
           to="/checkout"
-          state={{ startDate: startDate, price: price, clientInfo: clientInfo }}
+          state={{
+            startDate: startDate,
+            price: price,
+            clientInfo: clientInfo,
+            sessionLength: sessionLength,
+          }}
         >
           Continue to Checkout
         </Link>
