@@ -30,9 +30,6 @@ const Header = (props: HeaderProps) => {
             <Nav.Link className="px-3" href="/contact">
               Contact
             </Nav.Link>
-            <Nav.Link className="px-3" href="/order/checkout">
-              Checkout
-            </Nav.Link>
           </Nav>
         </Container>
       </Navbar>

@@ -35,9 +35,9 @@ const Checkout = () => {
         onClick={() => {
           const timeString =
             startDate.getHours() + ":" + startDate.getMinutes();
-          clientInfo.bookingDetails = startDate.toDateString();
+          clientInfo.bookingDetails.sessionDate = startDate.toDateString();
           // clientInfo.bookingDetails.sessionTime = timeString.toString();
-          // clientInfo.bookingDetails.lengthOfSession = sessionLength.toString();
+          clientInfo.bookingDetails.lengthOfSession = sessionLength.toString();
           console.log(clientInfo);
         }}
       >

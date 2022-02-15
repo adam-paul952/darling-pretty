@@ -15,8 +15,8 @@ interface IEvents {
 const clientEvents: EventInput[] = clients.map((client) => {
   const { name, contact, bookingDetails } = client;
 
-  let startTime = new Date(bookingDetails);
-  let endTime = addMinutes(startTime, 20);
+  let startTime = new Date(bookingDetails.sessionDate);
+  let endTime = addMinutes(startTime, parseInt(bookingDetails.lengthOfSession));
 
   return {
     title: `${name.firstName} ${name.lastName} - ${contact.phoneNumber}`,

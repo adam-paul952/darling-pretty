@@ -7,10 +7,14 @@ const AdminDashboard = () => {
     <>
       <Button>Clients</Button>
       <Button>
-        <Link to="/admin/calendar">Session</Link>
+        <Link className="buttonLink" to="/admin/calendar">
+          Calendar
+        </Link>
       </Button>
       <Button>
-        <Link to="">Edit Session Info</Link>
+        <Link className="buttonLink" to="/admin/editsession">
+          Edit Session Info
+        </Link>
       </Button>
     </>
   );

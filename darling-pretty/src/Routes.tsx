@@ -6,6 +6,8 @@ import Register from "./screens/Register";
 import ContactForm from "./screens/Contact";
 import Checkout from "./screens/Checkout";
 import SessionCalendar from "./admin/SessionCalendar";
+import EditSessionInfo from "./admin/EditSession";
+import AdminDashboard from "./admin/AdminDashboard";
 
 const DarlingPrettyRouter = () => {
   return (
@@ -16,7 +18,9 @@ const DarlingPrettyRouter = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/contact" element={<ContactForm />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/admin/calendar" element={<SessionCalendar />} />
+        <Route path="/admin/editsession" element={<EditSessionInfo />} />
       </Routes>
     </Router>
   );

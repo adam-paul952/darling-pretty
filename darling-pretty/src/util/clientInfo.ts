@@ -12,7 +12,10 @@ const clients: ClientInfoProps[] = [
       postalCode: "A1A1A1",
       country: "Canada",
     },
-    bookingDetails: "Sat Feb 12 2022 08:40:00",
+    bookingDetails: {
+      sessionDate: "Sat Feb 12 2022 08:40:00",
+      lengthOfSession: "20",
+    },
   },
   {
     name: { firstName: "Raelene", lastName: "" },
@@ -25,7 +28,10 @@ const clients: ClientInfoProps[] = [
       postalCode: "S1S1S1",
       country: "Canada",
     },
-    bookingDetails: "Sat Feb 12 2022 09:00:00",
+    bookingDetails: {
+      sessionDate: "Sat Feb 12 2022 09:00:00",
+      lengthOfSession: "20",
+    },
   },
   {
     name: { firstName: "Ted", lastName: "" },
@@ -38,7 +44,10 @@ const clients: ClientInfoProps[] = [
       postalCode: "",
       country: "Canada",
     },
-    bookingDetails: "2022-02-13T11:00:00",
+    bookingDetails: {
+      sessionDate: "2022-02-13T11:00:00",
+      lengthOfSession: "20",
+    },
   },
 ];
 
