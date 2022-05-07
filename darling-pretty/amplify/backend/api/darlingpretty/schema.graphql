@@ -1,0 +1,20 @@
+type Session @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  booking: [Bookings] @hasMany(indexName: "bySession", fields: ["id"])
+  date: AWSDate!
+  startTime: AWSTime!
+  endTime: AWSTime!
+  sessionLength: Int!
+  sessionInfo: String!
+  price: Int!
+  sessionDetails: String!
+}
+
+type Bookings @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  title: String!
+  sessionID: ID! @index(name: "bySession")
+  Session: Session @belongsTo
+}
+ 

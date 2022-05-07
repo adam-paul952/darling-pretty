@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 
 const AdminDashboard = () => {
   return (
-    <>
+    <Container className="d-flex justify-content-center align-items-center min-vh-100">
       <Button>Clients</Button>
       <Button>
         <Link className="buttonLink" to="/admin/calendar">
@@ -16,7 +16,7 @@ const AdminDashboard = () => {
           Edit Session Info
         </Link>
       </Button>
-    </>
+    </Container>
   );
 };
 

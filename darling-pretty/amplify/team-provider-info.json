@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-darlingpretty-dev-121208-authRole",
+      "UnauthRoleArn": "arn:aws:iam::318571327234:role/amplify-darlingpretty-dev-121208-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::318571327234:role/amplify-darlingpretty-dev-121208-authRole",
+      "Region": "ca-central-1",
+      "DeploymentBucketName": "amplify-darlingpretty-dev-121208-deployment",
+      "UnauthRoleName": "amplify-darlingpretty-dev-121208-unauthRole",
+      "StackName": "amplify-darlingpretty-dev-121208",
+      "StackId": "arn:aws:cloudformation:ca-central-1:318571327234:stack/amplify-darlingpretty-dev-121208/dfd43690-ce13-11ec-812a-067082f369c2",
+      "AmplifyAppId": "d3bczaaymam3ew"
+    },
+    "categories": {
+      "auth": {
+        "undefined": {}
+      }
+    }
+  }
+}

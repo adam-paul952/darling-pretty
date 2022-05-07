@@ -27,7 +27,11 @@ const ShowAvailablePhotos = () => {
               <Col className="mb-4">
                 <Card>
                   <Card.Link as={Link} to={`/photo/${session.id}`}>
-                    <Card.Img variant="top" src={darlingPretty} />
+                    <Card.Img
+                      variant="top"
+                      src={darlingPretty}
+                      alt="Darling Pretty Logo"
+                    />
                   </Card.Link>
                   <Card.Body>
                     <Card.Title>{session.sessionName}</Card.Title>

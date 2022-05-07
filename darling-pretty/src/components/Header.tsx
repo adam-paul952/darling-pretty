@@ -1,6 +1,6 @@
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 
-interface HeaderProps {
+export interface HeaderProps {
   title: string;
 }
 

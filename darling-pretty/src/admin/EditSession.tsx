@@ -4,12 +4,18 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 const EditSessionInfo = () => {
   const [date, setDate] = React.useState<string>("");
   const [startTime, setStartHour] = React.useState<string>("");
-  const [numberOfSessions, setNumberOfSessions] = React.useState<string>("");
+  const [endTime, setEndTime] = React.useState<string>("");
   const [lengthOfSessions, setLengthOfSessions] = React.useState<string>("");
   const [sessionName, setSessionName] = React.useState<string>("");
   const [sessionInfo, setSessionInfo] = React.useState<string>("");
   const [sessionPrice, setSessionPrice] = React.useState<string>("");
   const [sessionDetails, setSessionDetails] = React.useState<string>("");
+
+  /*    const determineNumberofSessions = (start: number, end: number, length: number) => {
+   *      let numberOfSessions = 60 / length;
+   *      let lengthOfSession = end - start;
+   *      return lengthOfSession * numberOfSessions;
+   */
 
   return (
     <>
@@ -28,9 +34,9 @@ const EditSessionInfo = () => {
         </Row>
 
         <Row className="m-3">
-          <Form.Group as={Col} controlId="numberOfSessions">
-            <Form.Label>Number of Sessions</Form.Label>
-            <Form.Control value={numberOfSessions} />
+          <Form.Group as={Col} controlId="endTime">
+            <Form.Label>End Time</Form.Label>
+            <Form.Control placeholder="2:00" value={endTime} />
           </Form.Group>
         </Row>
 

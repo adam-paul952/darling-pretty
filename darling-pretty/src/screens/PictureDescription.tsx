@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 
 import { sessionInfo } from "../util/sessionInfo";
 
-import { Button, Container } from "react-bootstrap";
+import { Button, Container, Col, Row } from "react-bootstrap";
 
 import ShowAvailableTime from "../components/Calendar";
 import Header from "../components/Header";
@@ -14,6 +14,9 @@ import useSessionInfo from "../hooks/useSessionInfo";
 
 import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
+
+import useAWSDatastore from "../hooks/useAWSData";
+import { createSession } from "../graphql/mutations";
 
 interface Session {
   session: ISessionInfo;
@@ -46,13 +49,14 @@ const PictureDescription = () => {
   );
 };
 
-const SessionInfo: React.FC<Session> = ({ session, setSessionDate }) => {
+export const SessionInfo: React.FC<Session> = ({ session, setSessionDate }) => {
   const [startDate, setStartDate] = React.useState(
     setHours(
       setMinutes(new Date(session.date), session.startMinute),
       session.startHour
     )
   );
+  const { createSession } = useAWSDatastore();
 
   return (
     <Container key={session.id}>
@@ -76,28 +80,39 @@ const SessionInfo: React.FC<Session> = ({ session, setSessionDate }) => {
       <h2>Session Includes:</h2>
       <p>{session.details}</p>
       <hr />
-      <div className="centerItems">
-        <ShowAvailableTime
-          key={session.id}
-          session={session}
-          setSessionDate={setSessionDate}
-          startDate={startDate}
-          setStartDate={setStartDate}
-        />
-        <Button>
-          <Link
-            className="buttonLink"
-            to="/register"
-            state={{
-              startDate: startDate,
-              price: session.price,
-              sessionLength: session.lengthOfSessions,
-            }}
+      <Row>
+        <Col className="d-flex justify-content-end">
+          <p>Available Times:</p>
+        </Col>
+        <Col>
+          <ShowAvailableTime
+            key={session.id}
+            session={session}
+            setSessionDate={setSessionDate}
+            startDate={startDate}
+            setStartDate={setStartDate}
+          />
+        </Col>
+        <Col>
+          <Button
+          // onClick={() => {
+          //   createSession();
+          // }}
           >
-            Add to Cart
-          </Link>
-        </Button>
-      </div>
+            <Link
+              className="buttonLink"
+              to="/register"
+              state={{
+                startDate: startDate,
+                price: session.price,
+                sessionLength: session.lengthOfSessions,
+              }}
+            >
+              Add to Cart
+            </Link>
+          </Button>
+        </Col>
+      </Row>
     </Container>
   );
 };
