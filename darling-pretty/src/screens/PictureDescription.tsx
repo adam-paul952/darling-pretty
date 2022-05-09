@@ -1,22 +1,21 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
-
-import { sessionInfo } from "../util/sessionInfo";
-
-import { Button, Container, Col, Row } from "react-bootstrap";
-
-import ShowAvailableTime from "../components/Calendar";
+//Router
+import { Link, useLocation, useParams } from "react-router-dom";
+//Components
 import Header from "../components/Header";
-import { ISessionInfo } from "../util/sessionInfo";
+import { Button, Container, Col, Row } from "react-bootstrap";
+import ShowAvailableTime from "../components/Calendar";
+// Images
 import darlingPretty from "../images/darling-pretty1.jpg";
 
-import useSessionInfo from "../hooks/useSessionInfo";
+// import { ISessionInfo } from "../util/sessionInfo";
 
+import useSessionInfo from "../hooks/useSessionInfo";
 import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
 
-import useAWSDatastore from "../hooks/useAWSData";
-import { createSession } from "../graphql/mutations";
+import { sessionInfo } from "../util/sessionInfo";
+import { ISessionInfo } from "../hooks/useAWSData";
 
 interface Session {
   session: ISessionInfo;
@@ -24,39 +23,44 @@ interface Session {
   setStartDate?: React.Dispatch<React.SetStateAction<Date | null | undefined>>;
 }
 
+type LocationPropsT = {
+  session: ISessionInfo;
+};
+
 const PictureDescription = () => {
   const { setSessionDate } = useSessionInfo();
+  const { session } = useLocation().state as LocationPropsT;
 
   const { id } = useParams();
 
   return (
     <>
-      {sessionInfo
-        .filter((session) => session.id === id)
-        .map((session) => {
-          return (
-            <>
-              <Header title={session.date} />
-              <SessionInfo
-                key={id}
-                session={session}
-                setSessionDate={setSessionDate}
-              />
-            </>
-          );
-        })}
+      <>
+        <Header title={session.date} />
+        <SessionInfo
+          key={id}
+          session={session}
+          setSessionDate={setSessionDate}
+        />
+      </>
     </>
   );
 };
 
 export const SessionInfo: React.FC<Session> = ({ session, setSessionDate }) => {
-  const [startDate, setStartDate] = React.useState(
-    setHours(
-      setMinutes(new Date(session.date), session.startMinute),
-      session.startHour
-    )
+  const startHour: number = parseInt(
+    session.startTime.slice(0, 2).padStart(2, "0"),
+    10
   );
-  const { createSession } = useAWSDatastore();
+  const startMinute: number = parseInt(session.startTime.slice(3, 5), 10);
+  const [startDate, setStartDate] = React.useState(
+    setHours(setMinutes(new Date(session.date), startMinute), startHour)
+  );
+
+  React.useEffect(() => {
+    console.log(startHour);
+    console.log(startMinute);
+  }, []);
 
   return (
     <Container key={session.id}>
@@ -68,17 +72,17 @@ export const SessionInfo: React.FC<Session> = ({ session, setSessionDate }) => {
         height="350"
       />
       <h2>Price</h2>
-      <p>
-        <b>{session.price}</b>
-      </p>
+      <p>{session.price}</p>
       <hr />
       <h3>Date</h3>
-      <p>
-        <b>{session.date}</b>
-      </p>
+      <p>{session.date}</p>
       <hr />
       <h2>Session Includes:</h2>
-      <p>{session.details}</p>
+      <div
+        dangerouslySetInnerHTML={{
+          __html: session.sessionDetails,
+        }}
+      />
       <hr />
       <Row>
         <Col className="d-flex justify-content-end">
@@ -94,18 +98,14 @@ export const SessionInfo: React.FC<Session> = ({ session, setSessionDate }) => {
           />
         </Col>
         <Col>
-          <Button
-          // onClick={() => {
-          //   createSession();
-          // }}
-          >
+          <Button>
             <Link
               className="buttonLink"
               to="/register"
               state={{
-                startDate: startDate,
+                // startDate: startDate,
                 price: session.price,
-                sessionLength: session.lengthOfSessions,
+                sessionLength: session.sessionLength,
               }}
             >
               Add to Cart

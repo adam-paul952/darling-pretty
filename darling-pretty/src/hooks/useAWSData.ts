@@ -1,30 +1,52 @@
 import { DataStore } from "@aws-amplify/datastore";
 import { Bookings, Session } from "../models";
 import { createSession } from "../graphql/mutations";
+import { listSessions } from "../graphql/queries";
 import { API, graphqlOperation } from "aws-amplify";
+
+export interface ISessionInfo {
+  id?: string;
+  name: string;
+  date: string;
+  startTime: string;
+  endTime: string;
+  sessionLength: number | undefined;
+  sessionInfo: string;
+  price: number | undefined;
+  sessionDetails: string;
+}
 
 const useAWSDatastore = () => {
   //Session create
-  const createSession = async () => {
+  const createNewSession = async (newSession: ISessionInfo) => {
     try {
-      const session = await DataStore.save(
-        new Session({
-          name: "Lorem ipsum dolor sit amet",
-          booking: [],
-          date: "1970-01-01Z",
-          startTime: "12:30:23.999Z",
-          endTime: "12:30:23.999Z",
-          sessionLength: 1020,
-          sessionInfo: "Lorem ipsum dolor sit amet",
-          price: 1020,
-          sessionDetails: "Lorem ipsum dolor sit amet",
-        })
+      const sessionDetails = {
+        name: newSession.name,
+        date: newSession.date,
+        startTime: newSession.startTime,
+        endTime: newSession.endTime,
+        sessionLength: newSession.sessionLength,
+        sessionInfo: newSession.sessionInfo,
+        price: newSession.price,
+        sessionDetails: newSession.sessionDetails,
+      };
+      const session = await API.graphql(
+        graphqlOperation(createSession, { input: sessionDetails })
       );
-      console.log(session);
-      return;
-      // const session = await API.graphql(graphqlOperation(createSession))
-    } catch (error) {
-      console.log(error);
+      console.log(`Session from hook is:`, session);
+    } catch (error: any) {
+      throw new Error(error);
+    }
+  };
+
+  const listAllSessions = async () => {
+    try {
+      const allSessions: any = await API.graphql(
+        graphqlOperation(listSessions)
+      );
+      return allSessions.data.listSessions.items;
+    } catch (error: any) {
+      throw new Error(error);
     }
   };
   // // Session Query
@@ -51,7 +73,8 @@ const useAWSDatastore = () => {
   // const modelToDelete = await DataStore.query(Bookings, '123456789');
   // DataStore.delete(modelToDelete);
   return {
-    createSession,
+    createNewSession,
+    listAllSessions,
   };
 };
 

@@ -8,6 +8,7 @@ import Checkout from "./screens/Checkout";
 import SessionCalendar from "./admin/SessionCalendar";
 import EditSessionInfo from "./admin/EditSession";
 import AdminDashboard from "./admin/AdminDashboard";
+import CreateSessionScreen from "./admin/CreateSession";
 
 const DarlingPrettyRouter = () => {
   return (
@@ -21,6 +22,7 @@ const DarlingPrettyRouter = () => {
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/admin/calendar" element={<SessionCalendar />} />
         <Route path="/admin/editsession" element={<EditSessionInfo />} />
+        <Route path="/admin/createsession" element={<CreateSessionScreen />} />
       </Routes>
     </Router>
   );

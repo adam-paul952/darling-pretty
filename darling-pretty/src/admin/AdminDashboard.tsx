@@ -12,6 +12,11 @@ const AdminDashboard = () => {
         </Link>
       </Button>
       <Button>
+        <Link className="buttonLink" to="/admin/createsession">
+          Create Session
+        </Link>
+      </Button>
+      <Button>
         <Link className="buttonLink" to="/admin/editsession">
           Edit Session Info
         </Link>

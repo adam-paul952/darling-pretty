@@ -11,6 +11,11 @@ const EditSessionInfo = () => {
   const [sessionPrice, setSessionPrice] = React.useState<string>("");
   const [sessionDetails, setSessionDetails] = React.useState<string>("");
 
+  const [saving, setSaving] = React.useState<boolean>(false);
+  const [loading, setLoading] = React.useState<boolean>(true);
+  const [success, setSuccess] = React.useState<string>("");
+  const [error, setError] = React.useState<string>("");
+
   /*    const determineNumberofSessions = (start: number, end: number, length: number) => {
    *      let numberOfSessions = 60 / length;
    *      let lengthOfSession = end - start;

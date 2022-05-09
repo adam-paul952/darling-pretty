@@ -3,8 +3,7 @@ import FullCalendar, { EventInput } from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-
-import clients from "../util/clientInfo";
+import useAWSDatastore, { ISessionInfo } from "../hooks/useAWSData";
 import addMinutes from "date-fns/addMinutes";
 
 interface IEvents {
@@ -12,20 +11,56 @@ interface IEvents {
   title: string;
 }
 
-const clientEvents: EventInput[] = clients.map((client) => {
-  const { name, contact, bookingDetails } = client;
+type SessionEventsT = ISessionInfo[];
 
-  let startTime = new Date(bookingDetails.sessionDate);
-  let endTime = addMinutes(startTime, parseInt(bookingDetails.lengthOfSession));
+// const clientEvents: EventInput[] = clients.map((client) => {
+//   const { name, contact, bookingDetails } = client;
 
-  return {
-    title: `${name.firstName} ${name.lastName} - ${contact.phoneNumber}`,
-    start: startTime,
-    end: endTime,
-  };
-});
+//   let startTime = new Date(bookingDetails.sessionDate);
+//   let endTime = addMinutes(startTime, parseInt(bookingDetails.lengthOfSession));
+
+//   return {
+//     title: `${name.firstName} ${name.lastName} - ${contact.phoneNumber}`,
+//     start: startTime,
+//     end: endTime,
+//   };
+// });
+
 const SessionCalendar = () => {
-  const [events, setEvents] = React.useState(clients);
+  const { listAllSessions } = useAWSDatastore();
+  const [sessions, setSessions] = React.useState<any>([]);
+
+  React.useEffect(() => {
+    const fetchSessions = async () => {
+      try {
+        const allSessions = await listAllSessions();
+        console.log(allSessions);
+        const testDate = allSessions.forEach((session: any) => {
+          const date = session.date.split("-").map(Number);
+          const start = parseInt(session.startTime.slice(0, 2), 10);
+          const startDateString = new Date(date[0], date[1], date[2], start);
+          const end = parseInt(session.endTime.slice(0, 2), 10);
+          const endDateString = new Date(date[0], date[1], date[2], end);
+          // console.log(endDateString);
+          return {
+            title: session.name,
+            date: new Date(date[0], date[1], date[2]),
+            // start: startDateString,
+            // end: endDateString,
+          };
+        });
+        setSessions(testDate);
+        // console.log(testSessionEdit);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchSessions();
+  }, []);
+
+  React.useEffect(() => {
+    console.log(sessions);
+  }, [sessions]);
 
   return (
     <>
@@ -42,7 +77,7 @@ const SessionCalendar = () => {
         selectMirror={true}
         dayMaxEvents={true}
         initialDate={new Date()}
-        events={clientEvents}
+        events={sessions}
         // events={[{ title: "Test", date: new Date() }]}
         nowIndicator={true}
         slotDuration="00:20:00"

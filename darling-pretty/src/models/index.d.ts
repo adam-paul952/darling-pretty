@@ -4,12 +4,33 @@ import { ModelInit, MutableModel, PersistentModelConstructor } from "@aws-amplif
 
 
 
+type ClientsMetaData = {
+  readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
 type SessionMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
 type BookingsMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
+export declare class Clients {
+  readonly id: string;
+  readonly firstName: string;
+  readonly lastName: string;
+  readonly phoneNumber: string;
+  readonly email: string;
+  readonly addressOne: string;
+  readonly addressTwo?: string | null;
+  readonly city: string;
+  readonly province: string;
+  readonly country: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+  constructor(init: ModelInit<Clients, ClientsMetaData>);
+  static copyOf(source: Clients, mutator: (draft: MutableModel<Clients, ClientsMetaData>) => MutableModel<Clients, ClientsMetaData> | void): Clients;
 }
 
 export declare class Session {

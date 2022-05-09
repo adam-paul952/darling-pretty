@@ -1,3 +1,16 @@
+type Clients @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  phoneNumber: AWSPhone!
+  email: AWSEmail!
+  addressOne: String!
+  addressTwo: String
+  city: String!
+  province: String!
+  country: String!
+}
+
 type Session @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String!
