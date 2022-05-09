@@ -1,4 +1,4 @@
-type Clients @model @auth(rules: [{allow: public}]) {
+type Clients @model @auth(rules: [{ allow: public }]) {
   id: ID!
   firstName: String!
   lastName: String!
@@ -11,7 +11,7 @@ type Clients @model @auth(rules: [{allow: public}]) {
   country: String!
 }
 
-type Session @model @auth(rules: [{allow: public}]) {
+type Session @model @auth(rules: [{ allow: public }]) {
   id: ID!
   name: String!
   booking: [Bookings] @hasMany(indexName: "bySession", fields: ["id"])
@@ -24,10 +24,15 @@ type Session @model @auth(rules: [{allow: public}]) {
   sessionDetails: String!
 }
 
-type Bookings @model @auth(rules: [{allow: public}]) {
+type Bookings @model @auth(rules: [{ allow: public }]) {
   id: ID!
   title: String!
   sessionID: ID! @index(name: "bySession")
   Session: Session @belongsTo
 }
- 
+
+type Contact @model @auth(rules: [{ allow: public, operations: [create] }]) {
+  id: ID!
+  name: String!
+  email: AWSEmail!
+}

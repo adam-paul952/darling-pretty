@@ -57,10 +57,6 @@ const ShowAvailablePhotos = () => {
     fetchSessions();
   }, []);
 
-  React.useEffect(() => {
-    console.log(sessions);
-  }, [sessions]);
-
   return (
     <>
       {sessions.map((session: any) => {

@@ -14,6 +14,13 @@
     "categories": {
       "auth": {
         "undefined": {}
+      },
+      "function": {
+        "contactformuploader": {
+          "sesEmail": "adam.paul@live.com",
+          "deploymentBucketName": "amplify-darlingpretty-dev-121208-deployment",
+          "s3Key": "amplify-builds/contactformuploader-53314f55347a35517749-build.zip"
+        }
       }
     }
   }

@@ -1,15 +1,18 @@
 import React from "react";
 import { Button, Container, Form } from "react-bootstrap";
+import useContactForm from "../hooks/useContactForm";
 
 import Header from "../components/Header";
 
 const ContactForm = () => {
+  const { sendContactForm } = useContactForm();
   const [name, setName] = React.useState<string>("");
   const [email, setEmail] = React.useState<string>("");
   const [subject, setSubject] = React.useState<string>("");
   const [message, setMessage] = React.useState<string>("");
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    await sendContactForm({ name, email });
     console.log(`
     Name: ${name}
     Email: ${email}

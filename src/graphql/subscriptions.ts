@@ -2,6 +2,69 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const onCreateClients = /* GraphQL */ `
+  subscription OnCreateClients {
+    onCreateClients {
+      id
+      firstName
+      lastName
+      phoneNumber
+      email
+      addressOne
+      addressTwo
+      city
+      province
+      country
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onUpdateClients = /* GraphQL */ `
+  subscription OnUpdateClients {
+    onUpdateClients {
+      id
+      firstName
+      lastName
+      phoneNumber
+      email
+      addressOne
+      addressTwo
+      city
+      province
+      country
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onDeleteClients = /* GraphQL */ `
+  subscription OnDeleteClients {
+    onDeleteClients {
+      id
+      firstName
+      lastName
+      phoneNumber
+      email
+      addressOne
+      addressTwo
+      city
+      province
+      country
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
 export const onCreateSession = /* GraphQL */ `
   subscription OnCreateSession {
     onCreateSession {
@@ -198,6 +261,48 @@ export const onDeleteBookings = /* GraphQL */ `
         _deleted
         _lastChangedAt
       }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onCreateContact = /* GraphQL */ `
+  subscription OnCreateContact {
+    onCreateContact {
+      id
+      name
+      email
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onUpdateContact = /* GraphQL */ `
+  subscription OnUpdateContact {
+    onUpdateContact {
+      id
+      name
+      email
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onDeleteContact = /* GraphQL */ `
+  subscription OnDeleteContact {
+    onDeleteContact {
+      id
+      name
+      email
       createdAt
       updatedAt
       _version
