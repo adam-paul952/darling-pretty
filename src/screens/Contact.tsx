@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import useContactForm from "../hooks/useContactForm";
+import ReCAPTCHAV2 from "react-google-recaptcha";
 
 import Header from "../components/Header";
 
@@ -11,13 +12,25 @@ const ContactForm = () => {
   const [subject, setSubject] = React.useState<string>("");
   const [message, setMessage] = React.useState<string>("");
 
+  const [token, setToken] = React.useState<boolean>(false);
+  const [success, setSuccess] = React.useState<boolean>(false);
+
+  const handleToken = async (token: string | null) => {
+    token ? setToken(true) : setToken(false);
+  };
+
+  const handleExpireToken = () => {
+    setToken(false);
+  };
+
   const handleSubmit = async () => {
-    await sendContactForm({ name, email });
+    await sendContactForm({ name, email, subject, message });
     console.log(`
     Name: ${name}
     Email: ${email}
     Subject: ${subject}
     Message: ${message}`);
+    setSuccess(true);
   };
 
   return (
@@ -66,7 +79,20 @@ const ContactForm = () => {
               value={message}
             />
           </Form.Group>
-          <Button onClick={() => handleSubmit()}>Send Message</Button>
+          {!success ? (
+            <>
+              <ReCAPTCHAV2
+                sitekey={process.env.REACT_APP_SITE_KEY!}
+                onChange={handleToken}
+                onExpired={handleExpireToken}
+              />
+              <Button disabled={!token} onClick={() => handleSubmit()}>
+                Send Message
+              </Button>
+            </>
+          ) : (
+            <SubmissionComplete />
+          )}
         </Form>
       </Container>
     </>
@@ -74,3 +100,11 @@ const ContactForm = () => {
 };
 
 export default ContactForm;
+
+const SubmissionComplete = () => {
+  return (
+    <Container className="d-flex justify-content-center align-items-center">
+      <h2>Thanks for your submission, someone will be in touch soon!</h2>
+    </Container>
+  );
+};

@@ -92,20 +92,6 @@ export const getSession = /* GraphQL */ `
     getSession(id: $id) {
       id
       name
-      booking {
-        items {
-          id
-          title
-          sessionID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        nextToken
-        startedAt
-      }
       date
       startTime
       endTime
@@ -113,6 +99,8 @@ export const getSession = /* GraphQL */ `
       sessionInfo
       price
       sessionDetails
+      availableTimes
+      bookings
       createdAt
       updatedAt
       _version
@@ -131,10 +119,6 @@ export const listSessions = /* GraphQL */ `
       items {
         id
         name
-        booking {
-          nextToken
-          startedAt
-        }
         date
         startTime
         endTime
@@ -142,6 +126,8 @@ export const listSessions = /* GraphQL */ `
         sessionInfo
         price
         sessionDetails
+        availableTimes
+        bookings
         createdAt
         updatedAt
         _version
@@ -169,10 +155,6 @@ export const syncSessions = /* GraphQL */ `
       items {
         id
         name
-        booking {
-          nextToken
-          startedAt
-        }
         date
         startTime
         endTime
@@ -180,122 +162,8 @@ export const syncSessions = /* GraphQL */ `
         sessionInfo
         price
         sessionDetails
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const getBookings = /* GraphQL */ `
-  query GetBookings($id: ID!) {
-    getBookings(id: $id) {
-      id
-      title
-      sessionID
-      Session {
-        id
-        name
-        booking {
-          nextToken
-          startedAt
-        }
-        date
-        startTime
-        endTime
-        sessionLength
-        sessionInfo
-        price
-        sessionDetails
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const listBookings = /* GraphQL */ `
-  query ListBookings(
-    $filter: ModelBookingsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listBookings(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        title
-        sessionID
-        Session {
-          id
-          name
-          date
-          startTime
-          endTime
-          sessionLength
-          sessionInfo
-          price
-          sessionDetails
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const syncBookings = /* GraphQL */ `
-  query SyncBookings(
-    $filter: ModelBookingsFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncBookings(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        title
-        sessionID
-        Session {
-          id
-          name
-          date
-          startTime
-          endTime
-          sessionLength
-          sessionInfo
-          price
-          sessionDetails
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
+        availableTimes
+        bookings
         createdAt
         updatedAt
         _version
@@ -313,6 +181,8 @@ export const getContact = /* GraphQL */ `
       id
       name
       email
+      subject
+      message
       createdAt
       updatedAt
       _version
@@ -332,6 +202,8 @@ export const listContacts = /* GraphQL */ `
         id
         name
         email
+        subject
+        message
         createdAt
         updatedAt
         _version
@@ -360,6 +232,8 @@ export const syncContacts = /* GraphQL */ `
         id
         name
         email
+        subject
+        message
         createdAt
         updatedAt
         _version

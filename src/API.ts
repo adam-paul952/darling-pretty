@@ -2,31 +2,33 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type CreateSessionInput = {
+export type CreateClientsInput = {
   id?: string | null,
-  name: string,
-  date: string,
-  startTime: string,
-  endTime: string,
-  sessionLength: number,
-  sessionInfo: string,
-  price: number,
-  sessionDetails: string,
+  firstName: string,
+  lastName: string,
+  phoneNumber: string,
+  email: string,
+  addressOne: string,
+  addressTwo?: string | null,
+  city: string,
+  province: string,
+  country: string,
   _version?: number | null,
 };
 
-export type ModelSessionConditionInput = {
-  name?: ModelStringInput | null,
-  date?: ModelStringInput | null,
-  startTime?: ModelStringInput | null,
-  endTime?: ModelStringInput | null,
-  sessionLength?: ModelIntInput | null,
-  sessionInfo?: ModelStringInput | null,
-  price?: ModelIntInput | null,
-  sessionDetails?: ModelStringInput | null,
-  and?: Array< ModelSessionConditionInput | null > | null,
-  or?: Array< ModelSessionConditionInput | null > | null,
-  not?: ModelSessionConditionInput | null,
+export type ModelClientsConditionInput = {
+  firstName?: ModelStringInput | null,
+  lastName?: ModelStringInput | null,
+  phoneNumber?: ModelStringInput | null,
+  email?: ModelStringInput | null,
+  addressOne?: ModelStringInput | null,
+  addressTwo?: ModelStringInput | null,
+  city?: ModelStringInput | null,
+  province?: ModelStringInput | null,
+  country?: ModelStringInput | null,
+  and?: Array< ModelClientsConditionInput | null > | null,
+  or?: Array< ModelClientsConditionInput | null > | null,
+  not?: ModelClientsConditionInput | null,
 };
 
 export type ModelStringInput = {
@@ -69,6 +71,75 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
+export type Clients = {
+  __typename: "Clients",
+  id: string,
+  firstName: string,
+  lastName: string,
+  phoneNumber: string,
+  email: string,
+  addressOne: string,
+  addressTwo?: string | null,
+  city: string,
+  province: string,
+  country: string,
+  createdAt: string,
+  updatedAt: string,
+  _version: number,
+  _deleted?: boolean | null,
+  _lastChangedAt: number,
+};
+
+export type UpdateClientsInput = {
+  id: string,
+  firstName?: string | null,
+  lastName?: string | null,
+  phoneNumber?: string | null,
+  email?: string | null,
+  addressOne?: string | null,
+  addressTwo?: string | null,
+  city?: string | null,
+  province?: string | null,
+  country?: string | null,
+  _version?: number | null,
+};
+
+export type DeleteClientsInput = {
+  id: string,
+  _version?: number | null,
+};
+
+export type CreateSessionInput = {
+  id?: string | null,
+  name: string,
+  date: string,
+  startTime: string,
+  endTime: string,
+  sessionLength: number,
+  sessionInfo: string,
+  price: number,
+  sessionDetails: string,
+  availableTimes?: Array< string | null > | null,
+  bookings?: Array< string | null > | null,
+  _version?: number | null,
+};
+
+export type ModelSessionConditionInput = {
+  name?: ModelStringInput | null,
+  date?: ModelStringInput | null,
+  startTime?: ModelStringInput | null,
+  endTime?: ModelStringInput | null,
+  sessionLength?: ModelIntInput | null,
+  sessionInfo?: ModelStringInput | null,
+  price?: ModelIntInput | null,
+  sessionDetails?: ModelStringInput | null,
+  availableTimes?: ModelStringInput | null,
+  bookings?: ModelStringInput | null,
+  and?: Array< ModelSessionConditionInput | null > | null,
+  or?: Array< ModelSessionConditionInput | null > | null,
+  not?: ModelSessionConditionInput | null,
+};
+
 export type ModelIntInput = {
   ne?: number | null,
   eq?: number | null,
@@ -85,7 +156,6 @@ export type Session = {
   __typename: "Session",
   id: string,
   name: string,
-  booking?: ModelBookingsConnection | null,
   date: string,
   startTime: string,
   endTime: string,
@@ -93,26 +163,8 @@ export type Session = {
   sessionInfo: string,
   price: number,
   sessionDetails: string,
-  createdAt: string,
-  updatedAt: string,
-  _version: number,
-  _deleted?: boolean | null,
-  _lastChangedAt: number,
-};
-
-export type ModelBookingsConnection = {
-  __typename: "ModelBookingsConnection",
-  items:  Array<Bookings | null >,
-  nextToken?: string | null,
-  startedAt?: number | null,
-};
-
-export type Bookings = {
-  __typename: "Bookings",
-  id: string,
-  title: string,
-  sessionID: string,
-  Session?: Session | null,
+  availableTimes?: Array< string | null > | null,
+  bookings?: Array< string | null > | null,
   createdAt: string,
   updatedAt: string,
   _version: number,
@@ -130,6 +182,8 @@ export type UpdateSessionInput = {
   sessionInfo?: string | null,
   price?: number | null,
   sessionDetails?: string | null,
+  availableTimes?: Array< string | null > | null,
+  bookings?: Array< string | null > | null,
   _version?: number | null,
 };
 
@@ -138,19 +192,67 @@ export type DeleteSessionInput = {
   _version?: number | null,
 };
 
-export type CreateBookingsInput = {
+export type CreateContactInput = {
   id?: string | null,
-  title: string,
-  sessionID: string,
+  name: string,
+  email: string,
+  subject: string,
+  message: string,
   _version?: number | null,
 };
 
-export type ModelBookingsConditionInput = {
-  title?: ModelStringInput | null,
-  sessionID?: ModelIDInput | null,
-  and?: Array< ModelBookingsConditionInput | null > | null,
-  or?: Array< ModelBookingsConditionInput | null > | null,
-  not?: ModelBookingsConditionInput | null,
+export type ModelContactConditionInput = {
+  name?: ModelStringInput | null,
+  email?: ModelStringInput | null,
+  subject?: ModelStringInput | null,
+  message?: ModelStringInput | null,
+  and?: Array< ModelContactConditionInput | null > | null,
+  or?: Array< ModelContactConditionInput | null > | null,
+  not?: ModelContactConditionInput | null,
+};
+
+export type Contact = {
+  __typename: "Contact",
+  id: string,
+  name: string,
+  email: string,
+  subject: string,
+  message: string,
+  createdAt: string,
+  updatedAt: string,
+  _version: number,
+  _deleted?: boolean | null,
+  _lastChangedAt: number,
+};
+
+export type UpdateContactInput = {
+  id: string,
+  name?: string | null,
+  email?: string | null,
+  subject?: string | null,
+  message?: string | null,
+  _version?: number | null,
+};
+
+export type DeleteContactInput = {
+  id: string,
+  _version?: number | null,
+};
+
+export type ModelClientsFilterInput = {
+  id?: ModelIDInput | null,
+  firstName?: ModelStringInput | null,
+  lastName?: ModelStringInput | null,
+  phoneNumber?: ModelStringInput | null,
+  email?: ModelStringInput | null,
+  addressOne?: ModelStringInput | null,
+  addressTwo?: ModelStringInput | null,
+  city?: ModelStringInput | null,
+  province?: ModelStringInput | null,
+  country?: ModelStringInput | null,
+  and?: Array< ModelClientsFilterInput | null > | null,
+  or?: Array< ModelClientsFilterInput | null > | null,
+  not?: ModelClientsFilterInput | null,
 };
 
 export type ModelIDInput = {
@@ -169,16 +271,11 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null,
 };
 
-export type UpdateBookingsInput = {
-  id: string,
-  title?: string | null,
-  sessionID?: string | null,
-  _version?: number | null,
-};
-
-export type DeleteBookingsInput = {
-  id: string,
-  _version?: number | null,
+export type ModelClientsConnection = {
+  __typename: "ModelClientsConnection",
+  items:  Array<Clients | null >,
+  nextToken?: string | null,
+  startedAt?: number | null,
 };
 
 export type ModelSessionFilterInput = {
@@ -191,6 +288,8 @@ export type ModelSessionFilterInput = {
   sessionInfo?: ModelStringInput | null,
   price?: ModelIntInput | null,
   sessionDetails?: ModelStringInput | null,
+  availableTimes?: ModelStringInput | null,
+  bookings?: ModelStringInput | null,
   and?: Array< ModelSessionFilterInput | null > | null,
   or?: Array< ModelSessionFilterInput | null > | null,
   not?: ModelSessionFilterInput | null,
@@ -203,13 +302,100 @@ export type ModelSessionConnection = {
   startedAt?: number | null,
 };
 
-export type ModelBookingsFilterInput = {
+export type ModelContactFilterInput = {
   id?: ModelIDInput | null,
-  title?: ModelStringInput | null,
-  sessionID?: ModelIDInput | null,
-  and?: Array< ModelBookingsFilterInput | null > | null,
-  or?: Array< ModelBookingsFilterInput | null > | null,
-  not?: ModelBookingsFilterInput | null,
+  name?: ModelStringInput | null,
+  email?: ModelStringInput | null,
+  subject?: ModelStringInput | null,
+  message?: ModelStringInput | null,
+  and?: Array< ModelContactFilterInput | null > | null,
+  or?: Array< ModelContactFilterInput | null > | null,
+  not?: ModelContactFilterInput | null,
+};
+
+export type ModelContactConnection = {
+  __typename: "ModelContactConnection",
+  items:  Array<Contact | null >,
+  nextToken?: string | null,
+  startedAt?: number | null,
+};
+
+export type CreateClientsMutationVariables = {
+  input: CreateClientsInput,
+  condition?: ModelClientsConditionInput | null,
+};
+
+export type CreateClientsMutation = {
+  createClients?:  {
+    __typename: "Clients",
+    id: string,
+    firstName: string,
+    lastName: string,
+    phoneNumber: string,
+    email: string,
+    addressOne: string,
+    addressTwo?: string | null,
+    city: string,
+    province: string,
+    country: string,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type UpdateClientsMutationVariables = {
+  input: UpdateClientsInput,
+  condition?: ModelClientsConditionInput | null,
+};
+
+export type UpdateClientsMutation = {
+  updateClients?:  {
+    __typename: "Clients",
+    id: string,
+    firstName: string,
+    lastName: string,
+    phoneNumber: string,
+    email: string,
+    addressOne: string,
+    addressTwo?: string | null,
+    city: string,
+    province: string,
+    country: string,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type DeleteClientsMutationVariables = {
+  input: DeleteClientsInput,
+  condition?: ModelClientsConditionInput | null,
+};
+
+export type DeleteClientsMutation = {
+  deleteClients?:  {
+    __typename: "Clients",
+    id: string,
+    firstName: string,
+    lastName: string,
+    phoneNumber: string,
+    email: string,
+    addressOne: string,
+    addressTwo?: string | null,
+    city: string,
+    province: string,
+    country: string,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
 };
 
 export type CreateSessionMutationVariables = {
@@ -222,22 +408,6 @@ export type CreateSessionMutation = {
     __typename: "Session",
     id: string,
     name: string,
-    booking?:  {
-      __typename: "ModelBookingsConnection",
-      items:  Array< {
-        __typename: "Bookings",
-        id: string,
-        title: string,
-        sessionID: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
     date: string,
     startTime: string,
     endTime: string,
@@ -245,6 +415,8 @@ export type CreateSessionMutation = {
     sessionInfo: string,
     price: number,
     sessionDetails: string,
+    availableTimes?: Array< string | null > | null,
+    bookings?: Array< string | null > | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -263,22 +435,6 @@ export type UpdateSessionMutation = {
     __typename: "Session",
     id: string,
     name: string,
-    booking?:  {
-      __typename: "ModelBookingsConnection",
-      items:  Array< {
-        __typename: "Bookings",
-        id: string,
-        title: string,
-        sessionID: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
     date: string,
     startTime: string,
     endTime: string,
@@ -286,6 +442,8 @@ export type UpdateSessionMutation = {
     sessionInfo: string,
     price: number,
     sessionDetails: string,
+    availableTimes?: Array< string | null > | null,
+    bookings?: Array< string | null > | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -304,22 +462,6 @@ export type DeleteSessionMutation = {
     __typename: "Session",
     id: string,
     name: string,
-    booking?:  {
-      __typename: "ModelBookingsConnection",
-      items:  Array< {
-        __typename: "Bookings",
-        id: string,
-        title: string,
-        sessionID: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
     date: string,
     startTime: string,
     endTime: string,
@@ -327,6 +469,8 @@ export type DeleteSessionMutation = {
     sessionInfo: string,
     price: number,
     sessionDetails: string,
+    availableTimes?: Array< string | null > | null,
+    bookings?: Array< string | null > | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -335,39 +479,19 @@ export type DeleteSessionMutation = {
   } | null,
 };
 
-export type CreateBookingsMutationVariables = {
-  input: CreateBookingsInput,
-  condition?: ModelBookingsConditionInput | null,
+export type CreateContactMutationVariables = {
+  input: CreateContactInput,
+  condition?: ModelContactConditionInput | null,
 };
 
-export type CreateBookingsMutation = {
-  createBookings?:  {
-    __typename: "Bookings",
+export type CreateContactMutation = {
+  createContact?:  {
+    __typename: "Contact",
     id: string,
-    title: string,
-    sessionID: string,
-    Session?:  {
-      __typename: "Session",
-      id: string,
-      name: string,
-      booking?:  {
-        __typename: "ModelBookingsConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      date: string,
-      startTime: string,
-      endTime: string,
-      sessionLength: number,
-      sessionInfo: string,
-      price: number,
-      sessionDetails: string,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null,
+    name: string,
+    email: string,
+    subject: string,
+    message: string,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -376,39 +500,19 @@ export type CreateBookingsMutation = {
   } | null,
 };
 
-export type UpdateBookingsMutationVariables = {
-  input: UpdateBookingsInput,
-  condition?: ModelBookingsConditionInput | null,
+export type UpdateContactMutationVariables = {
+  input: UpdateContactInput,
+  condition?: ModelContactConditionInput | null,
 };
 
-export type UpdateBookingsMutation = {
-  updateBookings?:  {
-    __typename: "Bookings",
+export type UpdateContactMutation = {
+  updateContact?:  {
+    __typename: "Contact",
     id: string,
-    title: string,
-    sessionID: string,
-    Session?:  {
-      __typename: "Session",
-      id: string,
-      name: string,
-      booking?:  {
-        __typename: "ModelBookingsConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      date: string,
-      startTime: string,
-      endTime: string,
-      sessionLength: number,
-      sessionInfo: string,
-      price: number,
-      sessionDetails: string,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null,
+    name: string,
+    email: string,
+    subject: string,
+    message: string,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -417,44 +521,114 @@ export type UpdateBookingsMutation = {
   } | null,
 };
 
-export type DeleteBookingsMutationVariables = {
-  input: DeleteBookingsInput,
-  condition?: ModelBookingsConditionInput | null,
+export type DeleteContactMutationVariables = {
+  input: DeleteContactInput,
+  condition?: ModelContactConditionInput | null,
 };
 
-export type DeleteBookingsMutation = {
-  deleteBookings?:  {
-    __typename: "Bookings",
+export type DeleteContactMutation = {
+  deleteContact?:  {
+    __typename: "Contact",
     id: string,
-    title: string,
-    sessionID: string,
-    Session?:  {
-      __typename: "Session",
-      id: string,
-      name: string,
-      booking?:  {
-        __typename: "ModelBookingsConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      date: string,
-      startTime: string,
-      endTime: string,
-      sessionLength: number,
-      sessionInfo: string,
-      price: number,
-      sessionDetails: string,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null,
+    name: string,
+    email: string,
+    subject: string,
+    message: string,
     createdAt: string,
     updatedAt: string,
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+  } | null,
+};
+
+export type GetClientsQueryVariables = {
+  id: string,
+};
+
+export type GetClientsQuery = {
+  getClients?:  {
+    __typename: "Clients",
+    id: string,
+    firstName: string,
+    lastName: string,
+    phoneNumber: string,
+    email: string,
+    addressOne: string,
+    addressTwo?: string | null,
+    city: string,
+    province: string,
+    country: string,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type ListClientsQueryVariables = {
+  filter?: ModelClientsFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListClientsQuery = {
+  listClients?:  {
+    __typename: "ModelClientsConnection",
+    items:  Array< {
+      __typename: "Clients",
+      id: string,
+      firstName: string,
+      lastName: string,
+      phoneNumber: string,
+      email: string,
+      addressOne: string,
+      addressTwo?: string | null,
+      city: string,
+      province: string,
+      country: string,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type SyncClientsQueryVariables = {
+  filter?: ModelClientsFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  lastSync?: number | null,
+};
+
+export type SyncClientsQuery = {
+  syncClients?:  {
+    __typename: "ModelClientsConnection",
+    items:  Array< {
+      __typename: "Clients",
+      id: string,
+      firstName: string,
+      lastName: string,
+      phoneNumber: string,
+      email: string,
+      addressOne: string,
+      addressTwo?: string | null,
+      city: string,
+      province: string,
+      country: string,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
   } | null,
 };
 
@@ -467,22 +641,6 @@ export type GetSessionQuery = {
     __typename: "Session",
     id: string,
     name: string,
-    booking?:  {
-      __typename: "ModelBookingsConnection",
-      items:  Array< {
-        __typename: "Bookings",
-        id: string,
-        title: string,
-        sessionID: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
     date: string,
     startTime: string,
     endTime: string,
@@ -490,6 +648,8 @@ export type GetSessionQuery = {
     sessionInfo: string,
     price: number,
     sessionDetails: string,
+    availableTimes?: Array< string | null > | null,
+    bookings?: Array< string | null > | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -511,11 +671,6 @@ export type ListSessionsQuery = {
       __typename: "Session",
       id: string,
       name: string,
-      booking?:  {
-        __typename: "ModelBookingsConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
       date: string,
       startTime: string,
       endTime: string,
@@ -523,6 +678,8 @@ export type ListSessionsQuery = {
       sessionInfo: string,
       price: number,
       sessionDetails: string,
+      availableTimes?: Array< string | null > | null,
+      bookings?: Array< string | null > | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -548,11 +705,6 @@ export type SyncSessionsQuery = {
       __typename: "Session",
       id: string,
       name: string,
-      booking?:  {
-        __typename: "ModelBookingsConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
       date: string,
       startTime: string,
       endTime: string,
@@ -560,6 +712,8 @@ export type SyncSessionsQuery = {
       sessionInfo: string,
       price: number,
       sessionDetails: string,
+      availableTimes?: Array< string | null > | null,
+      bookings?: Array< string | null > | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -571,38 +725,18 @@ export type SyncSessionsQuery = {
   } | null,
 };
 
-export type GetBookingsQueryVariables = {
+export type GetContactQueryVariables = {
   id: string,
 };
 
-export type GetBookingsQuery = {
-  getBookings?:  {
-    __typename: "Bookings",
+export type GetContactQuery = {
+  getContact?:  {
+    __typename: "Contact",
     id: string,
-    title: string,
-    sessionID: string,
-    Session?:  {
-      __typename: "Session",
-      id: string,
-      name: string,
-      booking?:  {
-        __typename: "ModelBookingsConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      date: string,
-      startTime: string,
-      endTime: string,
-      sessionLength: number,
-      sessionInfo: string,
-      price: number,
-      sessionDetails: string,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null,
+    name: string,
+    email: string,
+    subject: string,
+    message: string,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -611,37 +745,22 @@ export type GetBookingsQuery = {
   } | null,
 };
 
-export type ListBookingsQueryVariables = {
-  filter?: ModelBookingsFilterInput | null,
+export type ListContactsQueryVariables = {
+  filter?: ModelContactFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type ListBookingsQuery = {
-  listBookings?:  {
-    __typename: "ModelBookingsConnection",
+export type ListContactsQuery = {
+  listContacts?:  {
+    __typename: "ModelContactConnection",
     items:  Array< {
-      __typename: "Bookings",
+      __typename: "Contact",
       id: string,
-      title: string,
-      sessionID: string,
-      Session?:  {
-        __typename: "Session",
-        id: string,
-        name: string,
-        date: string,
-        startTime: string,
-        endTime: string,
-        sessionLength: number,
-        sessionInfo: string,
-        price: number,
-        sessionDetails: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-      } | null,
+      name: string,
+      email: string,
+      subject: string,
+      message: string,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -653,38 +772,23 @@ export type ListBookingsQuery = {
   } | null,
 };
 
-export type SyncBookingsQueryVariables = {
-  filter?: ModelBookingsFilterInput | null,
+export type SyncContactsQueryVariables = {
+  filter?: ModelContactFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
   lastSync?: number | null,
 };
 
-export type SyncBookingsQuery = {
-  syncBookings?:  {
-    __typename: "ModelBookingsConnection",
+export type SyncContactsQuery = {
+  syncContacts?:  {
+    __typename: "ModelContactConnection",
     items:  Array< {
-      __typename: "Bookings",
+      __typename: "Contact",
       id: string,
-      title: string,
-      sessionID: string,
-      Session?:  {
-        __typename: "Session",
-        id: string,
-        name: string,
-        date: string,
-        startTime: string,
-        endTime: string,
-        sessionLength: number,
-        sessionInfo: string,
-        price: number,
-        sessionDetails: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-      } | null,
+      name: string,
+      email: string,
+      subject: string,
+      message: string,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -693,6 +797,69 @@ export type SyncBookingsQuery = {
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
+  } | null,
+};
+
+export type OnCreateClientsSubscription = {
+  onCreateClients?:  {
+    __typename: "Clients",
+    id: string,
+    firstName: string,
+    lastName: string,
+    phoneNumber: string,
+    email: string,
+    addressOne: string,
+    addressTwo?: string | null,
+    city: string,
+    province: string,
+    country: string,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type OnUpdateClientsSubscription = {
+  onUpdateClients?:  {
+    __typename: "Clients",
+    id: string,
+    firstName: string,
+    lastName: string,
+    phoneNumber: string,
+    email: string,
+    addressOne: string,
+    addressTwo?: string | null,
+    city: string,
+    province: string,
+    country: string,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type OnDeleteClientsSubscription = {
+  onDeleteClients?:  {
+    __typename: "Clients",
+    id: string,
+    firstName: string,
+    lastName: string,
+    phoneNumber: string,
+    email: string,
+    addressOne: string,
+    addressTwo?: string | null,
+    city: string,
+    province: string,
+    country: string,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -701,22 +868,6 @@ export type OnCreateSessionSubscription = {
     __typename: "Session",
     id: string,
     name: string,
-    booking?:  {
-      __typename: "ModelBookingsConnection",
-      items:  Array< {
-        __typename: "Bookings",
-        id: string,
-        title: string,
-        sessionID: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
     date: string,
     startTime: string,
     endTime: string,
@@ -724,6 +875,8 @@ export type OnCreateSessionSubscription = {
     sessionInfo: string,
     price: number,
     sessionDetails: string,
+    availableTimes?: Array< string | null > | null,
+    bookings?: Array< string | null > | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -737,22 +890,6 @@ export type OnUpdateSessionSubscription = {
     __typename: "Session",
     id: string,
     name: string,
-    booking?:  {
-      __typename: "ModelBookingsConnection",
-      items:  Array< {
-        __typename: "Bookings",
-        id: string,
-        title: string,
-        sessionID: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
     date: string,
     startTime: string,
     endTime: string,
@@ -760,6 +897,8 @@ export type OnUpdateSessionSubscription = {
     sessionInfo: string,
     price: number,
     sessionDetails: string,
+    availableTimes?: Array< string | null > | null,
+    bookings?: Array< string | null > | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -773,22 +912,6 @@ export type OnDeleteSessionSubscription = {
     __typename: "Session",
     id: string,
     name: string,
-    booking?:  {
-      __typename: "ModelBookingsConnection",
-      items:  Array< {
-        __typename: "Bookings",
-        id: string,
-        title: string,
-        sessionID: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
     date: string,
     startTime: string,
     endTime: string,
@@ -796,6 +919,8 @@ export type OnDeleteSessionSubscription = {
     sessionInfo: string,
     price: number,
     sessionDetails: string,
+    availableTimes?: Array< string | null > | null,
+    bookings?: Array< string | null > | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -804,34 +929,14 @@ export type OnDeleteSessionSubscription = {
   } | null,
 };
 
-export type OnCreateBookingsSubscription = {
-  onCreateBookings?:  {
-    __typename: "Bookings",
+export type OnCreateContactSubscription = {
+  onCreateContact?:  {
+    __typename: "Contact",
     id: string,
-    title: string,
-    sessionID: string,
-    Session?:  {
-      __typename: "Session",
-      id: string,
-      name: string,
-      booking?:  {
-        __typename: "ModelBookingsConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      date: string,
-      startTime: string,
-      endTime: string,
-      sessionLength: number,
-      sessionInfo: string,
-      price: number,
-      sessionDetails: string,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null,
+    name: string,
+    email: string,
+    subject: string,
+    message: string,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -840,34 +945,14 @@ export type OnCreateBookingsSubscription = {
   } | null,
 };
 
-export type OnUpdateBookingsSubscription = {
-  onUpdateBookings?:  {
-    __typename: "Bookings",
+export type OnUpdateContactSubscription = {
+  onUpdateContact?:  {
+    __typename: "Contact",
     id: string,
-    title: string,
-    sessionID: string,
-    Session?:  {
-      __typename: "Session",
-      id: string,
-      name: string,
-      booking?:  {
-        __typename: "ModelBookingsConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      date: string,
-      startTime: string,
-      endTime: string,
-      sessionLength: number,
-      sessionInfo: string,
-      price: number,
-      sessionDetails: string,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null,
+    name: string,
+    email: string,
+    subject: string,
+    message: string,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -876,34 +961,14 @@ export type OnUpdateBookingsSubscription = {
   } | null,
 };
 
-export type OnDeleteBookingsSubscription = {
-  onDeleteBookings?:  {
-    __typename: "Bookings",
+export type OnDeleteContactSubscription = {
+  onDeleteContact?:  {
+    __typename: "Contact",
     id: string,
-    title: string,
-    sessionID: string,
-    Session?:  {
-      __typename: "Session",
-      id: string,
-      name: string,
-      booking?:  {
-        __typename: "ModelBookingsConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      date: string,
-      startTime: string,
-      endTime: string,
-      sessionLength: number,
-      sessionInfo: string,
-      price: number,
-      sessionDetails: string,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null,
+    name: string,
+    email: string,
+    subject: string,
+    message: string,
     createdAt: string,
     updatedAt: string,
     _version: number,

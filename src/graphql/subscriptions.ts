@@ -70,20 +70,6 @@ export const onCreateSession = /* GraphQL */ `
     onCreateSession {
       id
       name
-      booking {
-        items {
-          id
-          title
-          sessionID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        nextToken
-        startedAt
-      }
       date
       startTime
       endTime
@@ -91,6 +77,8 @@ export const onCreateSession = /* GraphQL */ `
       sessionInfo
       price
       sessionDetails
+      availableTimes
+      bookings
       createdAt
       updatedAt
       _version
@@ -104,20 +92,6 @@ export const onUpdateSession = /* GraphQL */ `
     onUpdateSession {
       id
       name
-      booking {
-        items {
-          id
-          title
-          sessionID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        nextToken
-        startedAt
-      }
       date
       startTime
       endTime
@@ -125,6 +99,8 @@ export const onUpdateSession = /* GraphQL */ `
       sessionInfo
       price
       sessionDetails
+      availableTimes
+      bookings
       createdAt
       updatedAt
       _version
@@ -138,20 +114,6 @@ export const onDeleteSession = /* GraphQL */ `
     onDeleteSession {
       id
       name
-      booking {
-        items {
-          id
-          title
-          sessionID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        nextToken
-        startedAt
-      }
       date
       startTime
       endTime
@@ -159,108 +121,8 @@ export const onDeleteSession = /* GraphQL */ `
       sessionInfo
       price
       sessionDetails
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const onCreateBookings = /* GraphQL */ `
-  subscription OnCreateBookings {
-    onCreateBookings {
-      id
-      title
-      sessionID
-      Session {
-        id
-        name
-        booking {
-          nextToken
-          startedAt
-        }
-        date
-        startTime
-        endTime
-        sessionLength
-        sessionInfo
-        price
-        sessionDetails
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const onUpdateBookings = /* GraphQL */ `
-  subscription OnUpdateBookings {
-    onUpdateBookings {
-      id
-      title
-      sessionID
-      Session {
-        id
-        name
-        booking {
-          nextToken
-          startedAt
-        }
-        date
-        startTime
-        endTime
-        sessionLength
-        sessionInfo
-        price
-        sessionDetails
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const onDeleteBookings = /* GraphQL */ `
-  subscription OnDeleteBookings {
-    onDeleteBookings {
-      id
-      title
-      sessionID
-      Session {
-        id
-        name
-        booking {
-          nextToken
-          startedAt
-        }
-        date
-        startTime
-        endTime
-        sessionLength
-        sessionInfo
-        price
-        sessionDetails
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
+      availableTimes
+      bookings
       createdAt
       updatedAt
       _version
@@ -275,6 +137,8 @@ export const onCreateContact = /* GraphQL */ `
       id
       name
       email
+      subject
+      message
       createdAt
       updatedAt
       _version
@@ -289,6 +153,8 @@ export const onUpdateContact = /* GraphQL */ `
       id
       name
       email
+      subject
+      message
       createdAt
       updatedAt
       _version
@@ -303,6 +169,8 @@ export const onDeleteContact = /* GraphQL */ `
       id
       name
       email
+      subject
+      message
       createdAt
       updatedAt
       _version

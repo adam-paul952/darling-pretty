@@ -1,8 +1,6 @@
-import { DataStore } from "@aws-amplify/datastore";
-import { Bookings, Session } from "../models";
+import { API, graphqlOperation } from "aws-amplify";
 import { createSession } from "../graphql/mutations";
 import { listSessions } from "../graphql/queries";
-import { API, graphqlOperation } from "aws-amplify";
 
 export interface ISessionInfo {
   id?: string;
@@ -14,6 +12,12 @@ export interface ISessionInfo {
   sessionInfo: string;
   price: number | undefined;
   sessionDetails: string;
+  availableTimes: string[];
+}
+
+export interface IBookingInfo {
+  sessionID: string;
+  title: string;
 }
 
 const useAWSDatastore = () => {
@@ -29,6 +33,7 @@ const useAWSDatastore = () => {
         sessionInfo: newSession.sessionInfo,
         price: newSession.price,
         sessionDetails: newSession.sessionDetails,
+        availableTimes: newSession.availableTimes,
       };
       const session = await API.graphql(
         graphqlOperation(createSession, { input: sessionDetails })

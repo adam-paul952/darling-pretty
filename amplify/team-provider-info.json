@@ -19,7 +19,7 @@
         "contactformuploader": {
           "sesEmail": "adam.paul@live.com",
           "deploymentBucketName": "amplify-darlingpretty-dev-121208-deployment",
-          "s3Key": "amplify-builds/contactformuploader-53314f55347a35517749-build.zip"
+          "s3Key": "amplify-builds/contactformuploader-674e37695556494a6e6d-build.zip"
         }
       }
     }

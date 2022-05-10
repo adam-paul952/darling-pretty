@@ -22,7 +22,7 @@ const Header = (props: HeaderProps) => {
               title="Products"
               id="navbarScrollingDropdown"
             >
-              <NavDropdown.Item href="/darling_pretty_photo">
+              <NavDropdown.Item href="/">
                 Darling Pretty Photography
               </NavDropdown.Item>
               <NavDropdown.Divider />

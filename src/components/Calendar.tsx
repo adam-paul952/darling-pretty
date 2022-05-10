@@ -1,11 +1,10 @@
 import React from "react";
-
+// Components
 import DatePicker from "react-datepicker";
 import addMinutes from "date-fns/addMinutes";
 import "react-datepicker/dist/react-datepicker.css";
-
+// Types
 import { ISessionInfo } from "../hooks/useAWSData";
-
 interface Props {
   session: ISessionInfo;
   setSessionDate: React.Dispatch<React.SetStateAction<Date | null | undefined>>;
@@ -20,19 +19,10 @@ const ShowAvailableTime: React.FC<Props> = ({
   setStartDate,
 }) => {
   let startDayTime = startDate;
-  React.useEffect(() => {
-    console.log(startDate);
-  }, [startDate]);
+
   const timeIntervals: Date[] = [];
 
-  // TODO: If sessions starts at *:30, doesn't correctly display sessions in datepicker
-  let numberOfSessions =
-    ((parseInt(session.endTime, 10) - parseInt(session.startTime, 10)) * 60) /
-    session.sessionLength!;
-
-  React.useEffect(() => {
-    console.log(numberOfSessions);
-  }, []);
+  let numberOfSessions = session.availableTimes.length;
 
   for (let i = 0; i < numberOfSessions; i++) {
     timeIntervals.push(startDayTime);
@@ -43,6 +33,7 @@ const ShowAvailableTime: React.FC<Props> = ({
     setStartDate!(date);
     setSessionDate(date);
   };
+
   return (
     <>
       <DatePicker
@@ -55,7 +46,7 @@ const ShowAvailableTime: React.FC<Props> = ({
         timeIntervals={session.sessionLength}
         timeCaption="Time"
         dateFormat="h:mm aa"
-        includeDates={[new Date(session.date)]} // November 27th, 2021
+        includeDates={[new Date(session.date)]}
         includeTimes={timeIntervals}
       />
     </>

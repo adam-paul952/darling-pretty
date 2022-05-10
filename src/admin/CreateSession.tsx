@@ -1,13 +1,13 @@
 import React from "react";
 // Components
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import { EditorState, ContentState, convertToRaw } from "draft-js";
+import { EditorState, convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
-import htmlToDraft from "html-to-draftjs";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 // Hooks
 import useAWSDatastore from "../hooks/useAWSData";
+import { parseDateTime } from "../util/parseDate";
 
 const CreateSessionScreen = () => {
   const { createNewSession } = useAWSDatastore();
@@ -15,7 +15,7 @@ const CreateSessionScreen = () => {
   const [date, setDate] = React.useState<string>("");
   const [startTime, setStartTime] = React.useState<string>("");
   const [endTime, setEndTime] = React.useState<string>("");
-  const [lengthOfSessions, setLengthOfSessions] = React.useState<number>();
+  const [lengthOfSessions, setLengthOfSessions] = React.useState<number>(0);
   const [sessionName, setSessionName] = React.useState<string>("");
   const [sessionInfo, setSessionInfo] = React.useState<string>("");
   const [sessionPrice, setSessionPrice] = React.useState<number>();
@@ -30,7 +30,9 @@ const CreateSessionScreen = () => {
   const [error, setError] = React.useState<string>("");
 
   const onHandleSubmit = async () => {
+    const availableSessions = { date, startTime, endTime, lengthOfSessions };
     try {
+      const bookings = await parseDateTime(availableSessions);
       const newSession = {
         date: date,
         startTime: startTime,
@@ -40,6 +42,7 @@ const CreateSessionScreen = () => {
         sessionInfo: sessionInfo,
         price: sessionPrice,
         sessionDetails: sessionDetails,
+        availableTimes: bookings,
       };
       await createNewSession(newSession);
     } catch (error: any) {

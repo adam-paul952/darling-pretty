@@ -132,20 +132,6 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "booking": {
-                    "name": "booking",
-                    "isArray": true,
-                    "type": {
-                        "model": "Bookings"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": "sessionID"
-                    }
-                },
                 "date": {
                     "name": "date",
                     "isArray": false,
@@ -195,6 +181,22 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "availableTimes": {
+                    "name": "availableTimes",
+                    "isArray": true,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true
+                },
+                "bookings": {
+                    "name": "bookings",
+                    "isArray": true,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -237,8 +239,8 @@ export const schema = {
                 }
             ]
         },
-        "Bookings": {
-            "name": "Bookings",
+        "Contact": {
+            "name": "Contact",
             "fields": {
                 "id": {
                     "name": "id",
@@ -247,32 +249,33 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "title": {
-                    "name": "title",
+                "name": {
+                    "name": "name",
                     "isArray": false,
                     "type": "String",
                     "isRequired": true,
                     "attributes": []
                 },
-                "sessionID": {
-                    "name": "sessionID",
+                "email": {
+                    "name": "email",
                     "isArray": false,
-                    "type": "ID",
+                    "type": "AWSEmail",
                     "isRequired": true,
                     "attributes": []
                 },
-                "Session": {
-                    "name": "Session",
+                "subject": {
+                    "name": "subject",
                     "isArray": false,
-                    "type": {
-                        "model": "Session"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetName": "sessionBookingId"
-                    }
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "message": {
+                    "name": "message",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -292,20 +295,11 @@ export const schema = {
                 }
             },
             "syncable": true,
-            "pluralName": "Bookings",
+            "pluralName": "Contacts",
             "attributes": [
                 {
                     "type": "model",
                     "properties": {}
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "bySession",
-                        "fields": [
-                            "sessionID"
-                        ]
-                    }
                 },
                 {
                     "type": "auth",
@@ -314,10 +308,7 @@ export const schema = {
                             {
                                 "allow": "public",
                                 "operations": [
-                                    "create",
-                                    "update",
-                                    "delete",
-                                    "read"
+                                    "create"
                                 ]
                             }
                         ]
@@ -328,5 +319,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "38ada3174ec5e82a7d0c8cefcd1fb37a"
+    "version": "e3f0dbd8654ae04dfcc6e8ed675c0d70"
 };

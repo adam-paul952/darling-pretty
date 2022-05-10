@@ -1,26 +1,14 @@
-import axios from "axios";
 import { API, graphqlOperation } from "aws-amplify";
 import { createContact } from "../graphql/mutations";
 
 interface IContactFormProps {
   name: string;
   email: string;
+  subject: string;
+  message: string;
 }
-const useContactForm = () => {
-  // const sendContactForm = (data: string) => {
-  //   axios
-  //     .post(URL, data)
-  //     .then(() => {
-  //       console.log(`Successfully sent message`);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err.message);
-  //     });
-  // };
 
-  // return {
-  //   sendContactForm,
-  // };
+const useContactForm = () => {
   const sendContactForm = async (data: IContactFormProps) => {
     try {
       return await API.graphql(

@@ -12,7 +12,7 @@ type SessionMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
-type BookingsMetaData = {
+type ContactMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
@@ -36,7 +36,6 @@ export declare class Clients {
 export declare class Session {
   readonly id: string;
   readonly name: string;
-  readonly booking?: (Bookings | null)[] | null;
   readonly date: string;
   readonly startTime: string;
   readonly endTime: string;
@@ -44,19 +43,22 @@ export declare class Session {
   readonly sessionInfo: string;
   readonly price: number;
   readonly sessionDetails: string;
+  readonly availableTimes?: (string | null)[] | null;
+  readonly bookings?: (string | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<Session, SessionMetaData>);
   static copyOf(source: Session, mutator: (draft: MutableModel<Session, SessionMetaData>) => MutableModel<Session, SessionMetaData> | void): Session;
 }
 
-export declare class Bookings {
+export declare class Contact {
   readonly id: string;
-  readonly title: string;
-  readonly sessionID: string;
-  readonly Session?: Session | null;
+  readonly name: string;
+  readonly email: string;
+  readonly subject: string;
+  readonly message: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  constructor(init: ModelInit<Bookings, BookingsMetaData>);
-  static copyOf(source: Bookings, mutator: (draft: MutableModel<Bookings, BookingsMetaData>) => MutableModel<Bookings, BookingsMetaData> | void): Bookings;
+  constructor(init: ModelInit<Contact, ContactMetaData>);
+  static copyOf(source: Contact, mutator: (draft: MutableModel<Contact, ContactMetaData>) => MutableModel<Contact, ContactMetaData> | void): Contact;
 }
