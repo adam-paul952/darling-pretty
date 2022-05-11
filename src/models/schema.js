@@ -59,6 +59,13 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "postalCode": {
+                    "name": "postalCode",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
                 "province": {
                     "name": "province",
                     "isArray": false,
@@ -319,5 +326,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "e3f0dbd8654ae04dfcc6e8ed675c0d70"
+    "version": "5bbf595d4c1dc4ab4cdfdc47dc26a635"
 };

@@ -1,25 +1,31 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-darlingpretty-dev-121208-authRole",
-      "UnauthRoleArn": "arn:aws:iam::318571327234:role/amplify-darlingpretty-dev-121208-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::318571327234:role/amplify-darlingpretty-dev-121208-authRole",
+      "AuthRoleName": "amplify-darlingpretty-dev-94209-authRole",
+      "UnauthRoleArn": "arn:aws:iam::318571327234:role/amplify-darlingpretty-dev-94209-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::318571327234:role/amplify-darlingpretty-dev-94209-authRole",
       "Region": "ca-central-1",
-      "DeploymentBucketName": "amplify-darlingpretty-dev-121208-deployment",
-      "UnauthRoleName": "amplify-darlingpretty-dev-121208-unauthRole",
-      "StackName": "amplify-darlingpretty-dev-121208",
-      "StackId": "arn:aws:cloudformation:ca-central-1:318571327234:stack/amplify-darlingpretty-dev-121208/dfd43690-ce13-11ec-812a-067082f369c2",
-      "AmplifyAppId": "d3bczaaymam3ew"
+      "DeploymentBucketName": "amplify-darlingpretty-dev-94209-deployment",
+      "UnauthRoleName": "amplify-darlingpretty-dev-94209-unauthRole",
+      "StackName": "amplify-darlingpretty-dev-94209",
+      "StackId": "arn:aws:cloudformation:ca-central-1:318571327234:stack/amplify-darlingpretty-dev-94209/96ae0410-d123-11ec-9b8d-0a7266de1350",
+      "AmplifyAppId": "d1mhh3u1y4eacu"
     },
     "categories": {
       "auth": {
-        "undefined": {}
+        "darlingpretty0cfe07d9": {}
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d1mhh3u1y4eacu",
+          "type": "manual"
+        }
       },
       "function": {
-        "contactformuploader": {
-          "sesEmail": "adam.paul@live.com",
-          "deploymentBucketName": "amplify-darlingpretty-dev-121208-deployment",
-          "s3Key": "amplify-builds/contactformuploader-674e37695556494a6e6d-build.zip"
+        "contactformsend": {
+          "deploymentBucketName": "amplify-darlingpretty-dev-94209-deployment",
+          "s3Key": "amplify-builds/contactformsend-30653447726f49755175-build.zip",
+          "sesEmail": "adam.paul@live.com"
         }
       }
     }

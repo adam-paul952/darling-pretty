@@ -25,6 +25,7 @@ export declare class Clients {
   readonly addressOne: string;
   readonly addressTwo?: string | null;
   readonly city: string;
+  readonly postalCode: string;
   readonly province: string;
   readonly country: string;
   readonly createdAt?: string | null;

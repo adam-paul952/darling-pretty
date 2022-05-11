@@ -2,6 +2,7 @@ import React from "react";
 // Components
 import DatePicker from "react-datepicker";
 import addMinutes from "date-fns/addMinutes";
+import addHours from "date-fns/addHours";
 import "react-datepicker/dist/react-datepicker.css";
 // Types
 import { ISessionInfo } from "../hooks/useAWSData";
@@ -18,16 +19,19 @@ const ShowAvailableTime: React.FC<Props> = ({
   startDate,
   setStartDate,
 }) => {
-  let startDayTime = startDate;
+  const [bookingOptions, setBookingOptions] = React.useState<Date[]>([]);
 
-  const timeIntervals: Date[] = [];
-
-  let numberOfSessions = session.availableTimes.length;
-
-  for (let i = 0; i < numberOfSessions; i++) {
-    timeIntervals.push(startDayTime);
-    startDayTime = addMinutes(startDayTime, session.sessionLength!);
-  }
+  React.useEffect(() => {
+    const newBookings = session.availableTimes.map((time) => {
+      const date = new Date(session.date);
+      const timesAvailable = addMinutes(
+        addHours(date, parseInt(time.slice(0, 2))),
+        parseInt(time.slice(3, 5))
+      );
+      return timesAvailable;
+    });
+    setBookingOptions(newBookings);
+  }, []);
 
   const handleChange = (date: Date) => {
     setStartDate!(date);
@@ -35,21 +39,19 @@ const ShowAvailableTime: React.FC<Props> = ({
   };
 
   return (
-    <>
-      <DatePicker
-        selected={startDate}
-        onChange={(date: Date) => {
-          handleChange(date);
-        }}
-        showTimeSelect
-        showTimeSelectOnly
-        timeIntervals={session.sessionLength}
-        timeCaption="Time"
-        dateFormat="h:mm aa"
-        includeDates={[new Date(session.date)]}
-        includeTimes={timeIntervals}
-      />
-    </>
+    <DatePicker
+      selected={startDate}
+      onChange={(date: Date) => {
+        handleChange(date);
+      }}
+      showTimeSelect
+      showTimeSelectOnly
+      timeIntervals={session.sessionLength}
+      timeCaption="Time"
+      dateFormat="h:mm aa"
+      includeDates={[new Date(session.date)]}
+      includeTimes={bookingOptions}
+    />
   );
 };
 

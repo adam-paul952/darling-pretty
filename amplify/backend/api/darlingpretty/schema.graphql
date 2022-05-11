@@ -7,6 +7,7 @@ type Clients @model @auth(rules: [{ allow: public }]) {
   addressOne: String!
   addressTwo: String
   city: String!
+  postalCode: String!
   province: String!
   country: String!
 }

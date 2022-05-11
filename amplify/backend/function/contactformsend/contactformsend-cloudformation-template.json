@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "{\"createdOn\":\"Windows\",\"createdBy\":\"Amplify\",\"createdWith\":\"8.1.0\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
+  "Description": "{\"createdOn\":\"Windows\",\"createdBy\":\"Amplify\",\"createdWith\":\"8.2.0\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
   "Parameters": {
     "CloudWatchRule": {
       "Type": "String",
@@ -58,12 +58,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "contactformuploader",
+            "contactformsend",
             {
               "Fn::Join": [
                 "",
                 [
-                  "contactformuploader",
+                  "contactformsend",
                   "-",
                   {
                     "Ref": "env"
@@ -103,12 +103,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "darlingprettyLambdaRole54b5eab6",
+            "darlingprettyLambdaRolecbfe62f1",
             {
               "Fn::Join": [
                 "",
                 [
-                  "darlingprettyLambdaRole54b5eab6",
+                  "darlingprettyLambdaRolecbfe62f1",
                   "-",
                   {
                     "Ref": "env"

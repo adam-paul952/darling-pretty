@@ -1,35 +1,50 @@
 import React from "react";
-import { Button, Row, Col, Container } from "react-bootstrap";
-import { useLocation } from "react-router-dom";
-
+// Components
+import { Link } from "react-router-dom";
 import Header from "../components/Header";
-import BillingInformation from "./contactInfo/BillingInformation";
+import { Button, Row, Col, Container } from "react-bootstrap";
 import ClientInformation from "./contactInfo/ContactInformation";
+import BillingInformation from "./contactInfo/BillingInformation";
 import ClientInformationStatus from "../components/ClientInformationStatus";
-
-import useSessionInfo from "../hooks/useSessionInfo";
-
-interface LocationProps {
-  startDate: Date;
-  price: string;
-  sessionLength: number;
+//Hooks
+import { useLocation } from "react-router-dom";
+import { IClientInfo, ISessionInfo } from "../hooks/useAWSData";
+// Types
+export interface LocationProps {
+  session: ISessionInfo;
+  sessionTime: Date;
 }
+// Initial Client State
+const initialState = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  phoneNumber: "",
+  addressOne: "",
+  addressTwo: "",
+  city: "",
+  postalCode: "",
+  province: "Newfoundland and Labrador",
+  country: "Canada",
+};
 
 const Register = () => {
-  const { startDate, price, sessionLength } = useLocation()
-    .state as LocationProps;
-  const { clientInfo, setClientInfo } = useSessionInfo();
+  const { session, sessionTime } = useLocation().state as LocationProps;
 
-  const [showClientContact, setShowClientContact] = React.useState(false);
+  const [newClient, setNewClient] = React.useState<IClientInfo>(initialState);
+
+  const [showClientContact, setShowClientContact] = React.useState(true);
   const [showClientAddress, setShowClientAddress] = React.useState(false);
-  const [showContactStatus, setShowContactStatus] = React.useState(false);
-  const [showAddressStatus, setShowAddressStatus] = React.useState(false);
+
+  React.useEffect(() => {
+    console.log(`New Client from signup: `, newClient);
+  }, [newClient]);
 
   return (
     <>
       <Header title="Confirm Details" />
       <Container className="my-5">
-        <Row className="my-3">
+        {/* <Row className="my-3">
           <Col>
             <p>Returning Customer? Log in for faster checkout!</p>
           </Col>
@@ -44,62 +59,69 @@ const Register = () => {
           <Col>
             <Button>Register</Button>
           </Col>
-        </Row>
-        <Row className="my-3">
-          <Col>
+        </Row> */}
+        {/* <Row className="my-3"> */}
+        {/* <Col>
             <p>Fill in information</p>
-          </Col>
-          <Col>
+          </Col> */}
+        {/* <Col>
             <Button onClick={() => setShowClientContact(!showClientContact)}>
               Continue to fill in info
             </Button>
-          </Col>
-        </Row>
+          </Col> */}
+        {/* </Row> */}
         <Row>
           {showClientContact && (
             <Col>
               <ClientInformation
-                clientInfo={clientInfo}
-                setClientInfo={setClientInfo}
+                newClient={newClient}
+                setNewClient={setNewClient}
                 showClientAddress={showClientAddress}
                 setShowClientAddress={setShowClientAddress}
-                showContactStatus={showContactStatus}
-                setShowContactStatus={setShowContactStatus}
                 showClientContact={showClientContact}
                 setShowClientContact={setShowClientContact}
               />
             </Col>
           )}
-          {showContactStatus && (
-            <ClientInformationStatus
-              title="Contact Information"
-              complete={true}
-            />
+          {!showClientContact && (
+            <ClientInformationStatus title="Contact Information" />
           )}
         </Row>
         <Row>
           <Col>
             {showClientAddress && (
               <BillingInformation
-                clientInfo={clientInfo}
-                setClientInfo={setClientInfo}
+                newClient={newClient}
+                setNewClient={setNewClient}
                 showClientAddress={showClientAddress}
                 setShowClientAddress={setShowClientAddress}
-                showAddressStatus={showAddressStatus}
-                setShowAddressStatus={setShowAddressStatus}
-                startDate={startDate}
-                price={price}
-                sessionLength={sessionLength}
               />
             )}
           </Col>
-          {showAddressStatus && (
+          {!showClientAddress && !showClientContact && (
             <ClientInformationStatus
               title="Billing Information"
               complete={true}
             />
           )}
         </Row>
+        {!showClientAddress && !showClientContact && (
+          <Row>
+            <Button>
+              <Link
+                className="buttonLink"
+                to="/checkout"
+                state={{
+                  session: session,
+                  sessionTime: sessionTime,
+                  clientInfo: newClient,
+                }}
+              >
+                Continue to Checkout
+              </Link>
+            </Button>
+          </Row>
+        )}
       </Container>
     </>
   );

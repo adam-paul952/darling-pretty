@@ -4,7 +4,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import useAWSDatastore, { ISessionInfo } from "../hooks/useAWSData";
-import addMinutes from "date-fns/addMinutes";
+import { addDays, addHours, addMinutes } from "date-fns";
 
 interface IEvents {
   date: Date;
@@ -34,22 +34,16 @@ const SessionCalendar = () => {
     const fetchSessions = async () => {
       try {
         const allSessions = await listAllSessions();
-        console.log(allSessions);
-        const testDate = allSessions.forEach((session: any) => {
-          const date = session.date.split("-").map(Number);
-          const start = parseInt(session.startTime.slice(0, 2), 10);
-          const startDateString = new Date(date[0], date[1], date[2], start);
-          const end = parseInt(session.endTime.slice(0, 2), 10);
-          const endDateString = new Date(date[0], date[1], date[2], end);
-          // console.log(endDateString);
-          return {
-            title: session.name,
-            date: new Date(date[0], date[1], date[2]),
-            // start: startDateString,
-            // end: endDateString,
-          };
+        allSessions.map((session: any) => {
+          const date = addDays(new Date(session.date), 1);
+          const startTime = addHours(
+            date,
+            parseInt(session.startTime.slice(0, 2))
+          );
+          console.log(startTime);
+          // return {title: 'Name', start: , end: ,}
         });
-        setSessions(testDate);
+        console.log(allSessions);
         // console.log(testSessionEdit);
       } catch (error) {
         console.log(error);
@@ -57,10 +51,6 @@ const SessionCalendar = () => {
     };
     fetchSessions();
   }, []);
-
-  React.useEffect(() => {
-    console.log(sessions);
-  }, [sessions]);
 
   return (
     <>

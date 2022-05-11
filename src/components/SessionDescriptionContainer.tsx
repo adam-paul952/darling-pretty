@@ -1,66 +1,31 @@
 import React from "react";
 //Router
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 //Components
-import Header from "../components/Header";
 import { Button, Container, Col, Row } from "react-bootstrap";
 import ShowAvailableTime from "../components/Calendar";
 // Images
 import darlingPretty from "../images/darling-pretty1.jpg";
-
-// import { ISessionInfo } from "../util/sessionInfo";
-
-import useSessionInfo from "../hooks/useSessionInfo";
+// Date FNS
 import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
-
-import { sessionInfo } from "../util/sessionInfo";
+//Types
 import { ISessionInfo } from "../hooks/useAWSData";
-
 interface Session {
   session: ISessionInfo;
   setSessionDate: React.Dispatch<React.SetStateAction<Date | null | undefined>>;
   setStartDate?: React.Dispatch<React.SetStateAction<Date | null | undefined>>;
 }
 
-type LocationPropsT = {
-  session: ISessionInfo;
-};
-
-const PictureDescription = () => {
-  const { setSessionDate } = useSessionInfo();
-  const { session } = useLocation().state as LocationPropsT;
-
-  const { id } = useParams();
-
-  return (
-    <>
-      <>
-        <Header title={session.date} />
-        <SessionInfo
-          key={id}
-          session={session}
-          setSessionDate={setSessionDate}
-        />
-      </>
-    </>
-  );
-};
-
-export const SessionInfo: React.FC<Session> = ({ session, setSessionDate }) => {
+const SessionInfo: React.FC<Session> = ({ session, setSessionDate }) => {
   const startHour: number = parseInt(
     session.startTime.slice(0, 2).padStart(2, "0"),
     10
   );
   const startMinute: number = parseInt(session.startTime.slice(3, 5), 10);
-  const [startDate, setStartDate] = React.useState(
+  const [startDate, setStartDate] = React.useState<Date>(
     setHours(setMinutes(new Date(session.date), startMinute), startHour)
   );
-
-  React.useEffect(() => {
-    console.log(startHour);
-    console.log(startMinute);
-  }, []);
 
   return (
     <Container key={session.id}>
@@ -103,9 +68,8 @@ export const SessionInfo: React.FC<Session> = ({ session, setSessionDate }) => {
               className="buttonLink"
               to="/register"
               state={{
-                // startDate: startDate,
-                price: session.price,
-                sessionLength: session.sessionLength,
+                session: session,
+                sessionTime: startDate,
               }}
             >
               Add to Cart
@@ -117,4 +81,4 @@ export const SessionInfo: React.FC<Session> = ({ session, setSessionDate }) => {
   );
 };
 
-export default PictureDescription;
+export default SessionInfo;

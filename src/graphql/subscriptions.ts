@@ -13,6 +13,7 @@ export const onCreateClients = /* GraphQL */ `
       addressOne
       addressTwo
       city
+      postalCode
       province
       country
       createdAt
@@ -34,6 +35,7 @@ export const onUpdateClients = /* GraphQL */ `
       addressOne
       addressTwo
       city
+      postalCode
       province
       country
       createdAt
@@ -55,6 +57,7 @@ export const onDeleteClients = /* GraphQL */ `
       addressOne
       addressTwo
       city
+      postalCode
       province
       country
       createdAt

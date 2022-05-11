@@ -1,54 +1,33 @@
 import React from "react";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
-
-import { ClientInfoProps } from "../../hooks/useSessionInfo";
-
-interface Props {
-  clientInfo: ClientInfoProps;
-  setClientInfo: React.Dispatch<React.SetStateAction<ClientInfoProps>>;
-  showClientAddress: boolean;
-  setShowClientAddress: React.Dispatch<React.SetStateAction<boolean>>;
-  showClientContact: boolean;
-  setShowClientContact: React.Dispatch<React.SetStateAction<boolean>>;
-  showContactStatus: boolean;
-  setShowContactStatus: React.Dispatch<React.SetStateAction<boolean>>;
+// Components
+import { Button, Col, Form, Row } from "react-bootstrap";
+// Hooks
+import { IClientInfo } from "../../hooks/useAWSData";
+// Helpers
+import { formatPhoneNumber } from "../../util/formatStrings";
+//Types
+export interface IClientInfoProps {
+  newClient: IClientInfo;
+  setNewClient: React.Dispatch<React.SetStateAction<IClientInfo>>;
+  showClientAddress?: boolean;
+  setShowClientAddress?: React.Dispatch<React.SetStateAction<boolean>>;
+  showClientContact?: boolean;
+  setShowClientContact?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ClientInformation: React.FC<Props> = ({
-  clientInfo,
-  setClientInfo,
+const ClientInformation: React.FC<IClientInfoProps> = ({
+  newClient,
+  setNewClient,
   showClientAddress,
   setShowClientAddress,
   showClientContact,
   setShowClientContact,
-  showContactStatus,
-  setShowContactStatus,
 }) => {
-  const { name, contact } = clientInfo;
+  const { firstName, lastName, email, phoneNumber } = newClient;
 
   const handleClick = () => {
-    setShowClientAddress(!showClientAddress);
-    setShowClientContact(!showClientContact);
-    setShowContactStatus(!showContactStatus);
-  };
-
-  const formatPhoneNumber = (value: string) => {
-    if (!value) {
-      return value;
-    }
-    const phoneNumber = value.replace(/[^\d]/g, "");
-    if (phoneNumber.length < 4) {
-      return phoneNumber;
-    }
-
-    if (phoneNumber.length < 7) {
-      return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3)}`;
-    }
-
-    return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(
-      3,
-      6
-    )}-${phoneNumber.slice(6, 10)}`;
+    setShowClientAddress!(!showClientAddress);
+    setShowClientContact!(!showClientContact);
   };
 
   return (
@@ -61,15 +40,9 @@ const ClientInformation: React.FC<Props> = ({
               <Form.Control
                 type="text"
                 placeholder="First Name"
-                value={name.firstName}
+                value={firstName}
                 onChange={(e) => {
-                  setClientInfo((prevState) => ({
-                    ...prevState,
-                    name: {
-                      ...prevState.name,
-                      firstName: e.target.value,
-                    },
-                  }));
+                  setNewClient({ ...newClient, firstName: e.target.value });
                 }}
               ></Form.Control>
             </Form.Group>
@@ -80,15 +53,9 @@ const ClientInformation: React.FC<Props> = ({
               <Form.Control
                 type="text"
                 placeholder="Last Name"
-                value={name.lastName}
+                value={lastName}
                 onChange={(e) => {
-                  setClientInfo((prevState) => ({
-                    ...prevState,
-                    name: {
-                      ...prevState.name,
-                      lastName: e.target.value,
-                    },
-                  }));
+                  setNewClient({ ...newClient, lastName: e.target.value });
                 }}
               ></Form.Control>
             </Form.Group>
@@ -101,15 +68,9 @@ const ClientInformation: React.FC<Props> = ({
               <Form.Control
                 type="text"
                 placeholder="E-mail Address"
-                value={contact.email}
+                value={email}
                 onChange={(e) => {
-                  setClientInfo((prevState) => ({
-                    ...prevState,
-                    contact: {
-                      ...prevState.contact,
-                      email: e.target.value,
-                    },
-                  }));
+                  setNewClient({ ...newClient, email: e.target.value });
                 }}
               />
             </Form.Group>
@@ -120,22 +81,21 @@ const ClientInformation: React.FC<Props> = ({
               <Form.Control
                 type="text"
                 placeholder="Optional"
-                value={contact.phoneNumber}
+                value={phoneNumber}
                 onChange={(e) => {
-                  setClientInfo((prevState) => ({
-                    ...prevState,
-                    contact: {
-                      ...prevState.contact,
-                      phoneNumber: formatPhoneNumber(e.target.value),
-                    },
-                  }));
+                  setNewClient({
+                    ...newClient,
+                    phoneNumber: formatPhoneNumber(e.target.value),
+                  });
                 }}
               />
             </Form.Group>
           </Col>
         </Row>
       </Form>
-      <Button onClick={() => handleClick()}>Save Contact Info</Button>
+      <Button className="mt-3" onClick={() => handleClick()}>
+        Save Contact Info
+      </Button>
     </>
   );
 };

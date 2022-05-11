@@ -13,6 +13,7 @@ export const getClients = /* GraphQL */ `
       addressOne
       addressTwo
       city
+      postalCode
       province
       country
       createdAt
@@ -39,6 +40,7 @@ export const listClients = /* GraphQL */ `
         addressOne
         addressTwo
         city
+        postalCode
         province
         country
         createdAt
@@ -74,6 +76,7 @@ export const syncClients = /* GraphQL */ `
         addressOne
         addressTwo
         city
+        postalCode
         province
         country
         createdAt

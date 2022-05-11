@@ -1,6 +1,5 @@
 {
   "AppSyncApiName": "darlingpretty",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
-  "DynamoDBEnableServerSideEncryption": false,
-  "AuthModeLastUpdated": "2022-05-07T15:36:10.786Z"
+  "DynamoDBEnableServerSideEncryption": false
 }
