@@ -1,5 +1,4 @@
 // Components
-import { Container } from "react-bootstrap";
 import Header from "./components/Header";
 import ShowAvailablePhotos from "./components/DisplaySessions";
 
@@ -7,9 +6,9 @@ const App = () => {
   return (
     <>
       <Header title="Darling Pretty Photography" />
-      <Container className="mt-3">
+      <div className="container mt-2 mx-auto flex flex-column items-center">
         <ShowAvailablePhotos />
-      </Container>
+      </div>
     </>
   );
 };

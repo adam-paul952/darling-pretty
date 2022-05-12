@@ -133,9 +133,7 @@ export const listSessions = /* GraphQL */ `
         bookings
         createdAt
         updatedAt
-        _version
         _deleted
-        _lastChangedAt
       }
       nextToken
       startedAt

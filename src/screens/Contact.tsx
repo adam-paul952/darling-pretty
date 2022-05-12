@@ -1,8 +1,11 @@
 import React from "react";
 // Components
-import { Button, Container, Form, Row } from "react-bootstrap";
 import ReCAPTCHAV2 from "react-google-recaptcha";
 import Header from "../components/Header";
+import TailwindCSSTextArea from "../components/TailwindCSSTextArea";
+import TailwindCSSFormInput from "../components/TailwindFormInput";
+import TailwindCSSButton from "../components/visual/TailwindCSSButton";
+import SubmissionComplete from "../components/visual/ContactSuccessMessage";
 // Hooks
 import useContactForm from "../hooks/useContactForm";
 
@@ -25,7 +28,8 @@ const ContactForm = () => {
     setToken(false);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
     await sendContactForm({ name, email, subject, message });
     console.log(`
     Name: ${name}
@@ -47,100 +51,76 @@ const ContactForm = () => {
   return (
     <>
       <Header title="Contact" />
-      <Container className="my-4">
-        <Row>
-          <h3 style={{ textAlign: "center" }}>
-            Reach out with any questions or comments!
-          </h3>
-        </Row>
-      </Container>
-      <Container className="mt-3" style={{ width: "75%" }}>
-        <Form className="m-3">
-          <Form.Group
-            className="mb-3 contact-form-input"
-            controlId="contactName"
-          >
-            <Form.Label>Name</Form.Label>
-            <Form.Control
+      <div className="container">
+        <div className="p-6 rounded-lg shadow-lg bg-white min-w-2/3">
+          <div className="container flex justify-center mt-1 mb-2">
+            <h3>Reach out with any questions or comments!</h3>
+          </div>
+          <form className="w-2/3 mx-auto">
+            <TailwindCSSFormInput
+              id="contactName"
+              placeHolder="Name"
+              label="Name "
+              required
               type="text"
-              placeholder="Enter name"
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e: any) => setName(e.target.value)}
             />
-          </Form.Group>
-          <Form.Group
-            className="mb-3 contact-form-input"
-            controlId="contactEmail"
-          >
-            <Form.Label>Email address</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="name@example.com"
-              onChange={(e) => {
+            <TailwindCSSFormInput
+              id="contactEmail"
+              placeHolder="john.doe@email.com"
+              label="Email "
+              required
+              type="text"
+              onChange={(e: any) => {
                 setEmail(e.target.value);
               }}
               value={email}
             />
-          </Form.Group>
-          <Form.Group
-            className="mb-3 contact-form-input"
-            controlId="contactSubject"
-          >
-            <Form.Label>Subject</Form.Label>
-            <Form.Control
+            <TailwindCSSFormInput
+              id="contactSubject"
+              placeHolder="Subject"
+              label="Subject "
+              required
               type="text"
-              onChange={(e) => {
+              onChange={(e: any) => {
                 setSubject(e.target.value);
               }}
               value={subject}
             />
-          </Form.Group>
-          <Form.Group
-            className="mb-3 contact-form-input"
-            controlId="contactMessage"
-          >
-            <Form.Label>Message</Form.Label>
-            <Form.Control
-              as="textarea"
+            <TailwindCSSTextArea
+              id="contactMessage"
+              placeHolder="Message"
+              label="Message "
+              required
               rows={3}
-              onChange={(e) => {
+              onChange={(e: any) => {
                 setMessage(e.target.value);
               }}
               value={message}
             />
-          </Form.Group>
-          {!success ? (
-            <Container className="d-flex flex-column align-items-center">
-              <ReCAPTCHAV2
-                className="my-1"
-                sitekey={process.env.REACT_APP_SITE_KEY!}
-                onChange={handleToken}
-                onExpired={handleExpireToken}
-              />
-              <Button
-                className="mt-2"
-                style={{ width: "36.5%" }}
-                disabled={!token}
-                onClick={() => handleSubmit()}
-              >
-                Send Message
-              </Button>
-            </Container>
-          ) : (
-            <SubmissionComplete />
-          )}
-        </Form>
-      </Container>
+            {!success ? (
+              <div className="flex flex-col items-center">
+                <ReCAPTCHAV2
+                  className="my-1"
+                  sitekey={process.env.REACT_APP_SITE_KEY!}
+                  onChange={handleToken}
+                  onExpired={handleExpireToken}
+                />
+                <TailwindCSSButton
+                  buttonTitle="Send Message"
+                  onClick={(e: any) => handleSubmit(e)}
+                  disabled={!token}
+                />
+              </div>
+            ) : (
+              <SubmissionComplete />
+            )}
+          </form>
+        </div>
+      </div>
     </>
   );
 };
 
 export default ContactForm;
-
-const SubmissionComplete = () => {
-  return (
-    <Container className="d-flex justify-content-center align-items-center">
-      <h2>Thanks for your submission, someone will be in touch soon!</h2>
-    </Container>
-  );
-};

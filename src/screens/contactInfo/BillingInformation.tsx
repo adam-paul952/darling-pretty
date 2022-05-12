@@ -1,6 +1,7 @@
 import React from "react";
 // Components
-import { Button, Col, Form, Row } from "react-bootstrap";
+import TailwindCSSFormInput from "../../components/TailwindFormInput";
+import TailwindCSSButton from "../../components/visual/TailwindCSSButton";
 // Types
 import { IClientInfoProps } from "./ContactInformation";
 interface IBillingInfoProps extends IClientInfoProps {}
@@ -25,79 +26,91 @@ const BillingInformation: React.FC<IBillingInfoProps> = ({
   };
 
   return (
-    <Form>
-      <Row className="m-3">
-        <Form.Group as={Col} controlId="address1">
-          <Form.Label>Address</Form.Label>
-          <Form.Control
-            placeholder="1234 Main St"
+    <form>
+      <div className="flex flex-row justify-around">
+        <div className="flex flex-col w-5/12">
+          <TailwindCSSFormInput
+            id="addressOne"
+            label="Address "
+            placeHolder="1234 Main St"
             value={addressOne}
-            onChange={(e) => {
-              setNewClient({
-                ...newClient,
-                addressOne: e.target.value,
-              });
-            }}
-          />
-        </Form.Group>
-      </Row>
-      <Row className="m-3">
-        <Form.Group as={Col} controlId="address2">
-          <Form.Label>Address 2</Form.Label>
-          <Form.Control
             type="text"
-            placeholder="Apartment, studio, or floor"
+            required
+            onChange={(e: any) => {
+              setNewClient({ ...newClient, addressOne: e.target.value });
+            }}
+          />
+        </div>
+        <div className="flex flex-col w-5/12">
+          <TailwindCSSFormInput
+            id="address2"
+            label="Address 2 "
+            placeHolder="Apartment, studio, or floor"
             value={addressTwo!}
-            onChange={(e) => {
-              setNewClient({
-                ...newClient,
-                addressTwo: e.target.value,
-              });
+            type="text"
+            required={false}
+            onChange={(e: any) => {
+              setNewClient({ ...newClient, addressTwo: e.target.value });
             }}
           />
-        </Form.Group>
-      </Row>
-
-      <Row className="m-3">
-        <Form.Group as={Col} controlId="city">
-          <Form.Label>City</Form.Label>
-          <Form.Control
+        </div>
+      </div>
+      <div className="flex flex-row justify-around">
+        <div className="flex flex-col w-5/12">
+          <TailwindCSSFormInput
+            id="city"
+            label="City "
+            placeHolder="1234 Main St"
             value={city}
-            onChange={(e) => {
-              setNewClient({
-                ...newClient,
-                city: e.target.value,
-              });
+            type="text"
+            required
+            onChange={(e: any) => {
+              setNewClient({ ...newClient, city: e.target.value });
             }}
           />
-        </Form.Group>
-        <Form.Group as={Col} controlId="province">
-          <Form.Label>Province</Form.Label>
-          <Form.Control value="Newfoundland and Labrador" disabled={true} />
-        </Form.Group>
-      </Row>
-
-      <Row className="m-3">
-        <Form.Group as={Col} controlId="postalCode">
-          <Form.Label>Postal Code</Form.Label>
-          <Form.Control
+        </div>
+        <div className="flex flex-col w-5/12">
+          <TailwindCSSFormInput
+            id="province"
+            label="Province "
+            value="Newfoundland and Labrador"
+            type="text"
+            required={false}
+            disabled={true}
+          />
+        </div>
+      </div>
+      <div className="flex flex-row justify-around">
+        <div className="flex flex-col w-5/12">
+          <TailwindCSSFormInput
+            id="postalCode"
+            label="Postal Code "
+            placeHolder="A1A1A1"
             value={postalCode}
-            onChange={(e) => {
-              setNewClient({
-                ...newClient,
-                postalCode: e.target.value,
-              });
+            type="text"
+            required
+            onChange={(e: any) => {
+              setNewClient({ ...newClient, postalCode: e.target.value });
             }}
           />
-        </Form.Group>
-
-        <Form.Group as={Col} controlId="country">
-          <Form.Label>Country</Form.Label>
-          <Form.Control disabled={true} value="Canada" />
-        </Form.Group>
-      </Row>
-      <Button onClick={() => handleClick()}>Complete Billing Info Input</Button>
-    </Form>
+        </div>
+        <div className="flex flex-col w-5/12">
+          <TailwindCSSFormInput
+            id="country"
+            label="Country "
+            value="Canada"
+            required={false}
+            disabled={true}
+          />
+        </div>
+      </div>
+      <div className="ml-9 pl-3">
+        <TailwindCSSButton
+          buttonTitle="Complete Billing Info Input"
+          onClick={() => handleClick()}
+        />
+      </div>
+    </form>
   );
 };
 

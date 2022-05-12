@@ -2,7 +2,6 @@ import React from "react";
 //Router
 import { Link } from "react-router-dom";
 //Components
-import { Button, Container, Col, Row } from "react-bootstrap";
 import ShowAvailableTime from "../components/Calendar";
 // Images
 import darlingPretty from "../images/darling-pretty1.jpg";
@@ -28,32 +27,38 @@ const SessionInfo: React.FC<Session> = ({ session, setSessionDate }) => {
   );
 
   return (
-    <Container key={session.id}>
-      <img
-        className="float_left"
-        src={darlingPretty}
-        alt="Darling-Pretty logo"
-        width="450"
-        height="350"
-      />
-      <h2>Price</h2>
-      <p>{session.price}</p>
+    <div key={session.id} className="container flex flex-col mt-2">
+      <div className="container flex flex-row">
+        <div className="flex flex-col w-1/2 items-center">
+          <img
+            className="float_left"
+            src={darlingPretty}
+            alt="Darling-Pretty logo"
+            width="450"
+            height="350"
+          />
+        </div>
+        <div className="flex flex-col w-1/2 justify-center">
+          <h2>Price</h2>
+          <p>{session.price}</p>
+          <hr className="w-1/4" />
+          <h3>Date</h3>
+          <p>{session.date}</p>
+        </div>
+      </div>
       <hr />
-      <h3>Date</h3>
-      <p>{session.date}</p>
-      <hr />
-      <h2>Session Includes:</h2>
-      <div
-        dangerouslySetInnerHTML={{
-          __html: session.sessionDetails,
-        }}
-      />
-      <hr />
-      <Row>
-        <Col className="d-flex justify-content-end">
+      <div className="flex flex-row">
+        <div className="flex flex-col w-2/3 px-1">
+          <h2>Session Includes:</h2>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: session.sessionDetails,
+            }}
+          />
+          <hr />
+        </div>
+        <div className="flex flex-col items-center mx-auto">
           <p>Available Times:</p>
-        </Col>
-        <Col>
           <ShowAvailableTime
             key={session.id}
             session={session}
@@ -61,11 +66,9 @@ const SessionInfo: React.FC<Session> = ({ session, setSessionDate }) => {
             startDate={startDate}
             setStartDate={setStartDate}
           />
-        </Col>
-        <Col>
-          <Button>
+          <button className="bg-gray-300 p-2 rounded-xl w-fit">
             <Link
-              className="buttonLink"
+              className="no-underline text-black text-lg"
               to="/register"
               state={{
                 session: session,
@@ -74,10 +77,10 @@ const SessionInfo: React.FC<Session> = ({ session, setSessionDate }) => {
             >
               Add to Cart
             </Link>
-          </Button>
-        </Col>
-      </Row>
-    </Container>
+          </button>
+        </div>
+      </div>
+    </div>
   );
 };
 

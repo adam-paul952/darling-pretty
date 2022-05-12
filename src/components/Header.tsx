@@ -26,7 +26,9 @@ const Header = (props: HeaderProps) => {
                 Darling Pretty Photography
               </NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="/login">Log in</NavDropdown.Item>
+              <NavDropdown.Item href="/admin/dashboard">
+                Log in
+              </NavDropdown.Item>
             </NavDropdown>
             <Nav.Link className="px-3" href="/contact">
               Contact

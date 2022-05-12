@@ -3,7 +3,6 @@ import React from "react";
 import DatePicker from "react-datepicker";
 import addMinutes from "date-fns/addMinutes";
 import addHours from "date-fns/addHours";
-import "react-datepicker/dist/react-datepicker.css";
 // Types
 import { ISessionInfo } from "../hooks/useAWSData";
 interface Props {
@@ -40,6 +39,7 @@ const ShowAvailableTime: React.FC<Props> = ({
 
   return (
     <DatePicker
+      className="mb-2 border border-grey-300 rounded-xl p-1 text-center"
       selected={startDate}
       onChange={(date: Date) => {
         handleChange(date);

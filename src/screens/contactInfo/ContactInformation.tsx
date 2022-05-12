@@ -1,6 +1,7 @@
 import React from "react";
 // Components
-import { Button, Col, Form, Row } from "react-bootstrap";
+import TailwindCSSFormInput from "../../components/TailwindFormInput";
+import TailwindCSSButton from "../../components/visual/TailwindCSSButton";
 // Hooks
 import { IClientInfo } from "../../hooks/useAWSData";
 // Helpers
@@ -31,72 +32,74 @@ const ClientInformation: React.FC<IClientInfoProps> = ({
   };
 
   return (
-    <>
-      <Form>
-        <Row>
-          <Col>
-            <Form.Group controlId="firstName">
-              <Form.Label>First Name</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="First Name"
-                value={firstName}
-                onChange={(e) => {
-                  setNewClient({ ...newClient, firstName: e.target.value });
-                }}
-              ></Form.Control>
-            </Form.Group>
-          </Col>
-          <Col>
-            <Form.Group controlId="lastName">
-              <Form.Label>Last Name</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Last Name"
-                value={lastName}
-                onChange={(e) => {
-                  setNewClient({ ...newClient, lastName: e.target.value });
-                }}
-              ></Form.Control>
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <Form.Group controlId="email">
-              <Form.Label>E-mail Address</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="E-mail Address"
-                value={email}
-                onChange={(e) => {
-                  setNewClient({ ...newClient, email: e.target.value });
-                }}
-              />
-            </Form.Group>
-          </Col>
-          <Col>
-            <Form.Group controlId="phoneNumber">
-              <Form.Label>Phone Number</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Optional"
-                value={phoneNumber}
-                onChange={(e) => {
-                  setNewClient({
-                    ...newClient,
-                    phoneNumber: formatPhoneNumber(e.target.value),
-                  });
-                }}
-              />
-            </Form.Group>
-          </Col>
-        </Row>
-      </Form>
-      <Button className="mt-3" onClick={() => handleClick()}>
-        Save Contact Info
-      </Button>
-    </>
+    <form>
+      <div className="flex flex-row justify-around">
+        <div className="flex flex-col w-5/12">
+          <TailwindCSSFormInput
+            id="firstName"
+            label="First Name "
+            placeHolder="First Name"
+            value={firstName}
+            type="text"
+            required
+            onChange={(e: any) => {
+              setNewClient({ ...newClient, firstName: e.target.value });
+            }}
+          />
+        </div>
+        <div className="flex flex-col w-5/12">
+          <TailwindCSSFormInput
+            id="lastName"
+            label="Last Name "
+            placeHolder="Last Name"
+            value={lastName}
+            type="text"
+            required
+            onChange={(e: any) => {
+              setNewClient({ ...newClient, lastName: e.target.value });
+            }}
+          />
+        </div>
+      </div>
+      <div className="flex flex-row justify-around">
+        <div className="flex flex-col w-5/12">
+          <TailwindCSSFormInput
+            id="email"
+            label="Email "
+            placeHolder="john.doe@email.com"
+            value={email}
+            type="email"
+            required
+            onChange={(e: any) => {
+              setNewClient({ ...newClient, email: e.target.value });
+            }}
+          />
+        </div>
+        <div className="flex flex-col w-5/12">
+          <TailwindCSSFormInput
+            id="phoneNumber"
+            label="Phone "
+            placeHolder="(555)555-5555"
+            value={phoneNumber}
+            type="text"
+            required
+            onChange={(e: any) => {
+              setNewClient({
+                ...newClient,
+                phoneNumber: formatPhoneNumber(e.target.value),
+              });
+            }}
+          />
+        </div>
+      </div>
+      <div className="ml-9 pl-3">
+        <TailwindCSSButton
+          buttonTitle="Save Contact Info"
+          onClick={() => handleClick()}
+          disabled={!firstName || !lastName || !email || !phoneNumber}
+        />
+      </div>
+    </form>
   );
 };
 

@@ -1,6 +1,7 @@
-import { usePayPalScriptReducer, PayPalButtons } from "@paypal/react-paypal-js";
-import { Container } from "react-bootstrap";
+import React from "react";
 import useAWSData, { IClientInfo, ISessionInfo } from "../hooks/useAWSData";
+
+import { usePayPalScriptReducer, PayPalButtons } from "@paypal/react-paypal-js";
 
 interface IPaypalProps {
   price: string;
@@ -13,6 +14,8 @@ const Paypal = (props: IPaypalProps) => {
   const { createNewClient } = useAWSData();
   const { name } = props.session;
 
+  const [transactionComplete, setTransactionComplete] = React.useState(false);
+
   const addClientToDatabase = async () => {
     try {
       const newClient = await createNewClient(props.client);
@@ -20,10 +23,19 @@ const Paypal = (props: IPaypalProps) => {
       console.log(err);
     }
   };
+
+  React.useEffect(() => {
+    if (transactionComplete) {
+      alert(`Transaction complete, you should receive a reciept shortly`);
+      setTimeout(() => setTransactionComplete(false), 3000);
+    }
+  }, [transactionComplete]);
+
   return (
-    <Container className="my-4 w-50">
+    <div className="container my-4">
       {isPending ? <h2>Load Smart Payment Button...</h2> : null}
       <PayPalButtons
+        className="flex justify-center"
         style={{ layout: "vertical" }}
         // disabled={true}
         createOrder={(data, actions) => {
@@ -48,6 +60,7 @@ const Paypal = (props: IPaypalProps) => {
             // const name = details.payer.name!.given_name;
             // console.log(`Data from the approval of PayPal is: `, data);
             await addClientToDatabase();
+            setTransactionComplete(true);
             // alert(`Transaction completed by ${name}\nDetails: ${details}`);
           });
         }}
@@ -55,7 +68,7 @@ const Paypal = (props: IPaypalProps) => {
           alert(`There has been an error: ${err}`);
         }}
       />
-    </Container>
+    </div>
   );
 };
 

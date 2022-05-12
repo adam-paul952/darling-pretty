@@ -1,7 +1,6 @@
 import React from "react";
 // Components
-import { Link } from "react-router-dom";
-import { Card, CardGroup, Col, Row } from "react-bootstrap";
+import TailwindCSSCard from "./visual/Card";
 // Image
 import darlingPretty from "../images/darling-pretty1.jpg";
 // Hooks
@@ -42,33 +41,19 @@ const ShowAvailablePhotos = () => {
 
   return (
     <>
-      {sessions.map((session: any) => {
+      {sessions.map((session: ISessionInfo) => {
         return (
-          <Row key={session.id} className="row-cols-2 justify-content-center">
-            <CardGroup>
-              <Col className="mb-4">
-                <Card>
-                  <Card.Link
-                    as={Link}
-                    to={`/photo/${session.id}`}
-                    state={{ session: session }}
-                  >
-                    <Card.Img
-                      variant="top"
-                      src={darlingPretty}
-                      alt="Darling Pretty Logo"
-                    />
-                  </Card.Link>
-                  <Card.Body>
-                    <Card.Title>{session.name}</Card.Title>
-                    <Card.Text>{session.date}</Card.Text>
-                    <hr />
-                    <Card.Text>{session.price}</Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
-            </CardGroup>
-          </Row>
+          <div key={session.id} className="w-50">
+            <TailwindCSSCard
+              title={session.name}
+              date={session.date}
+              price={session.price}
+              image={darlingPretty}
+              imageAlt="Darling Pretty Logo"
+              link={`/photo/${session.id}`}
+              state={{ session: session }}
+            />
+          </div>
         );
       })}
     </>

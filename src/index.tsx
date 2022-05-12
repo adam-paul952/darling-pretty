@@ -1,11 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.css";
+// import "./App.css";
 import "./index.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "react-datepicker/dist/react-datepicker.css";
 import reportWebVitals from "./reportWebVitals";
 import DarlingPrettyRouter from "./Routes";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+
 import { Amplify } from "aws-amplify";
 import awsExports from "./aws-exports";
 Amplify.configure(awsExports);

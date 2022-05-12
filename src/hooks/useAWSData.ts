@@ -24,7 +24,7 @@ export interface IClientInfo {
   addressOne: string;
   addressTwo?: string | null;
   city: string;
-  postalCode?: string;
+  postalCode: string;
   province: string;
   country: string;
 }
