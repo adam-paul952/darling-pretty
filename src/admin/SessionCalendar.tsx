@@ -34,16 +34,19 @@ const SessionCalendar = () => {
     const fetchSessions = async () => {
       try {
         const allSessions = await listAllSessions();
-        allSessions.map((session: any) => {
+        const currentSessions = allSessions.map((session: any, index: any) => {
           const date = addDays(new Date(session.date), 1);
           const startTime = addHours(
             date,
             parseInt(session.startTime.slice(0, 2))
           );
-          console.log(startTime);
-          // return {title: 'Name', start: , end: ,}
+          console.log(session.availableTimes);
+          return {
+            title: session.name,
+            start: session.availableTimes[index],
+          };
         });
-        console.log(allSessions);
+        console.log(currentSessions);
         // console.log(testSessionEdit);
       } catch (error) {
         console.log(error);
@@ -53,7 +56,7 @@ const SessionCalendar = () => {
   }, []);
 
   return (
-    <>
+    <div className="mt-1/4">
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         headerToolbar={{
@@ -83,7 +86,7 @@ const SessionCalendar = () => {
         eventRemove={function(){}}
         */
       />
-    </>
+    </div>
   );
 };
 

@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 // import "./App.css";
-import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-datepicker/dist/react-datepicker.css";
+import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import DarlingPrettyRouter from "./Routes";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
@@ -14,18 +14,14 @@ Amplify.configure(awsExports);
 // import Background from "./components/Background";
 
 ReactDOM.render(
-  <React.StrictMode>
-    {/* <Background> */}
-    <PayPalScriptProvider
-      options={{
-        "client-id": process.env.REACT_APP_PAYPAL_CLIENT_ID,
-        currency: "CAD",
-      }}
-    >
-      <DarlingPrettyRouter />
-    </PayPalScriptProvider>
-    {/* </Background> */}
-  </React.StrictMode>,
+  <PayPalScriptProvider
+    options={{
+      "client-id": process.env.REACT_APP_PAYPAL_CLIENT_ID,
+      currency: "CAD",
+    }}
+  >
+    <DarlingPrettyRouter />
+  </PayPalScriptProvider>,
   document.getElementById("root")
 );
 

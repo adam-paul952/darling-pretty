@@ -1,27 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Container } from "react-bootstrap";
+import TailwindCSSButton from "../components/visual/TailwindCSSButton";
 
 const AdminDashboard = () => {
   return (
-    <Container className="d-flex justify-content-center align-items-center min-vh-100">
-      <Button className="mx-2">Clients</Button>
-      <Button className="mx-2">
-        <Link className="buttonLink" to="/admin/calendar">
-          Calendar
-        </Link>
-      </Button>
-      <Button className="mx-2">
-        <Link className="buttonLink" to="/admin/createsession">
-          Create Session
-        </Link>
-      </Button>
-      <Button className="mx-2">
-        <Link className="buttonLink" to="/admin/editsession">
-          Edit Session Info
-        </Link>
-      </Button>
-    </Container>
+    <div className="container flex flex-row justify-center items-center h-screen">
+      <TailwindCSSButton buttonTitle="Clients" onClick={() => {}} />
+      <Link to="/admin/calendar">
+        <TailwindCSSButton buttonTitle="Calendar" onClick={() => {}} />
+      </Link>
+      <Link className="buttonLink" to="/admin/createsession">
+        <TailwindCSSButton buttonTitle="Create Session" onClick={() => {}} />
+      </Link>
+      <Link className="buttonLink" to="/admin/editsession">
+        <TailwindCSSButton buttonTitle="Edit Session Info" onClick={() => {}} />
+      </Link>
+    </div>
   );
 };
 

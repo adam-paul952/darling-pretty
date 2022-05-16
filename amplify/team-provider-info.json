@@ -15,12 +15,6 @@
       "auth": {
         "darlingpretty0cfe07d9": {}
       },
-      "hosting": {
-        "amplifyhosting": {
-          "appId": "d1mhh3u1y4eacu",
-          "type": "manual"
-        }
-      },
       "function": {
         "contactformsend": {
           "deploymentBucketName": "amplify-darlingpretty-dev-94209-deployment",
