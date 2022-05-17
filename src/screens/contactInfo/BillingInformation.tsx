@@ -1,17 +1,12 @@
 import React from "react";
 // Components
-import TailwindCSSFormInput from "../../components/TailwindFormInput";
-import TailwindCSSButton from "../../components/visual/TailwindCSSButton";
+import { Button, Col, Form, Row } from "react-bootstrap";
+import RequiredAsterisk from "../../components/visual/RequiredAsterisk";
 // Types
 import { IClientInfoProps } from "./ContactInformation";
 interface IBillingInfoProps extends IClientInfoProps {}
 
-const BillingInformation: React.FC<IBillingInfoProps> = ({
-  newClient,
-  setNewClient,
-  showClientAddress,
-  setShowClientAddress,
-}) => {
+const BillingInformation: React.FC<IBillingInfoProps> = (props) => {
   const {
     addressOne,
     addressTwo,
@@ -19,98 +14,103 @@ const BillingInformation: React.FC<IBillingInfoProps> = ({
     postalCode,
     // province,
     // country
-  } = newClient;
+  } = props.newClient;
 
   const handleClick = () => {
-    setShowClientAddress!(!showClientAddress);
+    props.setShowClientAddress!(!props.showClientAddress);
   };
 
   return (
-    <form>
-      <div className="flex flex-row justify-around">
-        <div className="flex flex-col w-5/12">
-          <TailwindCSSFormInput
-            id="addressOne"
-            label="Address "
-            placeHolder="1234 Main St"
-            value={addressOne}
-            type="text"
-            required
-            onChange={(e: any) => {
-              setNewClient({ ...newClient, addressOne: e.target.value });
-            }}
-          />
-        </div>
-        <div className="flex flex-col w-5/12">
-          <TailwindCSSFormInput
-            id="address2"
-            label="Address 2 "
-            placeHolder="Apartment, studio, or floor"
-            value={addressTwo!}
-            type="text"
-            required={false}
-            onChange={(e: any) => {
-              setNewClient({ ...newClient, addressTwo: e.target.value });
-            }}
-          />
-        </div>
-      </div>
-      <div className="flex flex-row justify-around">
-        <div className="flex flex-col w-5/12">
-          <TailwindCSSFormInput
-            id="city"
-            label="City "
-            placeHolder="1234 Main St"
-            value={city}
-            type="text"
-            required
-            onChange={(e: any) => {
-              setNewClient({ ...newClient, city: e.target.value });
-            }}
-          />
-        </div>
-        <div className="flex flex-col w-5/12">
-          <TailwindCSSFormInput
-            id="province"
-            label="Province "
-            value="Newfoundland and Labrador"
-            type="text"
-            required={false}
-            disabled={true}
-          />
-        </div>
-      </div>
-      <div className="flex flex-row justify-around">
-        <div className="flex flex-col w-5/12">
-          <TailwindCSSFormInput
-            id="postalCode"
-            label="Postal Code "
-            placeHolder="A1A1A1"
-            value={postalCode}
-            type="text"
-            required
-            onChange={(e: any) => {
-              setNewClient({ ...newClient, postalCode: e.target.value });
-            }}
-          />
-        </div>
-        <div className="flex flex-col w-5/12">
-          <TailwindCSSFormInput
-            id="country"
-            label="Country "
-            value="Canada"
-            required={false}
-            disabled={true}
-          />
-        </div>
-      </div>
-      <div className="ml-9 pl-3">
-        <TailwindCSSButton
-          buttonTitle="Complete Billing Info Input"
+    <>
+      <Form className="my-5">
+        <Row className="justify-content-around">
+          <Form.Group as={Col} controlId="address1">
+            <Form.Label>
+              Address <RequiredAsterisk />
+            </Form.Label>
+            <Form.Control
+              placeholder="1234 Main St"
+              value={addressOne}
+              required
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                props.setNewClient({
+                  ...props.newClient,
+                  addressOne: e.target.value,
+                });
+              }}
+            />
+          </Form.Group>
+          <Form.Group as={Col} controlId="address2">
+            <Form.Label>Address 2</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Apartment, studio, or floor"
+              value={addressTwo!}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                props.setNewClient({
+                  ...props.newClient,
+                  addressTwo: e.target.value,
+                });
+              }}
+            />
+          </Form.Group>
+        </Row>
+        <Row className="justify-content-around">
+          <Form.Group as={Col} controlId="city">
+            <Form.Label>
+              City <RequiredAsterisk />
+            </Form.Label>
+            <Form.Control
+              value={city}
+              required
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                props.setNewClient({
+                  ...props.newClient,
+                  city: e.target.value,
+                });
+              }}
+            />
+          </Form.Group>
+          <Form.Group as={Col} controlId="province">
+            <Form.Label>
+              Province <RequiredAsterisk />
+            </Form.Label>
+            <Form.Control value="Newfoundland and Labrador" disabled={true} />
+          </Form.Group>
+        </Row>
+        <Row className="justify-content-around">
+          <Form.Group as={Col} controlId="postalCode">
+            <Form.Label>
+              Postal Code <RequiredAsterisk />
+            </Form.Label>
+            <Form.Control
+              value={postalCode}
+              placeholder="A1A1A1"
+              required
+              onChange={(e: any) => {
+                props.setNewClient({
+                  ...props.newClient,
+                  postalCode: e.target.value,
+                });
+              }}
+            />
+          </Form.Group>
+          <Form.Group as={Col} controlId="country">
+            <Form.Label>Country</Form.Label>
+            <Form.Control disabled={true} value="Canada" />
+          </Form.Group>
+        </Row>
+      </Form>
+      <Row className="justify-content-end">
+        <Button
+          variant="primary"
           onClick={() => handleClick()}
-        />
-      </div>
-    </form>
+          disabled={!addressOne || !city || !postalCode}
+        >
+          Save Billing Info
+        </Button>
+      </Row>
+    </>
   );
 };
 

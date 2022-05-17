@@ -1,6 +1,7 @@
 import React from "react";
 // Components
-import TailwindCSSCard from "./visual/Card";
+import { Link } from "react-router-dom";
+import { Card, CardGroup, Col, Row } from "react-bootstrap";
 // Image
 import darlingPretty from "../images/darling-pretty1.jpg";
 // Hooks
@@ -37,23 +38,39 @@ const ShowAvailablePhotos = () => {
       }
     };
     fetchSessions();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
-      {sessions.map((session: ISessionInfo) => {
+      {sessions.map((session: any) => {
         return (
-          <div key={session.id} className="w-50">
-            <TailwindCSSCard
-              title={session.name}
-              date={session.date}
-              price={session.price}
-              image={darlingPretty}
-              imageAlt="Darling Pretty Logo"
-              link={`/photo/${session.id}`}
-              state={{ session: session }}
-            />
-          </div>
+          <Row key={session.id} lg={2} className="justify-content-center">
+            <CardGroup>
+              <Col className="mb-4">
+                <Card className="photoCard">
+                  <Card.Link
+                    as={Link}
+                    to={`/photo/${session.id}`}
+                    state={{ session: session }}
+                  >
+                    <Card.Img
+                      variant="top"
+                      className="photoCardImage"
+                      src={darlingPretty}
+                      alt="Darling Pretty Logo"
+                    />
+                  </Card.Link>
+                  <Card.Body>
+                    <Card.Title>{session.name}</Card.Title>
+                    <Card.Text>{session.date}</Card.Text>
+                    <hr />
+                    <Card.Text>{session.price}</Card.Text>
+                  </Card.Body>
+                </Card>
+              </Col>
+            </CardGroup>
+          </Row>
         );
       })}
     </>

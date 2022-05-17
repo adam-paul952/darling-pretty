@@ -25,6 +25,7 @@ const DarlingPrettyRouter = () => {
         <Route path="/admin/calendar" element={<SessionCalendar />} />
         <Route path="/admin/editsession" element={<EditSessionInfo />} />
         <Route path="/admin/createsession" element={<CreateSessionScreen />} />
+        <Route path="/admin/contactform" element={<CreateSessionScreen />} />
       </Routes>
     </Router>
   );

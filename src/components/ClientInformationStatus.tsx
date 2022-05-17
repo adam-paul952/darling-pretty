@@ -1,4 +1,5 @@
 import React from "react";
+import { Col, Row } from "react-bootstrap";
 import { GrCheckmark } from "react-icons/gr";
 
 interface IClientInfoStatusProps {
@@ -6,19 +7,16 @@ interface IClientInfoStatusProps {
   complete?: boolean;
 }
 
-const ClientInformationStatus: React.FC<IClientInfoStatusProps> = ({
-  title,
-  complete,
-}) => {
+const ClientInformationStatus: React.FC<IClientInfoStatusProps> = (props) => {
   return (
-    <div className="container mx-auto my-5 flex flex-row items-center bg-green-300 rounded-lg">
-      <div className="flex flex-col w-2/3 items-center">
-        <h2>{title}</h2>
-      </div>
-      <div className="flex flex-col w-1/3">
+    <Row lg={2} className="my-5 info-complete">
+      <Col>
+        <h2 className="info-complete-text">{props.title}</h2>
+      </Col>
+      <Col>
         <GrCheckmark />
-      </div>
-    </div>
+      </Col>
+    </Row>
   );
 };
 

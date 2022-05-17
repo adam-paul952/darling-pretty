@@ -1,7 +1,7 @@
 import React from "react";
 // Components
-import TailwindCSSFormInput from "../../components/TailwindFormInput";
-import TailwindCSSButton from "../../components/visual/TailwindCSSButton";
+import { Button, Col, Form, Row } from "react-bootstrap";
+import RequiredAsterisk from "../../components/visual/RequiredAsterisk";
 // Hooks
 import { IClientInfo } from "../../hooks/useAWSData";
 // Helpers
@@ -16,90 +16,109 @@ export interface IClientInfoProps {
   setShowClientContact?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ClientInformation: React.FC<IClientInfoProps> = ({
-  newClient,
-  setNewClient,
-  showClientAddress,
-  setShowClientAddress,
-  showClientContact,
-  setShowClientContact,
-}) => {
-  const { firstName, lastName, email, phoneNumber } = newClient;
+const ClientInformation: React.FC<IClientInfoProps> = (props) => {
+  const { firstName, lastName, email, phoneNumber } = props.newClient;
 
   const handleClick = () => {
-    setShowClientAddress!(!showClientAddress);
-    setShowClientContact!(!showClientContact);
+    props.setShowClientAddress!(!props.showClientAddress);
+    props.setShowClientContact!(!props.showClientContact);
   };
 
   return (
-    <form>
-      <div className="flex flex-row justify-around">
-        <div className="flex flex-col w-5/12">
-          <TailwindCSSFormInput
-            id="firstName"
-            label="First Name "
-            placeHolder="First Name"
-            value={firstName}
-            type="text"
-            required
-            onChange={(e: any) => {
-              setNewClient({ ...newClient, firstName: e.target.value });
-            }}
-          />
-        </div>
-        <div className="flex flex-col w-5/12">
-          <TailwindCSSFormInput
-            id="lastName"
-            label="Last Name "
-            placeHolder="Last Name"
-            value={lastName}
-            type="text"
-            required
-            onChange={(e: any) => {
-              setNewClient({ ...newClient, lastName: e.target.value });
-            }}
-          />
-        </div>
-      </div>
-      <div className="flex flex-row justify-around">
-        <div className="flex flex-col w-5/12">
-          <TailwindCSSFormInput
-            id="email"
-            label="Email "
-            placeHolder="john.doe@email.com"
-            value={email}
-            type="email"
-            required
-            onChange={(e: any) => {
-              setNewClient({ ...newClient, email: e.target.value });
-            }}
-          />
-        </div>
-        <div className="flex flex-col w-5/12">
-          <TailwindCSSFormInput
-            id="phoneNumber"
-            label="Phone "
-            placeHolder="(555)555-5555"
-            value={phoneNumber}
-            type="text"
-            required
-            onChange={(e: any) => {
-              setNewClient({
-                ...newClient,
-                phoneNumber: formatPhoneNumber(e.target.value),
-              });
-            }}
-          />
-        </div>
-      </div>
-      <div className="ml-9 pl-3">
-        <TailwindCSSButton
-          buttonTitle="Save Contact Info"
+    <>
+      <Form className="my-5">
+        <Row lg={2} className="justify-content-around">
+          <Col>
+            <Form.Group controlId="firstName">
+              <Form.Label>
+                First Name <RequiredAsterisk />
+              </Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="First Name"
+                value={firstName}
+                required
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  props.setNewClient({
+                    ...props.newClient,
+                    firstName: e.target.value,
+                  });
+                }}
+              ></Form.Control>
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group controlId="lastName">
+              <Form.Label>
+                Last Name <RequiredAsterisk />
+              </Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Last Name"
+                value={lastName}
+                required
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  props.setNewClient({
+                    ...props.newClient,
+                    lastName: e.target.value,
+                  });
+                }}
+              ></Form.Control>
+            </Form.Group>
+          </Col>
+        </Row>
+        <Row className="justify-content-around">
+          <Col>
+            <Form.Group controlId="email">
+              <Form.Label>
+                E-mail <RequiredAsterisk />
+              </Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="E-mail Address"
+                value={email}
+                required
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  props.setNewClient({
+                    ...props.newClient,
+                    email: e.target.value,
+                  });
+                }}
+              />
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group controlId="phoneNumber">
+              <Form.Label>
+                Phone Number <RequiredAsterisk />
+              </Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="(555)555-5555"
+                value={phoneNumber}
+                required
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  props.setNewClient({
+                    ...props.newClient,
+                    phoneNumber: formatPhoneNumber(e.target.value),
+                  });
+                }}
+              />
+            </Form.Group>
+          </Col>
+        </Row>
+      </Form>
+      <Row className="justify-content-end">
+        <Button
+          variant="primary"
+          className="w-25"
           onClick={() => handleClick()}
           disabled={!firstName || !lastName || !email || !phoneNumber}
-        />
-      </div>
-    </form>
+        >
+          Save Contact Info
+        </Button>
+      </Row>
+    </>
   );
 };
 

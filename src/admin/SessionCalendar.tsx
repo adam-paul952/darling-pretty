@@ -1,4 +1,5 @@
 import React from "react";
+import SideNav from "./components/SideNav";
 import FullCalendar, { EventInput } from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -57,6 +58,7 @@ const SessionCalendar = () => {
 
   return (
     <div className="mt-1/4">
+      <SideNav />
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         headerToolbar={{

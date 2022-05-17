@@ -8,7 +8,7 @@ img.float_left {
 .buttonLink:active,
 .buttonLink:focus {
   text-decoration: none;
-  color: white;
+  color: #000;
 }
 
 .background::before {
@@ -49,8 +49,130 @@ img.float_left {
   margin-right: auto;
 }
 
+/* Global */
+.text-center {
+  text-align: center;
+}
+.margin-top-5 {
+  margin-top: 5%;
+}
+.col-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.align-self-center {
+  align-self: center;
+}
+/* SideNav */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: -300px;
+  width: 300px;
+  height: 100%;
+  background-color: peru;
+  transition: left 300ms ease-out;
+}
+.sidebar.active {
+  display: flex;
+  flex-direction: column;
+  left: 0;
+  z-index: 10;
+}
+.sidebar ul {
+  margin: 0;
+  padding: 0;
+}
+.sidebar li {
+  list-style: none;
+}
+.sidebar li a {
+  font-size: 18px;
+  text-decoration: none;
+  padding: 10px;
+  display: block;
+  color: #fff;
+}
+.hamburger {
+  border: none;
+  outline: 0;
+  width: 50px;
+  position: absolute;
+  right: -50px;
+  background-color: peru;
+}
+.hamburger:after,
+.hamburger:before,
+.hamburger div {
+  background-color: #fff;
+  height: 5px;
+  margin: 7px 0;
+  border-radius: 3px;
+  content: "";
+  display: block;
+  transition: all 300ms ease-in-out;
+}
+/* Home Page Card */
+.photoCard {
+  border-radius: 20px;
+}
+.photoCardImage {
+  border-radius: 20px;
+}
+/* Button */
+.btn-primary {
+  background-color: #e3e3e3;
+  border-color: #e3e3e3;
+  color: black;
+  font-size: 17px;
+  border-radius: 30px;
+  width: 20%;
+}
+.btn-primary:hover {
+  background-color: #cfcfcf;
+  border-color: #cfcfcf;
+  color: black;
+  font-size: 17px;
+}
+.btn-primary:disabled {
+  background-color: #777575;
+  border-color: #777575;
+  color: black;
+  font-size: 17px;
+}
+/* Forms */
+.required-label {
+  color: rgb(255, 0, 0);
+}
+.info-complete {
+  background-color: rgb(163, 207, 163);
+  border-radius: 30px;
+  align-items: center;
+}
+.info-complete-text {
+  text-align: center;
+}
+/* Contact */
 .contact-form-input {
   width: 63%;
   margin-left: auto;
   margin-right: auto;
+}
+.contact-form-container {
+  margin: 15px auto;
+}
+/* Checkout Container */
+.checkout-container {
+  margin-top: 13%;
+}
+.checkout-row {
+  text-align: center;
+}
+.paypal-button-container {
+  margin: 30px auto;
+  text-align: center;
+  width: 40%;
 }

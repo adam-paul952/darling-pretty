@@ -5,24 +5,19 @@ import addMinutes from "date-fns/addMinutes";
 import addHours from "date-fns/addHours";
 // Types
 import { ISessionInfo } from "../hooks/useAWSData";
-interface Props {
+interface IShowAvailableProps {
   session: ISessionInfo;
   setSessionDate: React.Dispatch<React.SetStateAction<Date | null | undefined>>;
   startDate: Date;
   setStartDate: React.Dispatch<React.SetStateAction<Date>>;
 }
 
-const ShowAvailableTime: React.FC<Props> = ({
-  session,
-  setSessionDate,
-  startDate,
-  setStartDate,
-}) => {
+const ShowAvailableTime: React.FC<IShowAvailableProps> = (props) => {
   const [bookingOptions, setBookingOptions] = React.useState<Date[]>([]);
 
   React.useEffect(() => {
-    const newBookings = session.availableTimes.map((time) => {
-      const date = new Date(session.date);
+    const newBookings = props.session.availableTimes.map((time) => {
+      const date = new Date(props.session.date);
       const timesAvailable = addMinutes(
         addHours(date, parseInt(time.slice(0, 2))),
         parseInt(time.slice(3, 5))
@@ -30,26 +25,27 @@ const ShowAvailableTime: React.FC<Props> = ({
       return timesAvailable;
     });
     setBookingOptions(newBookings);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChange = (date: Date) => {
-    setStartDate!(date);
-    setSessionDate(date);
+    props.setStartDate!(date);
+    props.setSessionDate(date);
   };
 
   return (
     <DatePicker
-      className="mb-2 border border-grey-300 rounded-xl p-1 text-center"
-      selected={startDate}
+      className="mb-2"
+      selected={props.startDate}
       onChange={(date: Date) => {
         handleChange(date);
       }}
       showTimeSelect
       showTimeSelectOnly
-      timeIntervals={session.sessionLength}
+      timeIntervals={props.session.sessionLength}
       timeCaption="Time"
       dateFormat="h:mm aa"
-      includeDates={[new Date(session.date)]}
+      includeDates={[new Date(props.session.date)]}
       includeTimes={bookingOptions}
     />
   );

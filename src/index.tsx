@@ -1,9 +1,8 @@
-import React from "react";
 import ReactDOM from "react-dom";
-// import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "react-datepicker/dist/react-datepicker.css";
 import "./index.css";
+import "react-datepicker/dist/react-datepicker.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
 import reportWebVitals from "./reportWebVitals";
 import DarlingPrettyRouter from "./Routes";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";

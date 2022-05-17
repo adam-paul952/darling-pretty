@@ -2,12 +2,11 @@ import React from "react";
 // Components
 import ReCAPTCHAV2 from "react-google-recaptcha";
 import Header from "../components/Header";
-import TailwindCSSTextArea from "../components/TailwindCSSTextArea";
-import TailwindCSSFormInput from "../components/TailwindFormInput";
-import TailwindCSSButton from "../components/visual/TailwindCSSButton";
+import { Button, Container, Form, Row } from "react-bootstrap";
 import SubmissionComplete from "../components/visual/ContactSuccessMessage";
 // Hooks
 import useContactForm from "../hooks/useContactForm";
+import RequiredAsterisk from "../components/visual/RequiredAsterisk";
 
 const ContactForm = () => {
   const { sendContactForm } = useContactForm();
@@ -28,8 +27,7 @@ const ContactForm = () => {
     setToken(false);
   };
 
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
+  const handleSubmit: React.MouseEventHandler<HTMLButtonElement> = async () => {
     await sendContactForm({ name, email, subject, message });
     console.log(`
     Name: ${name}
@@ -51,74 +49,103 @@ const ContactForm = () => {
   return (
     <>
       <Header title="Contact" />
-      <div className="container">
-        <div className="p-6 rounded-lg shadow-lg bg-white min-w-2/3">
-          <div className="container flex justify-center mt-1 mb-2">
-            <h3>Reach out with any questions or comments!</h3>
-          </div>
-          <form className="w-2/3 mx-auto">
-            <TailwindCSSFormInput
-              id="contactName"
-              placeHolder="Name"
-              label="Name "
-              required
+      <Container>
+        <Row className="margin-top-5">
+          <h3 className="text-center">
+            Reach out with any questions or comments!
+          </h3>
+        </Row>
+        <Form className="contact-form-container">
+          <Form.Group
+            className="mb-3 contact-form-input"
+            controlId="contactName"
+          >
+            <Form.Label>
+              Name <RequiredAsterisk />
+            </Form.Label>
+            <Form.Control
               type="text"
+              placeholder="John Doe"
+              required
               value={name}
-              onChange={(e: any) => setName(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setName(e.target.value)
+              }
             />
-            <TailwindCSSFormInput
-              id="contactEmail"
-              placeHolder="john.doe@email.com"
-              label="Email "
+          </Form.Group>
+          <Form.Group
+            className="mb-3 contact-form-input"
+            controlId="contactEmail"
+          >
+            <Form.Label>
+              Email <RequiredAsterisk />
+            </Form.Label>
+            <Form.Control
+              type="email"
+              placeholder="john.doe@email.com"
               required
-              type="text"
-              onChange={(e: any) => {
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setEmail(e.target.value);
               }}
               value={email}
             />
-            <TailwindCSSFormInput
-              id="contactSubject"
-              placeHolder="Subject"
-              label="Subject "
-              required
+          </Form.Group>
+          <Form.Group
+            className="mb-3 contact-form-input"
+            controlId="contactSubject"
+          >
+            <Form.Label>
+              Subject <RequiredAsterisk />
+            </Form.Label>
+            <Form.Control
               type="text"
-              onChange={(e: any) => {
+              placeholder="Subject"
+              required
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setSubject(e.target.value);
               }}
               value={subject}
             />
-            <TailwindCSSTextArea
-              id="contactMessage"
-              placeHolder="Message"
-              label="Message "
+          </Form.Group>
+          <Form.Group
+            className="mb-3 contact-form-input"
+            controlId="contactMessage"
+          >
+            <Form.Label>
+              Message <RequiredAsterisk />
+            </Form.Label>
+            <Form.Control
+              as="textarea"
+              placeholder="Type your message here..."
               required
               rows={3}
-              onChange={(e: any) => {
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setMessage(e.target.value);
               }}
               value={message}
             />
-            {!success ? (
-              <div className="flex flex-col items-center">
-                <ReCAPTCHAV2
-                  className="my-1"
-                  sitekey={process.env.REACT_APP_SITE_KEY!}
-                  onChange={handleToken}
-                  onExpired={handleExpireToken}
-                />
-                <TailwindCSSButton
-                  buttonTitle="Send Message"
-                  onClick={(e: any) => handleSubmit(e)}
-                  disabled={!token}
-                />
-              </div>
-            ) : (
-              <SubmissionComplete />
-            )}
-          </form>
-        </div>
-      </div>
+          </Form.Group>
+          {!success ? (
+            <Container className="col-center">
+              <ReCAPTCHAV2
+                className="my-1"
+                sitekey={process.env.REACT_APP_SITE_KEY!}
+                onChange={handleToken}
+                onExpired={handleExpireToken}
+              />
+              <Button
+                className="align-self-center"
+                onClick={handleSubmit}
+                disabled={!token}
+              >
+                Send Message
+              </Button>
+            </Container>
+          ) : (
+            <SubmissionComplete />
+          )}
+        </Form>
+      </Container>
     </>
   );
 };
