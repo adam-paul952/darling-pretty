@@ -39,6 +39,7 @@ const Checkout = () => {
           price={session.price!.toString()}
           session={session}
           client={clientInfo}
+          sessionTime={sessionTime}
         />
       </Container>
     </>

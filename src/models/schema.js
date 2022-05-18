@@ -149,14 +149,14 @@ export const schema = {
                 "startTime": {
                     "name": "startTime",
                     "isArray": false,
-                    "type": "AWSTime",
+                    "type": "String",
                     "isRequired": true,
                     "attributes": []
                 },
                 "endTime": {
                     "name": "endTime",
                     "isArray": false,
-                    "type": "AWSTime",
+                    "type": "String",
                     "isRequired": true,
                     "attributes": []
                 },
@@ -192,14 +192,16 @@ export const schema = {
                     "name": "availableTimes",
                     "isArray": true,
                     "type": "String",
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": [],
-                    "isArrayNullable": true
+                    "isArrayNullable": false
                 },
                 "bookings": {
                     "name": "bookings",
                     "isArray": true,
-                    "type": "String",
+                    "type": {
+                        "nonModel": "Booking"
+                    },
                     "isRequired": false,
                     "attributes": [],
                     "isArrayNullable": true
@@ -325,6 +327,33 @@ export const schema = {
         }
     },
     "enums": {},
-    "nonModels": {},
-    "version": "5bbf595d4c1dc4ab4cdfdc47dc26a635"
+    "nonModels": {
+        "Booking": {
+            "name": "Booking",
+            "fields": {
+                "clientId": {
+                    "name": "clientId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "clientName": {
+                    "name": "clientName",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "startTime": {
+                    "name": "startTime",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                }
+            }
+        }
+    },
+    "version": "7d9668470f61e1d53aa170247d8b241e"
 };

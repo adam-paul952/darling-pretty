@@ -93,7 +93,11 @@ export const createSession = /* GraphQL */ `
       price
       sessionDetails
       availableTimes
-      bookings
+      bookings {
+        clientId
+        clientName
+        startTime
+      }
       createdAt
       updatedAt
       _version
@@ -118,7 +122,11 @@ export const updateSession = /* GraphQL */ `
       price
       sessionDetails
       availableTimes
-      bookings
+      bookings {
+        clientId
+        clientName
+        startTime
+      }
       createdAt
       updatedAt
       _version
@@ -143,7 +151,11 @@ export const deleteSession = /* GraphQL */ `
       price
       sessionDetails
       availableTimes
-      bookings
+      bookings {
+        clientId
+        clientName
+        startTime
+      }
       createdAt
       updatedAt
       _version

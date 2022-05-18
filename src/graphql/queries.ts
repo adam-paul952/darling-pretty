@@ -103,7 +103,11 @@ export const getSession = /* GraphQL */ `
       price
       sessionDetails
       availableTimes
-      bookings
+      bookings {
+        clientId
+        clientName
+        startTime
+      }
       createdAt
       updatedAt
       _version
@@ -130,10 +134,11 @@ export const listSessions = /* GraphQL */ `
         price
         sessionDetails
         availableTimes
-        bookings
         createdAt
         updatedAt
+        _version
         _deleted
+        _lastChangedAt
       }
       nextToken
       startedAt
@@ -164,7 +169,6 @@ export const syncSessions = /* GraphQL */ `
         price
         sessionDetails
         availableTimes
-        bookings
         createdAt
         updatedAt
         _version

@@ -24,7 +24,7 @@
       "Type": "String",
       "Default": "apidarlingprettyGraphQLAPIEndpointOutput"
     },
-    "sesEmail": {
+    "sesSendEmail": {
       "Type": "String"
     }
   },
@@ -81,8 +81,8 @@
             "REGION": {
               "Ref": "AWS::Region"
             },
-            "SES_EMAIL": {
-              "Ref": "sesEmail"
+            "SES_SEND_EMAIL": {
+              "Ref": "sesSendEmail"
             }
           }
         },

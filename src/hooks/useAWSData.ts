@@ -1,5 +1,9 @@
 import { API, graphqlOperation } from "aws-amplify";
-import { createSession, createClients } from "../graphql/mutations";
+import {
+  createSession,
+  updateSession,
+  createClients,
+} from "../graphql/mutations";
 import { listSessions } from "../graphql/queries";
 
 export interface ISessionInfo {
@@ -13,6 +17,7 @@ export interface ISessionInfo {
   price: number | undefined;
   sessionDetails: string;
   availableTimes: string[];
+  bookings?: IBookingInfo[];
 }
 
 export interface IClientInfo {
@@ -29,9 +34,17 @@ export interface IClientInfo {
   country: string;
 }
 
+interface IUpdateSessionWithClientProps {
+  id: string;
+  bookings: IBookingInfo[];
+  availableTimes: string[];
+}
+
 export interface IBookingInfo {
-  sessionID: string;
-  title: string;
+  clientId: string;
+  clientName: string;
+  startTime: string;
+  endTime: string;
 }
 
 const useAWSDatastore = () => {
@@ -48,6 +61,7 @@ const useAWSDatastore = () => {
         price: newSession.price,
         sessionDetails: newSession.sessionDetails,
         availableTimes: newSession.availableTimes,
+        bookings: [],
       };
       const session = await API.graphql(
         graphqlOperation(createSession, { input: sessionDetails })
@@ -69,10 +83,24 @@ const useAWSDatastore = () => {
       // throw new Error(error);
     }
   };
+  // Update Session with Booking less Available time
+  const updateBookingWithClient = async (
+    updatedSessionDetails: IUpdateSessionWithClientProps
+  ) => {
+    try {
+      // console.log(`UpdatedSessionDetails from hook: `, updatedSessionDetails);
+      const updatedSession: any = await API.graphql(
+        graphqlOperation(updateSession, { input: updatedSessionDetails })
+      );
+      return updatedSession;
+    } catch (error) {
+      console.log(error);
+    }
+  };
   // Create New Client
   const createNewClient = async (newClient: IClientInfo) => {
     try {
-      const client = await API.graphql(
+      const client: any = await API.graphql(
         graphqlOperation(createClients, { input: newClient })
       );
       console.log(client);
@@ -86,6 +114,7 @@ const useAWSDatastore = () => {
     createNewSession,
     listAllSessions,
     createNewClient,
+    updateBookingWithClient,
   };
 };
 

@@ -16,9 +16,9 @@ exports.handler = async (event) => {
       await ses
         .sendEmail({
           Destination: {
-            ToAddresses: [process.env.SES_EMAIL],
+            ToAddresses: [process.env.SES_SEND_EMAIL],
           },
-          Source: process.env.SES_EMAIL,
+          Source: process.env.SES_SEND_EMAIL,
           Message: {
             Subject: { Data: "Contact Form Submission" },
             Body: {

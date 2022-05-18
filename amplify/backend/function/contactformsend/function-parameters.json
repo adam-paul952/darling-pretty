@@ -2,8 +2,8 @@
   "lambdaLayers": [],
   "environmentVariableList": [
     {
-      "cloudFormationParameterName": "sesEmail",
-      "environmentVariableName": "SES_EMAIL"
+      "cloudFormationParameterName": "sesSendEmail",
+      "environmentVariableName": "SES_SEND_EMAIL"
     }
   ]
 }

@@ -1,6 +1,6 @@
 projects:
   darlingpretty:
-    schemaPath: src/graphql/schema.json
+    schemaPath: amplify/backend/api/darlingpretty/build/schema.graphql
     includes:
       - src/graphql/**/*.ts
     excludes:
@@ -10,6 +10,7 @@ projects:
         codeGenTarget: typescript
         generatedFileName: src/API.ts
         docsFilePath: src/graphql
+        maxDepth: 2
 extensions:
   amplify:
     version: 3

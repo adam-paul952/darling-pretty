@@ -101,7 +101,8 @@ img.float_left {
   outline: 0;
   width: 50px;
   position: absolute;
-  right: -50px;
+  right: -65px;
+  top: 10px;
   background-color: peru;
 }
 .hamburger:after,
@@ -175,4 +176,9 @@ img.float_left {
   margin: 30px auto;
   text-align: center;
   width: 40%;
+}
+/* Calendar */
+.calendar-container {
+  margin: 20px auto;
+  padding: 10px auto;
 }

@@ -1,54 +1,44 @@
 import React from "react";
+// Components
 import SideNav from "./components/SideNav";
-import FullCalendar, { EventInput } from "@fullcalendar/react";
+import FullCalendar from "@fullcalendar/react";
+import { Container } from "react-bootstrap";
+// FullCalendar Plugins
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import useAWSDatastore, { ISessionInfo } from "../hooks/useAWSData";
-import { addDays, addHours, addMinutes } from "date-fns";
-
+// Hooks
+import useAWSDatastore from "../hooks/useAWSData";
+import moment from "moment";
+// Types
 interface IEvents {
-  date: Date;
   title: string;
+  start?: Date;
+  end?: Date;
+  allDay?: boolean;
 }
-
-type SessionEventsT = ISessionInfo[];
-
-// const clientEvents: EventInput[] = clients.map((client) => {
-//   const { name, contact, bookingDetails } = client;
-
-//   let startTime = new Date(bookingDetails.sessionDate);
-//   let endTime = addMinutes(startTime, parseInt(bookingDetails.lengthOfSession));
-
-//   return {
-//     title: `${name.firstName} ${name.lastName} - ${contact.phoneNumber}`,
-//     start: startTime,
-//     end: endTime,
-//   };
-// });
 
 const SessionCalendar = () => {
   const { listAllSessions } = useAWSDatastore();
-  const [sessions, setSessions] = React.useState<any>([]);
+  const [sessions, setSessions] = React.useState<IEvents[]>([]);
 
   React.useEffect(() => {
     const fetchSessions = async () => {
       try {
         const allSessions = await listAllSessions();
         const currentSessions = allSessions.map((session: any, index: any) => {
-          const date = addDays(new Date(session.date), 1);
-          const startTime = addHours(
-            date,
-            parseInt(session.startTime.slice(0, 2))
-          );
-          console.log(session.availableTimes);
+          const startTime = `${session.date}T${session.startTime}`;
+          const endTime = `${session.date}T${session.endTime}`;
+          const momentDate = moment().format(startTime);
+          const momentTime = moment().format(endTime);
           return {
             title: session.name,
-            start: session.availableTimes[index],
+            allDay: true,
+            start: momentDate,
+            // end: momentTime,
           };
         });
-        console.log(currentSessions);
-        // console.log(testSessionEdit);
+        setSessions(currentSessions);
       } catch (error) {
         console.log(error);
       }
@@ -57,9 +47,10 @@ const SessionCalendar = () => {
   }, []);
 
   return (
-    <div className="mt-1/4">
+    <Container className="calendar-container">
       <SideNav />
       <FullCalendar
+        contentHeight={575}
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         headerToolbar={{
           left: "prev,next today",
@@ -73,7 +64,6 @@ const SessionCalendar = () => {
         dayMaxEvents={true}
         initialDate={new Date()}
         events={sessions}
-        // events={[{ title: "Test", date: new Date() }]}
         nowIndicator={true}
         slotDuration="00:20:00"
         // weekends={this.state.weekendsVisible}
@@ -88,7 +78,7 @@ const SessionCalendar = () => {
         eventRemove={function(){}}
         */
       />
-    </div>
+    </Container>
   );
 };
 

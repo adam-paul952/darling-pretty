@@ -18,8 +18,8 @@
       "function": {
         "contactformsend": {
           "deploymentBucketName": "amplify-darlingpretty-dev-94209-deployment",
-          "s3Key": "amplify-builds/contactformsend-30653447726f49755175-build.zip",
-          "sesEmail": "adam.paul@live.com"
+          "s3Key": "amplify-builds/contactformsend-6d644365687443347644-build.zip",
+          "sesSendEmail": "adam.paul@live.com"
         }
       }
     }

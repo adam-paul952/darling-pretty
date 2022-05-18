@@ -2,7 +2,12 @@ import { ModelInit, MutableModel, PersistentModelConstructor } from "@aws-amplif
 
 
 
-
+export declare class Booking {
+  readonly clientId: string;
+  readonly clientName: string;
+  readonly startTime: string;
+  constructor(init: ModelInit<Booking>);
+}
 
 type ClientsMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
@@ -44,8 +49,8 @@ export declare class Session {
   readonly sessionInfo: string;
   readonly price: number;
   readonly sessionDetails: string;
-  readonly availableTimes?: (string | null)[] | null;
-  readonly bookings?: (string | null)[] | null;
+  readonly availableTimes: string[];
+  readonly bookings?: (Booking | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<Session, SessionMetaData>);

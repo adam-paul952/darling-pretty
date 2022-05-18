@@ -16,14 +16,21 @@ type Session @model @auth(rules: [{ allow: public }]) {
   id: ID!
   name: String!
   date: AWSDate!
-  startTime: AWSTime!
-  endTime: AWSTime!
+  startTime: String!
+  endTime: String!
   sessionLength: Int!
   sessionInfo: String!
   price: Int!
   sessionDetails: String!
-  availableTimes: [String]
-  bookings: [String]
+  availableTimes: [String!]!
+  bookings: [Booking]
+  # @hasMany(indexName: "bySession", fields: ["id"])
+}
+
+type Booking {
+  clientId: ID!
+  clientName: String!
+  startTime: String!
 }
 
 type Contact @model @auth(rules: [{ allow: public, operations: [create] }]) {
@@ -33,3 +40,12 @@ type Contact @model @auth(rules: [{ allow: public, operations: [create] }]) {
   subject: String!
   message: String!
 }
+
+# type BookingInput @model @auth(rules: [{ allow: public }]) {
+#   clientId: ID!
+#   session: Session! @belongsTo
+#   clientName: String!
+#   startTime: String!
+#   endTime: String!
+#   sessionId: ID! @index(name: "bySession")
+# }
