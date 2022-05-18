@@ -18,76 +18,51 @@ interface IPaypalProps {
 const Paypal = (props: IPaypalProps) => {
   const [{ options, isPending }] = usePayPalScriptReducer();
   const { createNewClient, updateBookingWithClient } = useAWSData();
-  const { name } = props.session;
 
+  const { id, name, availableTimes, bookings } = props.session;
+  const { firstName, lastName } = props.client;
+  // Determine if transaction was completed
   const [isComplete, setComplete] = React.useState<boolean>(false);
 
-  const { firstName, lastName } = props.client;
   const sessionTime = moment(props.sessionTime).format("hh:mm");
-  const sessionEndTime = moment(props.sessionTime)
-    .add(props.session.sessionLength, "m")
-    .format("hh:mm");
 
   const addClientToDatabase = async () => {
     try {
       const newClient = await createNewClient(props.client);
-      return newClient;
+      const editAvailableTimes = availableTimes.filter(
+        (time: string) => time !== sessionTime
+      );
+      const bookingDetails: IBookingInfo = {
+        clientId: newClient.id,
+        clientName: `${firstName} ${lastName}`,
+        startTime: sessionTime,
+      };
+      return { bookingDetails, editAvailableTimes };
     } catch (err: any) {
       console.log(err);
       throw new Error(err);
     }
   };
 
-  const onUpdateBooking = async (clientId: string) => {
-    const editAvailableTimes = props.session.availableTimes.filter(
-      (time: string) => time !== sessionTime
-    );
-    const bookingDetails: IBookingInfo = {
-      clientId: clientId,
-      clientName: `${firstName} ${lastName}`,
-      startTime: sessionTime,
-      endTime: sessionEndTime,
-    };
-    return { bookingDetails, editAvailableTimes };
-  };
-
-  React.useEffect(() => {
-    console.log(`Transaction complete: `, isComplete);
-  }, [isComplete]);
-
-  // React.useEffect(() => {
-  //   const updateArray = () => {
-  //     const editAvailableTimes = props.session.availableTimes.filter(
-  //       (time: string) => time !== sessionTime
-  //     );
-  //     console.log(props.session.availableTimes);
-  //     console.log(editAvailableTimes);
-  //   };
-  //   updateArray();
-  // }, []);
-
   React.useEffect(() => {
     const handleSessionUpdate = async () => {
-      // if (isComplete) {
-      try {
-        const newClient = await addClientToDatabase();
-        // const newClient = { id: "1" };
-        const { bookingDetails, editAvailableTimes } = await onUpdateBooking(
-          newClient.id
-        );
-        const updatedSession = await updateBookingWithClient({
-          id: props.session.id!,
-          bookings: [...props.session.bookings!, bookingDetails],
-          availableTimes: editAvailableTimes,
-        });
-        console.log(`Updated session from paypal: `, updatedSession);
-      } catch (error) {
-        console.log(error);
+      if (isComplete) {
+        try {
+          const { bookingDetails, editAvailableTimes } =
+            await addClientToDatabase();
+          await updateBookingWithClient({
+            id: id!,
+            bookings: [...bookings!, bookingDetails],
+            availableTimes: editAvailableTimes,
+          });
+        } catch (error) {
+          console.log(error);
+        }
       }
-      // }
     };
     handleSessionUpdate();
-  }, []);
+    //eslint-disable-next-line
+  }, [isComplete]);
 
   return (
     <>

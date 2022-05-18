@@ -1,13 +1,11 @@
 import React from "react";
 // Components
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Button, Container, Row } from "react-bootstrap";
 import Header from "../components/Header";
 import ClientInformation from "./contactInfo/ContactInformation";
 import BillingInformation from "./contactInfo/BillingInformation";
 import ClientInformationStatus from "../components/ClientInformationStatus";
-//Hooks
-import { useLocation } from "react-router-dom";
 // Types
 import { IClientInfo, ISessionInfo } from "../hooks/useAWSData";
 export interface LocationProps {

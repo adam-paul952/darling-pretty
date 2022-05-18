@@ -24,7 +24,6 @@ type Session @model @auth(rules: [{ allow: public }]) {
   sessionDetails: String!
   availableTimes: [String!]!
   bookings: [Booking]
-  # @hasMany(indexName: "bySession", fields: ["id"])
 }
 
 type Booking {
@@ -40,12 +39,3 @@ type Contact @model @auth(rules: [{ allow: public, operations: [create] }]) {
   subject: String!
   message: String!
 }
-
-# type BookingInput @model @auth(rules: [{ allow: public }]) {
-#   clientId: ID!
-#   session: Session! @belongsTo
-#   clientName: String!
-#   startTime: String!
-#   endTime: String!
-#   sessionId: ID! @index(name: "bySession")
-# }
