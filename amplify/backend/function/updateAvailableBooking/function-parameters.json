@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "api": {
+      "darlingpretty": [
+        "Mutation"
+      ]
+    }
+  },
+  "lambdaLayers": [],
+  "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "session",
+      "environmentVariableName": "Session"
+    }
+  ]
+}

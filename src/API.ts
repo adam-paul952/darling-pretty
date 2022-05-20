@@ -2,38 +2,23 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type CreateClientsInput = {
-  id?: string | null,
-  firstName: string,
-  lastName: string,
-  phoneNumber: string,
-  email: string,
-  addressOne: string,
-  addressTwo?: string | null,
-  city: string,
-  postalCode: string,
-  province: string,
-  country: string,
-  _version?: number | null,
+export type ModelSessionFilterInput = {
+  id?: ModelIDInput | null,
+  name?: ModelStringInput | null,
+  date?: ModelStringInput | null,
+  startTime?: ModelStringInput | null,
+  endTime?: ModelStringInput | null,
+  sessionLength?: ModelIntInput | null,
+  sessionInfo?: ModelStringInput | null,
+  price?: ModelIntInput | null,
+  sessionDetails?: ModelStringInput | null,
+  availableTimes?: ModelStringInput | null,
+  and?: Array< ModelSessionFilterInput | null > | null,
+  or?: Array< ModelSessionFilterInput | null > | null,
+  not?: ModelSessionFilterInput | null,
 };
 
-export type ModelClientsConditionInput = {
-  firstName?: ModelStringInput | null,
-  lastName?: ModelStringInput | null,
-  phoneNumber?: ModelStringInput | null,
-  email?: ModelStringInput | null,
-  addressOne?: ModelStringInput | null,
-  addressTwo?: ModelStringInput | null,
-  city?: ModelStringInput | null,
-  postalCode?: ModelStringInput | null,
-  province?: ModelStringInput | null,
-  country?: ModelStringInput | null,
-  and?: Array< ModelClientsConditionInput | null > | null,
-  or?: Array< ModelClientsConditionInput | null > | null,
-  not?: ModelClientsConditionInput | null,
-};
-
-export type ModelStringInput = {
+export type ModelIDInput = {
   ne?: string | null,
   eq?: string | null,
   le?: string | null,
@@ -71,6 +56,99 @@ export type ModelSizeInput = {
   ge?: number | null,
   gt?: number | null,
   between?: Array< number | null > | null,
+};
+
+export type ModelStringInput = {
+  ne?: string | null,
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  contains?: string | null,
+  notContains?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+  size?: ModelSizeInput | null,
+};
+
+export type ModelIntInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+};
+
+export type ModelSessionConnection = {
+  __typename: "ModelSessionConnection",
+  items:  Array<Session | null >,
+  nextToken?: string | null,
+  startedAt?: number | null,
+};
+
+export type Session = {
+  __typename: "Session",
+  id: string,
+  name: string,
+  date: string,
+  startTime: string,
+  endTime: string,
+  sessionLength: number,
+  sessionInfo: string,
+  price: number,
+  sessionDetails: string,
+  availableTimes: Array< string >,
+  bookings?:  Array<Booking | null > | null,
+  createdAt: string,
+  updatedAt: string,
+  _version: number,
+  _deleted?: boolean | null,
+  _lastChangedAt: number,
+};
+
+export type Booking = {
+  __typename: "Booking",
+  clientId: string,
+  clientName: string,
+  startTime: string,
+};
+
+export type CreateClientsInput = {
+  id?: string | null,
+  firstName: string,
+  lastName: string,
+  phoneNumber: string,
+  email: string,
+  addressOne: string,
+  addressTwo?: string | null,
+  city: string,
+  postalCode: string,
+  province: string,
+  country: string,
+  _version?: number | null,
+};
+
+export type ModelClientsConditionInput = {
+  firstName?: ModelStringInput | null,
+  lastName?: ModelStringInput | null,
+  phoneNumber?: ModelStringInput | null,
+  email?: ModelStringInput | null,
+  addressOne?: ModelStringInput | null,
+  addressTwo?: ModelStringInput | null,
+  city?: ModelStringInput | null,
+  postalCode?: ModelStringInput | null,
+  province?: ModelStringInput | null,
+  country?: ModelStringInput | null,
+  and?: Array< ModelClientsConditionInput | null > | null,
+  or?: Array< ModelClientsConditionInput | null > | null,
+  not?: ModelClientsConditionInput | null,
 };
 
 export type Clients = {
@@ -147,45 +225,6 @@ export type ModelSessionConditionInput = {
   and?: Array< ModelSessionConditionInput | null > | null,
   or?: Array< ModelSessionConditionInput | null > | null,
   not?: ModelSessionConditionInput | null,
-};
-
-export type ModelIntInput = {
-  ne?: number | null,
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  between?: Array< number | null > | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-};
-
-export type Session = {
-  __typename: "Session",
-  id: string,
-  name: string,
-  date: string,
-  startTime: string,
-  endTime: string,
-  sessionLength: number,
-  sessionInfo: string,
-  price: number,
-  sessionDetails: string,
-  availableTimes: Array< string >,
-  bookings?:  Array<Booking | null > | null,
-  createdAt: string,
-  updatedAt: string,
-  _version: number,
-  _deleted?: boolean | null,
-  _lastChangedAt: number,
-};
-
-export type Booking = {
-  __typename: "Booking",
-  clientId: string,
-  clientName: string,
-  startTime: string,
 };
 
 export type UpdateSessionInput = {
@@ -272,48 +311,9 @@ export type ModelClientsFilterInput = {
   not?: ModelClientsFilterInput | null,
 };
 
-export type ModelIDInput = {
-  ne?: string | null,
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  contains?: string | null,
-  notContains?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-  size?: ModelSizeInput | null,
-};
-
 export type ModelClientsConnection = {
   __typename: "ModelClientsConnection",
   items:  Array<Clients | null >,
-  nextToken?: string | null,
-  startedAt?: number | null,
-};
-
-export type ModelSessionFilterInput = {
-  id?: ModelIDInput | null,
-  name?: ModelStringInput | null,
-  date?: ModelStringInput | null,
-  startTime?: ModelStringInput | null,
-  endTime?: ModelStringInput | null,
-  sessionLength?: ModelIntInput | null,
-  sessionInfo?: ModelStringInput | null,
-  price?: ModelIntInput | null,
-  sessionDetails?: ModelStringInput | null,
-  availableTimes?: ModelStringInput | null,
-  and?: Array< ModelSessionFilterInput | null > | null,
-  or?: Array< ModelSessionFilterInput | null > | null,
-  not?: ModelSessionFilterInput | null,
-};
-
-export type ModelSessionConnection = {
-  __typename: "ModelSessionConnection",
-  items:  Array<Session | null >,
   nextToken?: string | null,
   startedAt?: number | null,
 };
@@ -334,6 +334,44 @@ export type ModelContactConnection = {
   items:  Array<Contact | null >,
   nextToken?: string | null,
   startedAt?: number | null,
+};
+
+export type ListSessionsWithBookingsQueryVariables = {
+  filter?: ModelSessionFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListSessionsWithBookingsQuery = {
+  listSessions?:  {
+    __typename: "ModelSessionConnection",
+    items:  Array< {
+      __typename: "Session",
+      id: string,
+      name: string,
+      date: string,
+      startTime: string,
+      endTime: string,
+      sessionLength: number,
+      sessionInfo: string,
+      price: number,
+      sessionDetails: string,
+      availableTimes: Array< string >,
+      bookings?:  Array< {
+        __typename: "Booking",
+        clientId: string,
+        clientName: string,
+        startTime: string,
+      } | null > | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
 };
 
 export type CreateClientsMutationVariables = {

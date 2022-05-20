@@ -110,6 +110,7 @@ const useAWSDatastore = () => {
             bookings: bookings,
             availableTimes: availableTimes,
           },
+          condition: { availableTimes: { attributeType: "stringSet" } },
         })
       );
       return updatedSession;
