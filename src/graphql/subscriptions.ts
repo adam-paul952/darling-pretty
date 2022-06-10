@@ -2,6 +2,75 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const onCreateSessions = /* GraphQL */ `
+  subscription OnCreateSessions {
+    onCreateSessions {
+      id
+      name
+      date
+      startTime
+      endTime
+      sessionLength
+      sessionInfo
+      price
+      sessionDetails
+      availableTimes
+      bookings {
+        clientId
+        clientName
+        startTime
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateSessions = /* GraphQL */ `
+  subscription OnUpdateSessions {
+    onUpdateSessions {
+      id
+      name
+      date
+      startTime
+      endTime
+      sessionLength
+      sessionInfo
+      price
+      sessionDetails
+      availableTimes
+      bookings {
+        clientId
+        clientName
+        startTime
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteSessions = /* GraphQL */ `
+  subscription OnDeleteSessions {
+    onDeleteSessions {
+      id
+      name
+      date
+      startTime
+      endTime
+      sessionLength
+      sessionInfo
+      price
+      sessionDetails
+      availableTimes
+      bookings {
+        clientId
+        clientName
+        startTime
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const onCreateClients = /* GraphQL */ `
   subscription OnCreateClients {
     onCreateClients {
@@ -18,9 +87,6 @@ export const onCreateClients = /* GraphQL */ `
       country
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -40,9 +106,6 @@ export const onUpdateClients = /* GraphQL */ `
       country
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -62,87 +125,6 @@ export const onDeleteClients = /* GraphQL */ `
       country
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const onCreateSession = /* GraphQL */ `
-  subscription OnCreateSession {
-    onCreateSession {
-      id
-      name
-      date
-      startTime
-      endTime
-      sessionLength
-      sessionInfo
-      price
-      sessionDetails
-      availableTimes
-      bookings {
-        clientId
-        clientName
-        startTime
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const onUpdateSession = /* GraphQL */ `
-  subscription OnUpdateSession {
-    onUpdateSession {
-      id
-      name
-      date
-      startTime
-      endTime
-      sessionLength
-      sessionInfo
-      price
-      sessionDetails
-      availableTimes
-      bookings {
-        clientId
-        clientName
-        startTime
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const onDeleteSession = /* GraphQL */ `
-  subscription OnDeleteSession {
-    onDeleteSession {
-      id
-      name
-      date
-      startTime
-      endTime
-      sessionLength
-      sessionInfo
-      price
-      sessionDetails
-      availableTimes
-      bookings {
-        clientId
-        clientName
-        startTime
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -156,9 +138,6 @@ export const onCreateContact = /* GraphQL */ `
       message
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -172,9 +151,6 @@ export const onUpdateContact = /* GraphQL */ `
       message
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -188,9 +164,6 @@ export const onDeleteContact = /* GraphQL */ `
       message
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;

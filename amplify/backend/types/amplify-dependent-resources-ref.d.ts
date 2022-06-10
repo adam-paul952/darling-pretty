@@ -7,7 +7,7 @@ export type AmplifyDependentResourcesAttributes = {
         }
     },
     "auth": {
-        "darlingpretty0cfe07d9": {
+        "darlingpretty6659593d": {
             "IdentityPoolId": "string",
             "IdentityPoolName": "string",
             "UserPoolId": "string",
@@ -18,7 +18,7 @@ export type AmplifyDependentResourcesAttributes = {
         }
     },
     "function": {
-        "contactformsend": {
+        "contactFormUploader": {
             "Name": "string",
             "Arn": "string",
             "Region": "string",

@@ -1,28 +1,31 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-darlingpretty-dev-94209-authRole",
-      "UnauthRoleArn": "arn:aws:iam::318571327234:role/amplify-darlingpretty-dev-94209-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::318571327234:role/amplify-darlingpretty-dev-94209-authRole",
+      "AuthRoleName": "amplify-darlingpretty-dev-163848-authRole",
+      "UnauthRoleArn": "arn:aws:iam::318571327234:role/amplify-darlingpretty-dev-163848-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::318571327234:role/amplify-darlingpretty-dev-163848-authRole",
       "Region": "ca-central-1",
-      "DeploymentBucketName": "amplify-darlingpretty-dev-94209-deployment",
-      "UnauthRoleName": "amplify-darlingpretty-dev-94209-unauthRole",
-      "StackName": "amplify-darlingpretty-dev-94209",
-      "StackId": "arn:aws:cloudformation:ca-central-1:318571327234:stack/amplify-darlingpretty-dev-94209/96ae0410-d123-11ec-9b8d-0a7266de1350",
-      "AmplifyAppId": "d1mhh3u1y4eacu"
+      "DeploymentBucketName": "amplify-darlingpretty-dev-163848-deployment",
+      "UnauthRoleName": "amplify-darlingpretty-dev-163848-unauthRole",
+      "StackName": "amplify-darlingpretty-dev-163848",
+      "StackId": "arn:aws:cloudformation:ca-central-1:318571327234:stack/amplify-darlingpretty-dev-163848/c222d320-e8f0-11ec-a70f-0a831d0e4748",
+      "AmplifyAppId": "d39vzlhubvd4cd"
     },
     "categories": {
       "auth": {
-        "darlingpretty0cfe07d9": {}
+        "darlingpretty6659593d": {}
       },
       "function": {
-        "contactformsend": {
-          "deploymentBucketName": "amplify-darlingpretty-dev-94209-deployment",
-          "s3Key": "amplify-builds/contactformsend-36354f37467a6f474537-build.zip",
-          "sesSendEmail": "adam.paul@live.com"
-        },
-        "updateAvailableBooking": {
-          "session": "Session"
+        "contactFormUploader": {
+          "sesEmail": "adam.paul@live.com",
+          "deploymentBucketName": "amplify-darlingpretty-dev-163848-deployment",
+          "s3Key": "amplify-builds/contactFormUploader-4844585458517948327a-build.zip"
+        }
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d39vzlhubvd4cd",
+          "type": "manual"
         }
       }
     }

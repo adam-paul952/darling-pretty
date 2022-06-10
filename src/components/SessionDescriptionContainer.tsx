@@ -9,6 +9,8 @@ import darlingPretty from "../images/darling-pretty1.jpg";
 // Date FNS
 import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
+
+import DOMPurify from "dompurify";
 //Types
 import { ISessionInfo } from "../hooks/useAWSData";
 interface ISessionInfoProps {
@@ -26,6 +28,10 @@ const SessionInfo: React.FC<ISessionInfoProps> = (props) => {
   const [startDate, setStartDate] = React.useState<Date>(
     setHours(setMinutes(new Date(props.session.date), startMinute), startHour)
   );
+
+  const sanitizeData = () => ({
+    __html: DOMPurify.sanitize(props.session.sessionDetails),
+  });
 
   return (
     <Container key={props.session.id} className="mt-2 pt-2">
@@ -49,11 +55,7 @@ const SessionInfo: React.FC<ISessionInfoProps> = (props) => {
       <Row lg={2} className="">
         <Col className="px-1">
           <h2>Session Includes:</h2>
-          <div
-            dangerouslySetInnerHTML={{
-              __html: props.session.sessionDetails,
-            }}
-          />
+          <div dangerouslySetInnerHTML={sanitizeData()} />
         </Col>
         <Col lg={3} className="mx-auto">
           <p>Available Times:</p>
@@ -77,7 +79,7 @@ const SessionInfo: React.FC<ISessionInfoProps> = (props) => {
             </Button>
           </Link>
         </Col>
-        <hr className="w-100" />
+        {/* <hr className="w-100" /> */}
       </Row>
     </Container>
   );

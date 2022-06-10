@@ -1,6 +1,6 @@
 export const listSessionsWithBookings = /* GraphQL */ `
-  query ListSessionsWithBookings(
-    $filter: ModelSessionFilterInput
+  query ListSessions(
+    $filter: ModelSessionsFilterInput
     $limit: Int
     $nextToken: String
   ) {
@@ -23,12 +23,8 @@ export const listSessionsWithBookings = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       nextToken
-      startedAt
     }
   }
 `;

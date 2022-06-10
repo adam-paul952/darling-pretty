@@ -15,7 +15,7 @@ const Header = (props: HeaderProps) => {
         variant="light"
       >
         <Container>
-          <Navbar.Brand>{props.title}</Navbar.Brand>
+          <Navbar.Brand href="/">{props.title}</Navbar.Brand>
           <Nav className="d-flex flex-row bd-highlight">
             <NavDropdown
               className="px-3"

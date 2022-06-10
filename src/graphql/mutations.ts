@@ -2,6 +2,84 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const createSessions = /* GraphQL */ `
+  mutation CreateSessions(
+    $input: CreateSessionsInput!
+    $condition: ModelSessionsConditionInput
+  ) {
+    createSessions(input: $input, condition: $condition) {
+      id
+      name
+      date
+      startTime
+      endTime
+      sessionLength
+      sessionInfo
+      price
+      sessionDetails
+      availableTimes
+      bookings {
+        clientId
+        clientName
+        startTime
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateSessions = /* GraphQL */ `
+  mutation UpdateSessions(
+    $input: UpdateSessionsInput!
+    $condition: ModelSessionsConditionInput
+  ) {
+    updateSessions(input: $input, condition: $condition) {
+      id
+      name
+      date
+      startTime
+      endTime
+      sessionLength
+      sessionInfo
+      price
+      sessionDetails
+      availableTimes
+      bookings {
+        clientId
+        clientName
+        startTime
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteSessions = /* GraphQL */ `
+  mutation DeleteSessions(
+    $input: DeleteSessionsInput!
+    $condition: ModelSessionsConditionInput
+  ) {
+    deleteSessions(input: $input, condition: $condition) {
+      id
+      name
+      date
+      startTime
+      endTime
+      sessionLength
+      sessionInfo
+      price
+      sessionDetails
+      availableTimes
+      bookings {
+        clientId
+        clientName
+        startTime
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const createClients = /* GraphQL */ `
   mutation CreateClients(
     $input: CreateClientsInput!
@@ -21,9 +99,6 @@ export const createClients = /* GraphQL */ `
       country
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -46,9 +121,6 @@ export const updateClients = /* GraphQL */ `
       country
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -71,96 +143,6 @@ export const deleteClients = /* GraphQL */ `
       country
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const createSession = /* GraphQL */ `
-  mutation CreateSession(
-    $input: CreateSessionInput!
-    $condition: ModelSessionConditionInput
-  ) {
-    createSession(input: $input, condition: $condition) {
-      id
-      name
-      date
-      startTime
-      endTime
-      sessionLength
-      sessionInfo
-      price
-      sessionDetails
-      availableTimes
-      bookings {
-        clientId
-        clientName
-        startTime
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const updateSession = /* GraphQL */ `
-  mutation UpdateSession(
-    $input: UpdateSessionInput!
-    $condition: ModelSessionConditionInput
-  ) {
-    updateSession(input: $input, condition: $condition) {
-      id
-      name
-      date
-      startTime
-      endTime
-      sessionLength
-      sessionInfo
-      price
-      sessionDetails
-      availableTimes
-      bookings {
-        clientId
-        clientName
-        startTime
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const deleteSession = /* GraphQL */ `
-  mutation DeleteSession(
-    $input: DeleteSessionInput!
-    $condition: ModelSessionConditionInput
-  ) {
-    deleteSession(input: $input, condition: $condition) {
-      id
-      name
-      date
-      startTime
-      endTime
-      sessionLength
-      sessionInfo
-      price
-      sessionDetails
-      availableTimes
-      bookings {
-        clientId
-        clientName
-        startTime
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -177,9 +159,6 @@ export const createContact = /* GraphQL */ `
       message
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -196,9 +175,6 @@ export const updateContact = /* GraphQL */ `
       message
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -215,9 +191,6 @@ export const deleteContact = /* GraphQL */ `
       message
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;

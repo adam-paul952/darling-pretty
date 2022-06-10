@@ -6,15 +6,9 @@
     "gqlSchemaPath": "C:\\Users\\adamp\\darling-pretty\\amplify\\backend\\api\\darlingpretty\\schema.graphql",
     "defaultAuthType": {
       "mode": "API_KEY",
-      "expirationTime": 30,
-      "apiKeyExpirationDate": "2022-06-10T12:26:40.669Z",
-      "keyDescription": "darling-pretty"
-    },
-    "conflictResolution": {
-      "defaultResolutionStrategy": {
-        "type": "AUTOMERGE"
-      }
-    },
-    "additionalAuthTypes": []
+      "expirationTime": 100,
+      "apiKeyExpirationDate": "2022-09-18T19:29:46.294Z",
+      "keyDescription": "test-darling-pretty"
+    }
   }
 }

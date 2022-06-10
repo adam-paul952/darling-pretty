@@ -122,6 +122,9 @@ img.float_left {
 }
 .photoCardImage {
   border-radius: 20px;
+  width: 75%;
+  display: block;
+  margin: 10px auto;
 }
 /* Button */
 .btn-primary {

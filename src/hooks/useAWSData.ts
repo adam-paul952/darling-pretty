@@ -1,10 +1,10 @@
 import { API, graphqlOperation } from "aws-amplify";
 import {
-  createSession,
-  updateSession,
+  createSessions,
+  updateSessions,
   createClients,
 } from "../graphql/mutations";
-import { getSession } from "../graphql/queries";
+import { getSessions, listSessions } from "../graphql/queries";
 import { listSessionsWithBookings } from "../graphql/customQueries";
 
 export interface ISessionInfo {
@@ -19,6 +19,7 @@ export interface ISessionInfo {
   sessionDetails: string;
   availableTimes: string[];
   bookings?: IBookingInfo[];
+  _version?: number;
 }
 
 export interface IClientInfo {
@@ -38,7 +39,8 @@ export interface IClientInfo {
 interface IUpdateSessionWithClientProps {
   id: string;
   bookings: IBookingInfo[];
-  availableTimes: string[];
+  timeToRemove: number;
+  version: number;
 }
 
 export interface IBookingInfo {
@@ -62,10 +64,9 @@ const useAWSDatastore = () => {
         sessionDetails: newSession.sessionDetails,
         availableTimes: newSession.availableTimes,
         bookings: [],
-        // _version: 1,
       };
       const session = await API.graphql(
-        graphqlOperation(createSession, { input: sessionDetails })
+        graphqlOperation(createSessions, { input: sessionDetails })
       );
       console.log(`Session from hook is:`, session);
     } catch (error: any) {
@@ -89,7 +90,7 @@ const useAWSDatastore = () => {
   const getSessionById = async (sessionId: string) => {
     try {
       const session: any = await API.graphql(
-        graphqlOperation(getSession, { id: sessionId })
+        graphqlOperation(getSessions, { id: sessionId })
       );
       return session.data.getSession;
     } catch (error) {
@@ -100,20 +101,20 @@ const useAWSDatastore = () => {
   const updateBookingWithClient = async (
     updatedSessionDetails: IUpdateSessionWithClientProps
   ) => {
-    const { id, bookings, availableTimes } = updatedSessionDetails;
+    const { id, bookings, timeToRemove, version } = updatedSessionDetails;
     try {
       // console.log(`UpdatedSessionDetails from hook: `, updatedSessionDetails);
-      const updatedSession: any = await API.graphql(
-        graphqlOperation(updateSession, {
-          input: {
-            id: id,
-            bookings: bookings,
-            availableTimes: availableTimes,
-          },
-          condition: { availableTimes: { attributeType: "stringSet" } },
-        })
-      );
-      return updatedSession;
+      // const updatedSession: any = await API.graphql(
+      //   graphqlOperation(updateSession, {
+      //     input: {
+      //       id: id,
+      //       bookings: bookings,
+      //       availableTimes: availableTimes,
+      //     },
+      // condition: { availableTimes: { attributeType: "stringSet" } },
+      // })
+      // );
+      // return updatedSession;
     } catch (error) {
       console.log(error);
     }
