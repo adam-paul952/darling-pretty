@@ -1,14 +1,20 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Container, Col, Row } from "react-bootstrap";
+import { Card, CardGroup, Container, Col, Row } from "react-bootstrap";
 import SideNav from "./components/SideNav";
 import useAWSDatastore, { ISessionInfo } from "../hooks/useAWSData";
+import moment from "moment";
 
 const AdminDashboard = () => {
   const { listAllSessions } = useAWSDatastore();
 
   const [sessions, setSessions] = React.useState<ISessionInfo[]>([]);
   const [loading, setLoading] = React.useState<boolean>(true);
+
+  const formatDate = React.useCallback((date) => {
+    const formattedDate = moment(date).format("MMMM DD YYYY");
+    return formattedDate;
+  }, []);
 
   React.useEffect(() => {
     const fetchSessions = async () => {
@@ -24,41 +30,42 @@ const AdminDashboard = () => {
     fetchSessions();
     //eslint-disable-next-line
   }, []);
-  React.useEffect(() => {
-    console.log(sessions);
-  }, [sessions]);
+
   return (
-    <>
+    <div className="dashboard-container">
       <SideNav />
       <Container>
         <h3>Current Sessions:</h3>
-        <Row>
-          {!loading && sessions.length > 0 ? (
-            sessions.map((session: ISessionInfo) => {
-              return (
-                <Col key={session.id}>
-                  <Link
-                    to="/admin/createsession"
-                    state={{ sessionId: session.id }}
-                  >
-                    <h5>{session.name}</h5>
-                    <p>{session.date}</p>
-                    <p>Available Sessions: {session.availableTimes.length}</p>
-                    <p>Booked Sessions: {session.bookings!.length}</p>
-                    <p>Start Time: {session.startTime}</p>
-                    <p>End Time: {session.endTime}</p>
-                  </Link>
-                </Col>
-              );
-            })
-          ) : (
-            <Container fluid>
-              <h3>No Sessions Found..</h3>
-            </Container>
-          )}
-        </Row>
+        {!loading && sessions.length > 0 ? (
+          sessions.map((session: ISessionInfo) => {
+            return (
+              <Row key={session.id} lg={4} sm={2}>
+                <CardGroup>
+                  <Card as={Col} className="dashboard-session-card">
+                    <Card.Link
+                      as={Link}
+                      to="/admin/createsession"
+                      state={{ sessionId: session.id }}
+                    >
+                      <h5>{session.name}</h5>
+                      <p>{formatDate(session.date)}</p>
+                      <p>Available Sessions: {session.availableTimes.length}</p>
+                      <p>Booked Sessions: {session.bookings!.length}</p>
+                      <p>Start Time: {session.startTime}</p>
+                      <p>End Time: {session.endTime}</p>
+                    </Card.Link>
+                  </Card>
+                </CardGroup>
+              </Row>
+            );
+          })
+        ) : (
+          <Container fluid>
+            <h3>No Sessions Found..</h3>
+          </Container>
+        )}
       </Container>
-    </>
+    </div>
   );
 };
 

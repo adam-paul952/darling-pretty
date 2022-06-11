@@ -39,16 +39,6 @@ img.float_left {
   left: 0;
   right: 0;
 }
-
-.editor {
-  width: 70%;
-  /* height: 200px; */
-  margin-top: 10px;
-  margin-bottom: 10px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 /* Global */
 .text-center {
   text-align: center;
@@ -71,9 +61,9 @@ img.float_left {
   position: fixed;
   top: 0;
   left: -300px;
-  width: 300px;
+  width: 19%;
   height: 100%;
-  background-color: peru;
+  background-color: #87ceeb;
   transition: left 300ms ease-out;
 }
 .sidebar.active {
@@ -82,19 +72,23 @@ img.float_left {
   left: 0;
   z-index: 10;
 }
-.sidebar ul {
-  margin: 0;
-  padding: 0;
+.sidebar ol {
+  margin-top: 40%;
+  padding: 0 7%;
 }
 .sidebar li {
   list-style: none;
+  height: 38%;
 }
 .sidebar li a {
   font-size: 18px;
   text-decoration: none;
   padding: 10px;
   display: block;
-  color: #fff;
+  color: #000;
+}
+.sidebar li a:hover {
+  color: #000;
 }
 .hamburger {
   border: none;
@@ -116,6 +110,27 @@ img.float_left {
   display: block;
   transition: all 300ms ease-in-out;
 }
+/* Dashboard */
+.dashboard-container {
+  width: 100%;
+  height: 100vh;
+  padding-left: 20%;
+  padding-top: 1%;
+}
+.dashboard-container h3 {
+  padding: 20px 0;
+}
+.dashboard-session-card {
+  align-items: center;
+  border-radius: 20px;
+}
+.dashboard-session-card a {
+  text-decoration: none;
+  color: #000;
+}
+.dashboard-session-card h5 {
+  padding-top: 10px;
+}
 /* Home Page Card */
 .photoCard {
   border-radius: 20px;
@@ -133,7 +148,7 @@ img.float_left {
   color: black;
   font-size: 17px;
   border-radius: 30px;
-  width: 20%;
+  width: auto;
 }
 .btn-primary:hover {
   background-color: #cfcfcf;
@@ -183,16 +198,33 @@ img.float_left {
 /* Calendar */
 .calendar-container {
   margin: 20px auto;
-  padding: 10px auto;
+  padding-left: 17%;
 }
 /* Create/ Edit Session */
+.editor {
+  width: 70%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.rdw-editor-main {
+  height: 75% !important;
+}
 .editor-wrapper {
   border: 1px solid black;
   padding: 5px;
-}
-.editor {
-  width: 90%;
+  height: 300px;
 }
 .public-DraftStyleDefault-block {
   white-space: normal !important;
+}
+/* Responsive */
+@media screen and (max-width: 600px) {
+  .sidebar {
+    width: 25%;
+  }
+  .dashboard-container {
+    padding-left: 26%;
+  }
 }

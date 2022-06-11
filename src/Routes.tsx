@@ -10,6 +10,7 @@ import EditSessionInfo from "./admin/EditSession";
 import AdminDashboard from "./admin/AdminDashboard";
 import CreateSessionScreen from "./admin/CreateSession";
 import LoginPage from "./screens/Login";
+import ContactFormSubmissions from "./screens/ContactFormSubmissions";
 
 const DarlingPrettyRouter = () => {
   return (
@@ -25,7 +26,7 @@ const DarlingPrettyRouter = () => {
         <Route path="/admin/calendar" element={<SessionCalendar />} />
         <Route path="/admin/editsession" element={<EditSessionInfo />} />
         <Route path="/admin/createsession" element={<CreateSessionScreen />} />
-        <Route path="/admin/contactform" element={<CreateSessionScreen />} />
+        <Route path="/admin/contactform" element={<ContactFormSubmissions />} />
       </Routes>
     </Router>
   );

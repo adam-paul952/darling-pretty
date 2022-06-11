@@ -97,12 +97,12 @@ const CreateSessionScreen: React.FC<ICreateSessionProps> = (props) => {
   const onEditSession = async () => {};
 
   return (
-    <Container>
+    <Container className="dashboard-container">
       <SideNav />
       <Container className="d-flex justify-content-center">
         <Row>{_id ? <p>Edit Session</p> : <p>Create Session</p>}</Row>
       </Container>
-      <Container>
+      <>
         <Form>
           <Row className="m-3">
             <Form.Group as={Col} controlId="date">
@@ -198,7 +198,7 @@ const CreateSessionScreen: React.FC<ICreateSessionProps> = (props) => {
             </Form.Group>
           </Row>
         </Form>
-      </Container>
+      </>
       <Container>
         <Row className="m-3 justify-content-end">
           {_id ? (
