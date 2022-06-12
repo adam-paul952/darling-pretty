@@ -196,9 +196,15 @@ img.float_left {
   width: 40%;
 }
 /* Calendar */
+.fc-v-event .fc-event-main-frame {
+  font-size: 12px !important;
+}
 .calendar-container {
   margin: 20px auto;
   padding-left: 17%;
+}
+.datepicker-input {
+  width: inherit;
 }
 /* Create/ Edit Session */
 .editor {

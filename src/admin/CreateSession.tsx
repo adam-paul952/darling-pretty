@@ -10,15 +10,16 @@ import SideNav from "./components/SideNav";
 // Hooks
 import useAWSDatastore from "../hooks/useAWSData";
 import { parseDateTime } from "../util/parseDate";
+import moment from "moment";
 // Types
 interface ICreateSessionLocation {
   sessionId: string | null;
 }
-interface ICreateSessionProps {}
 
-const CreateSessionScreen: React.FC<ICreateSessionProps> = (props) => {
+const CreateSessionScreen: React.FC = () => {
   const { sessionId } = useLocation().state as ICreateSessionLocation;
-  const { createNewSession, getSessionById } = useAWSDatastore();
+  const { createNewSession, getSessionById, adminUpateSession } =
+    useAWSDatastore();
   // Session Input States
   const [_id, setId] = React.useState<string | undefined>("");
   const [date, setDate] = React.useState<string>("");
@@ -34,6 +35,52 @@ const CreateSessionScreen: React.FC<ICreateSessionProps> = (props) => {
   );
 
   const [loading, setLoading] = React.useState<boolean>(true);
+
+  const formattedDate = moment(date).format("YYYY-MM-DD");
+  const availableSessions = {
+    formattedDate,
+    startTime,
+    endTime,
+    lengthOfSessions,
+  };
+  const availableBookings = parseDateTime(availableSessions);
+  const sessionData = {
+    date: formattedDate,
+    startTime: startTime,
+    endTime: endTime,
+    sessionLength: lengthOfSessions,
+    name: sessionName,
+    sessionInfo: sessionInfo,
+    price: sessionPrice,
+    sessionDetails: sessionDetails,
+    availableTimes: availableBookings,
+  };
+
+  const onCreateSession = async () => {
+    try {
+      await createNewSession(sessionData);
+      resetFormData();
+      alert("Session created successfully");
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
+  const onEditSession = async () => {
+    const editedSession = {};
+  };
+
+  const resetFormData = () => {
+    setId("");
+    setDate("");
+    setStartTime("");
+    setEndTime("");
+    setLengthOfSessions(0);
+    setSessionName("");
+    setSessionPrice(0);
+    setSessionInfo("");
+    setEditorState(EditorState.createEmpty());
+  };
 
   React.useEffect(() => {
     const checkForEdit = async () => {
@@ -61,40 +108,8 @@ const CreateSessionScreen: React.FC<ICreateSessionProps> = (props) => {
       }
     };
     checkForEdit();
-    // es-link-disable-next-line
+    // es-lint-disable-next-line
   }, []);
-
-  const onCreateSession = async () => {
-    const availableSessions = { date, startTime, endTime, lengthOfSessions };
-    try {
-      const availableBookings = await parseDateTime(availableSessions);
-      const newSession = {
-        date: date,
-        startTime: startTime,
-        endTime: endTime,
-        sessionLength: lengthOfSessions,
-        name: sessionName,
-        sessionInfo: sessionInfo,
-        price: sessionPrice,
-        sessionDetails: sessionDetails,
-        availableTimes: availableBookings,
-      };
-      await createNewSession(newSession);
-      setId("");
-      setDate("");
-      setStartTime("");
-      setEndTime("");
-      setLengthOfSessions(0);
-      setSessionName("");
-      setSessionPrice(0);
-      setSessionInfo("");
-      setEditorState(EditorState.createEmpty());
-    } catch (error: any) {
-      console.log(error);
-    }
-  };
-
-  const onEditSession = async () => {};
 
   return (
     <Container className="dashboard-container">

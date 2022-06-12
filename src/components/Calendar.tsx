@@ -35,7 +35,7 @@ const ShowAvailableTime: React.FC<IShowAvailableProps> = (props) => {
 
   return (
     <DatePicker
-      className="mb-2"
+      className="mb-2 datepicker-input"
       selected={props.startDate}
       onChange={(date: Date) => {
         handleChange(date);

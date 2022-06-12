@@ -39,7 +39,7 @@ export interface IClientInfo {
 interface IUpdateSessionWithClientProps {
   id: string;
   bookings: IBookingInfo[];
-  timeToRemove: number;
+  availableTimes: string[];
   version: number;
 }
 
@@ -92,7 +92,22 @@ const useAWSDatastore = () => {
       const session: any = await API.graphql(
         graphqlOperation(getSessions, { id: sessionId })
       );
-      return session.data.getSession;
+      return session.data.getSessions;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  // Admin update Session
+  const adminUpateSession = async (session: ISessionInfo) => {
+    try {
+      const updateSession: any = await API.graphql(
+        graphqlOperation(updateSessions, {
+          input: {
+            session,
+          },
+        })
+      );
+      return updateSession;
     } catch (error) {
       console.log(error);
     }
@@ -101,20 +116,19 @@ const useAWSDatastore = () => {
   const updateBookingWithClient = async (
     updatedSessionDetails: IUpdateSessionWithClientProps
   ) => {
-    const { id, bookings, timeToRemove, version } = updatedSessionDetails;
+    const { id, bookings, availableTimes, version } = updatedSessionDetails;
     try {
-      // console.log(`UpdatedSessionDetails from hook: `, updatedSessionDetails);
-      // const updatedSession: any = await API.graphql(
-      //   graphqlOperation(updateSession, {
-      //     input: {
-      //       id: id,
-      //       bookings: bookings,
-      //       availableTimes: availableTimes,
-      //     },
-      // condition: { availableTimes: { attributeType: "stringSet" } },
-      // })
-      // );
-      // return updatedSession;
+      console.log(`UpdatedSessionDetails from hook: `, updatedSessionDetails);
+      const updatedSession: any = await API.graphql(
+        graphqlOperation(updateSessions, {
+          input: {
+            id: id,
+            bookings: bookings,
+            availableTimes: availableTimes,
+          },
+        })
+      );
+      return updatedSession;
     } catch (error) {
       console.log(error);
     }
@@ -138,6 +152,7 @@ const useAWSDatastore = () => {
     getSessionById,
     createNewClient,
     updateBookingWithClient,
+    adminUpateSession,
   };
 };
 

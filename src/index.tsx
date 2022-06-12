@@ -11,7 +11,6 @@ import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import { Amplify } from "aws-amplify";
 import awsExports from "./aws-exports";
 Amplify.configure(awsExports);
-// import Background from "./components/Background";
 
 ReactDOM.render(
   <PayPalScriptProvider

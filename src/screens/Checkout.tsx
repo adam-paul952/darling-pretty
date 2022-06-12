@@ -26,12 +26,14 @@ const Checkout = () => {
   const [isComplete, setComplete] = React.useState<boolean>(false);
 
   const sessionStartTime = moment(sessionTime).format("HH:mm");
-  const isInArray = (element: any) => element === sessionStartTime;
 
-  // Index of Booked Time Slot && current version of Session
-  let indexToRemove = availableTimes.findIndex(isInArray);
   let version = _version!;
   let clientName = `${firstName} ${lastName}`;
+
+  const filterAvailableTimes = (array: string[]) => {
+    const filtered = array.filter((time) => time !== sessionStartTime);
+    return filtered;
+  };
 
   //Add client to DB to return ID to add with Booking details
   const addClientToDatabase = async () => {
@@ -58,7 +60,7 @@ const Checkout = () => {
           await updateBookingWithClient({
             id: id!,
             bookings: [...bookings!, bookingDetails],
-            timeToRemove: indexToRemove,
+            availableTimes: filterAvailableTimes(availableTimes),
             version: version,
           });
         } catch (error) {

@@ -11,6 +11,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import useAWSDatastore from "../hooks/useAWSData";
 import moment from "moment";
 // Types
+import { ISessionInfo, IBookingInfo } from "../hooks/useAWSData";
 interface IEvents {
   title: string;
   start?: Date;
@@ -24,20 +25,34 @@ const SessionCalendar = () => {
 
   React.useEffect(() => {
     const fetchSessions = async () => {
+      const currentSessions: any[] = [];
       try {
         const allSessions = await listAllSessions();
-        const currentSessions = allSessions.map((session: any, index: any) => {
+        allSessions.forEach((session: ISessionInfo) => {
+          session.bookings?.forEach((booking: IBookingInfo) => {
+            const clientStart = `${session.date}T${booking.startTime}`;
+            const clientEnd = moment(clientStart)
+              .add(session.sessionLength, "m")
+              .format("YYYY-MM-DDTHH:mm");
+            const formatClientDate = moment().format(clientStart);
+
+            currentSessions.push({
+              title: booking.clientName,
+              start: formatClientDate,
+              end: clientEnd,
+            });
+          });
+
           const startTime = `${session.date}T${session.startTime}`;
-          const endTime = `${session.date}T${session.endTime}`;
           const momentDate = moment().format(startTime);
-          const momentTime = moment().format(endTime);
-          return {
+
+          currentSessions.push({
             title: session.name,
             allDay: true,
             start: momentDate,
-            // end: momentTime,
-          };
+          });
         });
+
         setSessions(currentSessions);
       } catch (error) {
         console.log(error);

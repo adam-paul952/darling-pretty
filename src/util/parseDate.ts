@@ -1,14 +1,14 @@
 import addMinutes from "date-fns/addMinutes";
 
 interface IParseDateTimeProps {
-  date: string;
+  formattedDate: string;
   startTime: string;
   endTime: string;
   lengthOfSessions: number;
 }
-export const parseDateTime = async (props: IParseDateTimeProps) => {
+export const parseDateTime = (props: IParseDateTimeProps) => {
   const bookings: string[] = [];
-  const sessionDate = props.date.split("-").map(Number);
+  const sessionDate = props.formattedDate.split("-").map(Number);
   const start = parseInt(props.startTime.slice(0, 2), 10);
   const startDateString = new Date(
     sessionDate[0],

@@ -36,11 +36,11 @@ const AdminDashboard = () => {
       <SideNav />
       <Container>
         <h3>Current Sessions:</h3>
-        {!loading && sessions.length > 0 ? (
-          sessions.map((session: ISessionInfo) => {
-            return (
-              <Row key={session.id} lg={4} sm={2}>
-                <CardGroup>
+        <Row lg={4} sm={2}>
+          {!loading && sessions.length > 0 ? (
+            sessions.map((session: ISessionInfo) => {
+              return (
+                <CardGroup key={session.id}>
                   <Card as={Col} className="dashboard-session-card">
                     <Card.Link
                       as={Link}
@@ -56,14 +56,14 @@ const AdminDashboard = () => {
                     </Card.Link>
                   </Card>
                 </CardGroup>
-              </Row>
-            );
-          })
-        ) : (
-          <Container fluid>
-            <h3>No Sessions Found..</h3>
-          </Container>
-        )}
+              );
+            })
+          ) : (
+            <Container fluid>
+              <h3>No Sessions Found..</h3>
+            </Container>
+          )}
+        </Row>
       </Container>
     </div>
   );

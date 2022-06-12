@@ -30,6 +30,11 @@ const SideNav = () => {
             Contact Form Entries
           </Nav.Link>
         </li>
+        <li>
+          <Nav.Link as={Link} to="#">
+            Clients
+          </Nav.Link>
+        </li>
       </ol>
     </Nav>
   );

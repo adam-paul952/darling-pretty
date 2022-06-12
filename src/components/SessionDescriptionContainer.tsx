@@ -9,6 +9,7 @@ import darlingPretty from "../images/darling-pretty1.jpg";
 // Date FNS
 import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
+import moment from "moment";
 
 import DOMPurify from "dompurify";
 //Types
@@ -21,10 +22,13 @@ interface ISessionInfoProps {
 
 const SessionInfo: React.FC<ISessionInfoProps> = (props) => {
   const startHour: number = parseInt(
-    props.session.startTime.slice(0, 2).padStart(2, "0"),
+    props.session.availableTimes[0].slice(0, 2).padStart(2, "0"),
     10
   );
-  const startMinute: number = parseInt(props.session.startTime.slice(3, 5), 10);
+  const startMinute: number = parseInt(
+    props.session.availableTimes[0].slice(3, 5),
+    10
+  );
   const [startDate, setStartDate] = React.useState<Date>(
     setHours(setMinutes(new Date(props.session.date), startMinute), startHour)
   );
