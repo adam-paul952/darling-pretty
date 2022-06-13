@@ -13,6 +13,7 @@ type Sessions @model @auth(rules: [{ allow: public }]) {
   sessionInfo: String!
   price: Int!
   sessionDetails: String!
+  sessionImage: S3ImageObject!
   availableTimes: [String]
   bookings: [Booking]
 }
@@ -21,6 +22,14 @@ type Booking {
   clientId: ID!
   clientName: String!
   startTime: String!
+}
+
+type S3ImageObject {
+  name: String!
+  bucket: String!
+  key: String!
+  region: String!
+  mimeType: String!
 }
 
 type Clients @model @auth(rules: [{ allow: public }]) {
@@ -35,9 +44,12 @@ type Clients @model @auth(rules: [{ allow: public }]) {
   postalCode: String!
   province: String!
   country: String!
+  sessionBooked: String
 }
 
-type Contact @model @auth(rules: [{ allow: public, operations: [create] }]) {
+type Contact
+  @model
+  @auth(rules: [{ allow: public, operations: [create, read, delete] }]) {
   id: ID!
   name: String!
   email: AWSEmail!

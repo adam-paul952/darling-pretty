@@ -13,13 +13,19 @@
     },
     "categories": {
       "auth": {
-        "darlingpretty6659593d": {}
+        "darlingpretty6659593d": {},
+        "true": {}
       },
       "function": {
         "contactFormUploader": {
           "sesEmail": "adam.paul@live.com",
           "deploymentBucketName": "amplify-darlingpretty-dev-163848-deployment",
           "s3Key": "amplify-builds/contactFormUploader-4844585458517948327a-build.zip"
+        },
+        "orderConfirmationSender": {
+          "deploymentBucketName": "amplify-darlingpretty-dev-163848-deployment",
+          "s3Key": "amplify-builds/orderConfirmationSender-694651682f5434726968-build.zip",
+          "sesEmail": "adam.paul@live.com"
         }
       },
       "hosting": {

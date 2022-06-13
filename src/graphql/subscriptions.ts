@@ -14,6 +14,13 @@ export const onCreateSessions = /* GraphQL */ `
       sessionInfo
       price
       sessionDetails
+      sessionImage {
+        name
+        bucket
+        key
+        region
+        mimeType
+      }
       availableTimes
       bookings {
         clientId
@@ -37,6 +44,13 @@ export const onUpdateSessions = /* GraphQL */ `
       sessionInfo
       price
       sessionDetails
+      sessionImage {
+        name
+        bucket
+        key
+        region
+        mimeType
+      }
       availableTimes
       bookings {
         clientId
@@ -60,6 +74,13 @@ export const onDeleteSessions = /* GraphQL */ `
       sessionInfo
       price
       sessionDetails
+      sessionImage {
+        name
+        bucket
+        key
+        region
+        mimeType
+      }
       availableTimes
       bookings {
         clientId
@@ -85,6 +106,7 @@ export const onCreateClients = /* GraphQL */ `
       postalCode
       province
       country
+      sessionBooked
       createdAt
       updatedAt
     }
@@ -104,6 +126,7 @@ export const onUpdateClients = /* GraphQL */ `
       postalCode
       province
       country
+      sessionBooked
       createdAt
       updatedAt
     }
@@ -123,6 +146,7 @@ export const onDeleteClients = /* GraphQL */ `
       postalCode
       province
       country
+      sessionBooked
       createdAt
       updatedAt
     }

@@ -1,10 +1,8 @@
-//Router
+import React from "react";
 import { useLocation, useParams } from "react-router-dom";
 //Components
 import Header from "../components/Header";
 import SessionInfo from "../components/SessionDescriptionContainer";
-// Hooks
-import useSessionInfo from "../hooks/useSessionInfo";
 //Types
 import { ISessionInfo } from "../hooks/useAWSData";
 type LocationPropsT = {
@@ -12,7 +10,6 @@ type LocationPropsT = {
 };
 
 const SessionDescription = () => {
-  const { setSessionDate } = useSessionInfo();
   const { session } = useLocation().state as LocationPropsT;
 
   const { id } = useParams();
@@ -20,7 +17,7 @@ const SessionDescription = () => {
   return (
     <>
       <Header title={session.date} />
-      <SessionInfo key={id} session={session} setSessionDate={setSessionDate} />
+      <SessionInfo key={id} session={session} />
     </>
   );
 };

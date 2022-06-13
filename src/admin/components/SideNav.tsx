@@ -31,7 +31,7 @@ const SideNav = () => {
           </Nav.Link>
         </li>
         <li>
-          <Nav.Link as={Link} to="#">
+          <Nav.Link as={Link} to="/admin/clients">
             Clients
           </Nav.Link>
         </li>

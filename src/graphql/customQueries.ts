@@ -1,5 +1,5 @@
 export const listSessionsWithBookings = /* GraphQL */ `
-  query ListSessions(
+  query ListSessionsWithBookings(
     $filter: ModelSessionsFilterInput
     $limit: Int
     $nextToken: String
@@ -23,6 +23,21 @@ export const listSessionsWithBookings = /* GraphQL */ `
         }
         createdAt
         updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+
+export const listSessionsWithDates = /* GraphQL */ `
+  query ListSessionsWithDates(
+    $filter: ModelSessionsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listSessions(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        date
       }
       nextToken
     }

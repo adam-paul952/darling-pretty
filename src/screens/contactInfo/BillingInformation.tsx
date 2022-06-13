@@ -4,9 +4,9 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 import RequiredAsterisk from "../../components/visual/RequiredAsterisk";
 // Types
 import { IClientInfoProps } from "./ContactInformation";
-interface IBillingInfoProps extends IClientInfoProps {}
+// interface IBillingInfoProps extends IClientInfoProps {}
 
-const BillingInformation: React.FC<IBillingInfoProps> = (props) => {
+const BillingInformation: React.FC<IClientInfoProps> = (props) => {
   const {
     addressOne,
     addressTwo,

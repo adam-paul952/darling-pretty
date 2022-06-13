@@ -9,14 +9,12 @@ import darlingPretty from "../images/darling-pretty1.jpg";
 // Date FNS
 import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
-import moment from "moment";
 
 import DOMPurify from "dompurify";
 //Types
 import { ISessionInfo } from "../hooks/useAWSData";
 interface ISessionInfoProps {
   session: ISessionInfo;
-  setSessionDate: React.Dispatch<React.SetStateAction<Date | null | undefined>>;
   setStartDate?: React.Dispatch<React.SetStateAction<Date | null | undefined>>;
 }
 
@@ -66,7 +64,6 @@ const SessionInfo: React.FC<ISessionInfoProps> = (props) => {
           <ShowAvailableTime
             key={props.session.id}
             session={props.session}
-            setSessionDate={props.setSessionDate}
             startDate={startDate}
             setStartDate={setStartDate}
           />

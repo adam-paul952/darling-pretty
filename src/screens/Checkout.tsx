@@ -26,19 +26,28 @@ const Checkout = () => {
   const [isComplete, setComplete] = React.useState<boolean>(false);
 
   const sessionStartTime = moment(sessionTime).format("HH:mm");
+  const dateString = `${sessionTime.toTimeString().slice(0, 5)} ${
+    sessionTime.getHours() < 12 ? "AM" : "PM"
+  }`;
 
-  let version = _version!;
-  let clientName = `${firstName} ${lastName}`;
+  const version = _version!;
+  const clientName = `${firstName} ${lastName}`;
+  const bookingDate = moment(date).format(`DD MMMM YYYY [at ${dateString}]`);
 
-  const filterAvailableTimes = (array: string[]) => {
-    const filtered = array.filter((time) => time !== sessionStartTime);
+  const filterAvailableTimes = (arrayOfAvailableTimes: string[]) => {
+    const filtered: string[] = arrayOfAvailableTimes.filter(
+      (time) => time !== sessionStartTime
+    );
     return filtered;
   };
 
   //Add client to DB to return ID to add with Booking details
   const addClientToDatabase = async () => {
     try {
-      const newClient = await createNewClient(clientInfo);
+      const newClient = await createNewClient({
+        ...clientInfo,
+        sessionBooked: bookingDate,
+      });
       const bookingDetails: IBookingInfo = {
         clientId: newClient.id,
         clientName: clientName,
@@ -80,10 +89,7 @@ const Checkout = () => {
           <Col className="my-1">When: {date}</Col>
         </Row>
         <Row className="checkout-row">
-          <Col className="my-1">
-            What time: {sessionTime.toTimeString().slice(0, 5)}
-            {sessionTime.getHours() < 12 ? "AM" : "PM"}
-          </Col>
+          <Col className="my-1">What time: {dateString}</Col>
         </Row>
         <Row className="checkout-row">
           <Col className="my-1">Price: {price}</Col>

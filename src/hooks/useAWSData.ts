@@ -1,11 +1,21 @@
-import { API, graphqlOperation } from "aws-amplify";
+import { API, graphqlOperation, Storage } from "aws-amplify";
 import {
   createSessions,
   updateSessions,
   createClients,
+  deleteContact,
 } from "../graphql/mutations";
-import { getSessions, listSessions } from "../graphql/queries";
-import { listSessionsWithBookings } from "../graphql/customQueries";
+import {
+  getSessions,
+  listContacts,
+  listSessions,
+  listClients,
+} from "../graphql/queries";
+import {
+  listSessionsWithBookings,
+  listSessionsWithDates,
+} from "../graphql/customQueries";
+import awsmobile from "../aws-exports";
 
 export interface ISessionInfo {
   id?: string;
@@ -17,10 +27,19 @@ export interface ISessionInfo {
   sessionInfo: string;
   price: number | undefined;
   sessionDetails: string;
+  sessionImage: ImageUploadT;
   availableTimes: string[];
   bookings?: IBookingInfo[];
   _version?: number;
 }
+
+export type ImageUploadT = {
+  name: string;
+  bucket?: string;
+  region?: string;
+  key?: string;
+  mimeType: string;
+};
 
 export interface IClientInfo {
   id?: string | null;
@@ -34,6 +53,7 @@ export interface IClientInfo {
   postalCode: string;
   province: string;
   country: string;
+  sessionBooked?: string;
 }
 
 interface IUpdateSessionWithClientProps {
@@ -52,7 +72,16 @@ export interface IBookingInfo {
 const useAWSDatastore = () => {
   //Session create
   const createNewSession = async (newSession: ISessionInfo) => {
+    const { name, mimeType } = newSession.sessionImage;
+    const imageDetails = {
+      name,
+      mimeType,
+      bucket: awsmobile.aws_user_files_s3_bucket,
+      region: awsmobile.aws_user_files_s3_bucket_region,
+      key: `public/${name}`,
+    };
     try {
+      await uploadImageToStorage(newSession.sessionImage);
       const sessionDetails = {
         name: newSession.name,
         date: newSession.date,
@@ -62,6 +91,7 @@ const useAWSDatastore = () => {
         sessionInfo: newSession.sessionInfo,
         price: newSession.price,
         sessionDetails: newSession.sessionDetails,
+        sessionImage: imageDetails,
         availableTimes: newSession.availableTimes,
         bookings: [],
       };
@@ -112,13 +142,25 @@ const useAWSDatastore = () => {
       console.log(error);
     }
   };
+  const listSessionDates = async () => {
+    try {
+      const sessionDates: any = await API.graphql(
+        graphqlOperation(listSessions)
+      );
+      console.log(sessionDates.data.listSessions.items);
+      // return sessionDates.data.listSessions.items.map((date: any) => {
+      //   return date.date;
+      // });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   // Update Session with Booking less Available time
   const updateBookingWithClient = async (
     updatedSessionDetails: IUpdateSessionWithClientProps
   ) => {
-    const { id, bookings, availableTimes, version } = updatedSessionDetails;
+    const { id, bookings, availableTimes } = updatedSessionDetails;
     try {
-      console.log(`UpdatedSessionDetails from hook: `, updatedSessionDetails);
       const updatedSession: any = await API.graphql(
         graphqlOperation(updateSessions, {
           input: {
@@ -145,6 +187,51 @@ const useAWSDatastore = () => {
       console.log(error);
     }
   };
+  //List All Clients
+  const listAllClients = async () => {
+    try {
+      const clients: any = await API.graphql(graphqlOperation(listClients));
+      return clients.data.listClients.items;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  // Query Contact form entries
+  const getContactFormSubmissions = async () => {
+    try {
+      const contactFormEntries: any = await API.graphql(
+        graphqlOperation(listContacts)
+      );
+      return contactFormEntries.data.listContacts.items;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteContactFormSubmission = async (id: string) => {
+    try {
+      const removeContactEntry: any = await API.graphql(
+        graphqlOperation(deleteContact, { input: { id } })
+      );
+      return removeContactEntry;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const uploadImageToStorage = async (imageData: any) => {
+    try {
+      await Storage.put(imageData.name, imageData, {
+        contentType: imageData.mimeType,
+        progressCallback: (progress) => {
+          console.log(`Uploaded: ${progress.loaded}/${progress.total}`);
+        },
+      });
+      console.log(`Image successfully uploaded to S3`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return {
     createNewSession,
@@ -153,6 +240,10 @@ const useAWSDatastore = () => {
     createNewClient,
     updateBookingWithClient,
     adminUpateSession,
+    getContactFormSubmissions,
+    deleteContactFormSubmission,
+    listSessionDates,
+    listAllClients,
   };
 };
 

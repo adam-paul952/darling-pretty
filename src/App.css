@@ -113,6 +113,7 @@ img.float_left {
 /* Dashboard */
 .dashboard-container {
   width: 100%;
+  max-width: 95%;
   height: 100vh;
   padding-left: 20%;
   padding-top: 1%;
@@ -208,7 +209,7 @@ img.float_left {
 }
 /* Create/ Edit Session */
 .editor {
-  width: 70%;
+  width: 90%;
   margin-top: 10px;
   margin-bottom: 10px;
   margin-left: auto;

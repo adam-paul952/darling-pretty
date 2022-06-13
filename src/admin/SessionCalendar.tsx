@@ -59,6 +59,7 @@ const SessionCalendar = () => {
       }
     };
     fetchSessions();
+    //eslint-disable-next-line
   }, []);
 
   return (
@@ -74,7 +75,7 @@ const SessionCalendar = () => {
             right: "dayGridMonth,timeGridWeek,timeGridDay",
           }}
           initialView="timeGridWeek"
-          editable={true}
+          editable={false}
           selectable={true}
           selectMirror={true}
           dayMaxEvents={true}

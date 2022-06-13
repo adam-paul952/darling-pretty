@@ -7,7 +7,6 @@ import addHours from "date-fns/addHours";
 import { ISessionInfo } from "../hooks/useAWSData";
 interface IShowAvailableProps {
   session: ISessionInfo;
-  setSessionDate: React.Dispatch<React.SetStateAction<Date | null | undefined>>;
   startDate: Date;
   setStartDate: React.Dispatch<React.SetStateAction<Date>>;
 }
@@ -30,7 +29,6 @@ const ShowAvailableTime: React.FC<IShowAvailableProps> = (props) => {
 
   const handleChange = (date: Date) => {
     props.setStartDate!(date);
-    props.setSessionDate(date);
   };
 
   return (

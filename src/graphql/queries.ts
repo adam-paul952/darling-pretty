@@ -14,6 +14,13 @@ export const getSessions = /* GraphQL */ `
       sessionInfo
       price
       sessionDetails
+      sessionImage {
+        name
+        bucket
+        key
+        region
+        mimeType
+      }
       availableTimes
       bookings {
         clientId
@@ -64,6 +71,7 @@ export const getClients = /* GraphQL */ `
       postalCode
       province
       country
+      sessionBooked
       createdAt
       updatedAt
     }
@@ -88,6 +96,7 @@ export const listClients = /* GraphQL */ `
         postalCode
         province
         country
+        sessionBooked
         createdAt
         updatedAt
       }

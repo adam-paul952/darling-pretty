@@ -1,3 +1,4 @@
+import React from "react";
 // Components
 import Header from "./components/Header";
 import ShowAvailablePhotos from "./components/DisplaySessions";
