@@ -10,7 +10,6 @@ const DisplayClients = () => {
   React.useEffect(() => {
     const fetchClientInfo = async () => {
       const clients = await listAllClients();
-      console.log(clients);
       setClientInfo(clients);
     };
 

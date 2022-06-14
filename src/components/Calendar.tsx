@@ -15,7 +15,7 @@ const ShowAvailableTime: React.FC<IShowAvailableProps> = (props) => {
   const [bookingOptions, setBookingOptions] = React.useState<Date[]>([]);
 
   React.useEffect(() => {
-    const newBookings = props.session.availableTimes.map((time) => {
+    const newBookings = props.session.availableTimes!.map((time) => {
       const date = new Date(props.session.date);
       const timesAvailable = addMinutes(
         addHours(date, parseInt(time.slice(0, 2))),

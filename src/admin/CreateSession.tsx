@@ -8,7 +8,7 @@ import draftToHtml from "draftjs-to-html";
 import htmlToDraft from "html-to-draftjs";
 import SideNav from "./components/SideNav";
 // Hooks
-import useAWSDatastore from "../hooks/useAWSData";
+import useAWSDatastore, { ISessionInfo } from "../hooks/useAWSData";
 import { parseDateTime } from "../util/parseDate";
 import moment from "moment";
 // Types
@@ -20,70 +20,77 @@ type ImageDetailsT = {
   mimeType: string;
 };
 
+const initialState = {
+  id: "",
+  date: "",
+  startTime: "",
+  endTime: "",
+  sessionLength: 0,
+  name: "",
+  sessionInfo: "",
+  price: 0,
+  sessionDetails: "",
+  sessionImage: {
+    name: "",
+    size: 0,
+    type: "",
+    lastModified: 0,
+  },
+};
+
 const CreateSessionScreen: React.FC = () => {
   const { sessionId } = useLocation().state as ICreateSessionLocation;
-  const { createNewSession, getSessionById, adminUpateSession } =
-    useAWSDatastore();
-  // Session Input States
-  const [_id, setId] = React.useState<string | undefined>("");
-  const [date, setDate] = React.useState<string>("");
-  const [startTime, setStartTime] = React.useState<string>("");
-  const [endTime, setEndTime] = React.useState<string>("");
-  const [lengthOfSessions, setLengthOfSessions] = React.useState<number>(0);
-  const [sessionName, setSessionName] = React.useState<string>("");
-  const [sessionInfo, setSessionInfo] = React.useState<string>("");
-  const [sessionPrice, setSessionPrice] = React.useState<number>(0);
-  const [sessionDetails, setSessionDetails] = React.useState<string>("");
-  const [imageName, setImageName] = React.useState<string>("");
-  const [sessionImage, setSessionImage] = React.useState<ImageDetailsT>({
-    name: "",
-    mimeType: "",
-  });
+  const {
+    createNewSession,
+    getSessionById,
+    adminUpateSession,
+    getPhotosFromStorage,
+    listAllSessions,
+  } = useAWSDatastore();
+
+  const [sessionDetails, setSessionDetails] =
+    React.useState<ISessionInfo>(initialState);
+
   const [editorState, setEditorState] = React.useState<EditorState>(
     EditorState.createEmpty()
   );
 
+  const [imageName, setImageName] = React.useState<string>("");
   const [imagePreview, setImagePreview] = React.useState<any>("");
 
   const [loading, setLoading] = React.useState<boolean>(true);
 
-  const formattedDate = moment(date).format("YYYY-MM-DD");
-  const availableSessions = {
-    formattedDate,
-    startTime,
-    endTime,
-    lengthOfSessions,
-  };
-
-  const assignSessionImage = () => {
-    const { name, mimeType } = sessionImage;
-    if (imageName === "") {
-      return { name, mimeType };
-    } else {
-      return { name: imageName, mimeType };
-    }
-  };
+  const formattedDate = moment(sessionDetails.date).format("YYYY-MM-DD");
+  const { startTime, endTime, sessionLength } = sessionDetails;
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setImagePreview(URL.createObjectURL(event.target.files![0]));
-    setSessionImage({
-      name: event.target.files![0].name,
-      mimeType: event.target.files![0].type,
+    setSessionDetails({
+      ...sessionDetails,
+      sessionImage: event.target.files![0],
     });
   };
 
+  const assignSessionImage = () => {
+    const file = sessionDetails.sessionImage;
+    if (imageName === "") {
+      return file;
+    } else {
+      return { ...file, name: imageName };
+    }
+  };
+
   const onCreateSession = async () => {
-    const availableBookings = parseDateTime(availableSessions);
+    const availableBookings = parseDateTime({
+      formattedDate,
+      startTime,
+      endTime,
+      sessionLength,
+    });
     try {
       const sessionData = {
+        ...sessionDetails,
         date: formattedDate,
-        startTime: startTime,
-        endTime: endTime,
-        sessionLength: lengthOfSessions,
-        name: sessionName,
-        sessionInfo: sessionInfo,
-        price: sessionPrice,
-        sessionDetails: sessionDetails,
         sessionImage: assignSessionImage(),
         availableTimes: availableBookings,
       };
@@ -100,34 +107,23 @@ const CreateSessionScreen: React.FC = () => {
   };
 
   const resetFormData = () => {
-    setId("");
-    setDate("");
-    setStartTime("");
-    setEndTime("");
-    setLengthOfSessions(0);
-    setSessionName("");
-    setSessionPrice(0);
-    setSessionInfo("");
-    setImageName("");
-    setSessionImage({ name: "", mimeType: "" });
+    setSessionDetails(initialState);
+    setImagePreview("");
     setEditorState(EditorState.createEmpty());
   };
 
   React.useEffect(() => {
     const checkForEdit = async () => {
       if (!sessionId) {
-        setId("");
         setLoading(false);
+        return;
       } else {
         const session = await getSessionById(sessionId);
-        setId(session.id);
-        setDate(session.date);
-        setStartTime(session.startTime);
-        setEndTime(session.endTime);
-        setLengthOfSessions(session.sessionLength);
-        setSessionName(session.name);
-        setSessionPrice(session.price);
-        setSessionInfo(session.sessionInfo);
+        setSessionDetails(session);
+        const spacesRemoved = session.sessionImage.key?.replace(/ /g, "+");
+        setImagePreview(
+          `https://${session.sessionImage.bucket}.s3.amazonaws.com/${spacesRemoved}`
+        );
         // Convert HTML string to draft
         const contentBlock = htmlToDraft(session.sessionDetails);
         const contentState = ContentState.createFromBlockArray(
@@ -146,7 +142,7 @@ const CreateSessionScreen: React.FC = () => {
     <Container className="dashboard-container">
       <SideNav />
       <Container className="d-flex justify-content-center">
-        <Row>{_id ? <p>Edit Session</p> : <p>Create Session</p>}</Row>
+        <Row>{sessionId ? <p>Edit Session</p> : <p>Create Session</p>}</Row>
       </Container>
       <>
         <Form>
@@ -155,9 +151,12 @@ const CreateSessionScreen: React.FC = () => {
               <Form.Label>Date</Form.Label>
               <Form.Control
                 placeholder="YYYY-MM-DD"
-                value={date}
+                value={sessionDetails.date}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  setDate(event.target.value);
+                  setSessionDetails({
+                    ...sessionDetails,
+                    date: event.target.value,
+                  });
                 }}
               />
             </Form.Group>
@@ -165,9 +164,12 @@ const CreateSessionScreen: React.FC = () => {
               <Form.Label>Session Name</Form.Label>
               <Form.Control
                 placeholder="Family Photos"
-                value={sessionName}
+                value={sessionDetails.name}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                  setSessionName(event.target.value)
+                  setSessionDetails({
+                    ...sessionDetails,
+                    name: event.target.value,
+                  })
                 }
               />
             </Form.Group>
@@ -175,9 +177,12 @@ const CreateSessionScreen: React.FC = () => {
               <Form.Label>Session Price</Form.Label>
               <Form.Control
                 placeholder="150"
-                value={sessionPrice}
+                value={sessionDetails.price}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  setSessionPrice(parseInt(event.target.value, 10));
+                  setSessionDetails({
+                    ...sessionDetails,
+                    price: parseInt(event.target.value, 10),
+                  });
                 }}
               />
             </Form.Group>
@@ -187,9 +192,12 @@ const CreateSessionScreen: React.FC = () => {
               <Form.Label>Start Time</Form.Label>
               <Form.Control
                 placeholder="08:00"
-                value={startTime}
+                value={sessionDetails.startTime}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  setStartTime(event.target.value);
+                  setSessionDetails({
+                    ...sessionDetails,
+                    startTime: event.target.value,
+                  });
                 }}
               />
             </Form.Group>
@@ -197,9 +205,12 @@ const CreateSessionScreen: React.FC = () => {
               <Form.Label>End Time</Form.Label>
               <Form.Control
                 placeholder="14:00"
-                value={endTime}
+                value={sessionDetails.endTime}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  setEndTime(event.target.value);
+                  setSessionDetails({
+                    ...sessionDetails,
+                    endTime: event.target.value,
+                  });
                 }}
               />
             </Form.Group>
@@ -207,9 +218,12 @@ const CreateSessionScreen: React.FC = () => {
               <Form.Label>Length Of Sessions</Form.Label>
               <Form.Control
                 placeholder="30"
-                value={lengthOfSessions}
+                value={sessionDetails.sessionLength}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                  setLengthOfSessions(parseInt(event.target.value, 10))
+                  setSessionDetails({
+                    ...sessionDetails,
+                    sessionLength: parseInt(event.target.value, 10),
+                  })
                 }
               />
             </Form.Group>
@@ -219,15 +233,24 @@ const CreateSessionScreen: React.FC = () => {
               <Form.Label>Session Info</Form.Label>
               <Form.Control
                 placeholder="This gets displayed on Paypal Sale"
-                value={sessionInfo}
+                value={sessionDetails.sessionInfo}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                  setSessionInfo(event.target.value)
+                  setSessionDetails({
+                    ...sessionDetails,
+                    sessionInfo: event.target.value,
+                  })
                 }
               />
             </Form.Group>
           </Row>
           <Row className="m-3" style={{ alignItems: "center" }}>
-            <Form.Group as={Col} controlId="imageName">
+            <Form.Group as={Col} controlId="selectSessionImage">
+              <Form.Label>Select Image</Form.Label>
+              <Form.Select aria-label="Session picture dropdown">
+                <option>Open to select previously uploaded photo</option>
+              </Form.Select>
+            </Form.Group>
+            {/* <Form.Group as={Col} controlId="imageName">
               <Form.Label>Image Name</Form.Label>
               <Form.Control
                 placeholder=""
@@ -236,8 +259,8 @@ const CreateSessionScreen: React.FC = () => {
                   setImageName(event.target.value);
                 }}
               />
-            </Form.Group>
-            {sessionImage && (
+            </Form.Group> */}
+            {sessionDetails.sessionImage && (
               <Col>
                 <Image src={imagePreview} thumbnail fluid />
               </Col>
@@ -261,9 +284,12 @@ const CreateSessionScreen: React.FC = () => {
                 editorClassName="editor"
                 onEditorStateChange={(newState: any) => {
                   setEditorState(newState);
-                  setSessionDetails(
-                    draftToHtml(convertToRaw(newState.getCurrentContent()))
-                  );
+                  setSessionDetails({
+                    ...sessionDetails,
+                    sessionDetails: draftToHtml(
+                      convertToRaw(newState.getCurrentContent())
+                    ),
+                  });
                 }}
               />
             </Form.Group>
@@ -272,10 +298,12 @@ const CreateSessionScreen: React.FC = () => {
       </>
       <Container>
         <Row className="m-3 justify-content-end">
-          {_id ? (
-            <Button onClick={() => onEditSession()}>Edit Session</Button>
+          {sessionId ? (
+            <Button disabled onClick={() => onEditSession()}>
+              Edit Session
+            </Button>
           ) : (
-            <Button onClick={() => onCreateSession()}>
+            <Button disabled onClick={() => onCreateSession()}>
               Create New Session
             </Button>
           )}

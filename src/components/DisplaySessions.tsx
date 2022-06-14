@@ -2,8 +2,6 @@ import React from "react";
 // Components
 import { Link } from "react-router-dom";
 import { Card, CardGroup, Col, Row } from "react-bootstrap";
-// Image
-import darlingPretty from "../images/darling-pretty1.jpg";
 // Hooks
 import useAWSDatastore, { ISessionInfo } from "../hooks/useAWSData";
 import { addDays } from "date-fns";
@@ -26,6 +24,7 @@ const ShowAvailablePhotos = () => {
               ...session,
               date: date,
               price: `$${session.price}.00`,
+              sessionImage: `https://${session.sessionImage.bucket}.s3.amazonaws.com/${session.sessionImage.key}`,
             };
           })
           .sort(
@@ -57,7 +56,7 @@ const ShowAvailablePhotos = () => {
                     <Card.Img
                       variant="top"
                       className="photoCardImage"
-                      src={darlingPretty}
+                      src={session.sessionImage}
                       alt="Darling Pretty Logo"
                     />
                   </Card.Link>

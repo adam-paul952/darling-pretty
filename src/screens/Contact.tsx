@@ -29,11 +29,6 @@ const ContactForm = () => {
 
   const handleSubmit: React.MouseEventHandler<HTMLButtonElement> = async () => {
     await sendContactForm({ name, email, subject, message });
-    console.log(`
-    Name: ${name}
-    Email: ${email}
-    Subject: ${subject}
-    Message: ${message}`);
     setSuccess(true);
   };
 

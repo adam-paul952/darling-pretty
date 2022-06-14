@@ -14,6 +14,7 @@ import {
 import {
   listSessionsWithBookings,
   listSessionsWithDates,
+  listCompleteSessions,
 } from "../graphql/customQueries";
 import awsmobile from "../aws-exports";
 
@@ -27,18 +28,23 @@ export interface ISessionInfo {
   sessionInfo: string;
   price: number | undefined;
   sessionDetails: string;
-  sessionImage: ImageUploadT;
-  availableTimes: string[];
+  sessionImage: any;
+  availableTimes?: string[];
   bookings?: IBookingInfo[];
   _version?: number;
 }
 
 export type ImageUploadT = {
-  name: string;
   bucket?: string;
   region?: string;
   key?: string;
-  mimeType: string;
+  file: ImageFile;
+};
+
+export type ImageFile = {
+  name: string;
+  type: string;
+  size: number;
 };
 
 export interface IClientInfo {
@@ -72,10 +78,10 @@ export interface IBookingInfo {
 const useAWSDatastore = () => {
   //Session create
   const createNewSession = async (newSession: ISessionInfo) => {
-    const { name, mimeType } = newSession.sessionImage;
+    const { name, type } = newSession.sessionImage;
     const imageDetails = {
       name,
-      mimeType,
+      mimeType: type,
       bucket: awsmobile.aws_user_files_s3_bucket,
       region: awsmobile.aws_user_files_s3_bucket_region,
       key: `public/${name}`,
@@ -98,7 +104,6 @@ const useAWSDatastore = () => {
       const session = await API.graphql(
         graphqlOperation(createSessions, { input: sessionDetails })
       );
-      console.log(`Session from hook is:`, session);
     } catch (error: any) {
       // throw new Error(error);
       console.log(error);
@@ -108,7 +113,7 @@ const useAWSDatastore = () => {
   const listAllSessions = async () => {
     try {
       const allSessions: any = await API.graphql(
-        graphqlOperation(listSessionsWithBookings)
+        graphqlOperation(listCompleteSessions)
       );
       return allSessions.data.listSessions.items;
     } catch (error: any) {
@@ -147,7 +152,7 @@ const useAWSDatastore = () => {
       const sessionDates: any = await API.graphql(
         graphqlOperation(listSessions)
       );
-      console.log(sessionDates.data.listSessions.items);
+      // console.log(sessionDates.data.listSessions.items);
       // return sessionDates.data.listSessions.items.map((date: any) => {
       //   return date.date;
       // });
@@ -222,12 +227,22 @@ const useAWSDatastore = () => {
   const uploadImageToStorage = async (imageData: any) => {
     try {
       await Storage.put(imageData.name, imageData, {
-        contentType: imageData.mimeType,
+        contentType: imageData.type,
         progressCallback: (progress) => {
           console.log(`Uploaded: ${progress.loaded}/${progress.total}`);
         },
       });
-      console.log(`Image successfully uploaded to S3`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getPhotosFromStorage = async () => {
+    try {
+      const listOfPhotos = await Storage.list("", {})
+        .then((result) => console.log(result))
+        .catch((error) => console.log(error));
+      // return listOfPhotos;
     } catch (error) {
       console.log(error);
     }
@@ -244,6 +259,7 @@ const useAWSDatastore = () => {
     deleteContactFormSubmission,
     listSessionDates,
     listAllClients,
+    getPhotosFromStorage,
   };
 };
 

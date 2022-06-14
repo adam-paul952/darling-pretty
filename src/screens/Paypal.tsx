@@ -18,7 +18,7 @@ const Paypal = (props: IPaypalProps) => {
       <PayPalButtons
         className="paypal-button-container"
         style={{ layout: "vertical" }}
-        // disabled={true}
+        disabled={true}
         createOrder={(data, actions) => {
           return actions.order
             .create({
@@ -38,7 +38,6 @@ const Paypal = (props: IPaypalProps) => {
         }}
         onApprove={async (data, actions) => {
           return await actions.order!.capture().then(async (details) => {
-            console.log(`Details from paypal accept: `, details);
             if (details.status === "COMPLETED") {
               props.setComplete(!props.isComplete);
             }

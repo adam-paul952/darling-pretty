@@ -62,7 +62,7 @@ const ContactEntries: React.FC<IContactEntriesProps> = (props) => {
             <Accordion.Body>
               <Row style={{ margin: "5px 5px" }}>Subject: {entry.subject}</Row>
               <Row style={{ margin: "5px 5px" }}>Message: {entry.message}</Row>
-              <Row style={{ marginLeft: "0px" }}>
+              <Row style={{ marginLeft: "25%" }}>
                 <Col>
                   <a href={`mailto:${entry.email}?subject=${emailSubject}`}>
                     Reply
@@ -72,9 +72,9 @@ const ContactEntries: React.FC<IContactEntriesProps> = (props) => {
                   <a
                     href="#"
                     style={{ color: "red" }}
-                    onClick={() => {
-                      removeEntry(entry.id);
-                    }}
+                    // onClick={() => {
+                    //   removeEntry(entry.id);
+                    // }}
                   >
                     Delete
                   </a>

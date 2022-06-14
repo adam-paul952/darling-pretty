@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 //Components
 import { Button, Col, Container, Row } from "react-bootstrap";
 import ShowAvailableTime from "../components/Calendar";
-// Images
-import darlingPretty from "../images/darling-pretty1.jpg";
 // Date FNS
 import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
@@ -20,11 +18,11 @@ interface ISessionInfoProps {
 
 const SessionInfo: React.FC<ISessionInfoProps> = (props) => {
   const startHour: number = parseInt(
-    props.session.availableTimes[0].slice(0, 2).padStart(2, "0"),
+    props.session.availableTimes![0].slice(0, 2).padStart(2, "0"),
     10
   );
   const startMinute: number = parseInt(
-    props.session.availableTimes[0].slice(3, 5),
+    props.session.availableTimes![0].slice(3, 5),
     10
   );
   const [startDate, setStartDate] = React.useState<Date>(
@@ -41,7 +39,7 @@ const SessionInfo: React.FC<ISessionInfoProps> = (props) => {
         <Col className="">
           <img
             className="img-fluid"
-            src={darlingPretty}
+            src={props.session.sessionImage}
             alt="Darling-Pretty logo"
           />
         </Col>
@@ -80,7 +78,6 @@ const SessionInfo: React.FC<ISessionInfoProps> = (props) => {
             </Button>
           </Link>
         </Col>
-        {/* <hr className="w-100" /> */}
       </Row>
     </Container>
   );

@@ -69,7 +69,7 @@ const Checkout = () => {
           await updateBookingWithClient({
             id: id!,
             bookings: [...bookings!, bookingDetails],
-            availableTimes: filterAvailableTimes(availableTimes),
+            availableTimes: filterAvailableTimes(availableTimes!),
             version: version,
           });
         } catch (error) {

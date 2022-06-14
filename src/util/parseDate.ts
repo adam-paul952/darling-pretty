@@ -4,7 +4,7 @@ interface IParseDateTimeProps {
   formattedDate: string;
   startTime: string;
   endTime: string;
-  lengthOfSessions: number;
+  sessionLength: number;
 }
 export const parseDateTime = (props: IParseDateTimeProps) => {
   const bookings: string[] = [];
@@ -19,7 +19,7 @@ export const parseDateTime = (props: IParseDateTimeProps) => {
 
   const numberOfSessions =
     ((parseInt(props.endTime, 10) - parseInt(props.startTime, 10)) * 60) /
-      props.lengthOfSessions! +
+      props.sessionLength! +
     1;
 
   for (let i = 0; i < numberOfSessions; i++) {
@@ -27,7 +27,7 @@ export const parseDateTime = (props: IParseDateTimeProps) => {
       bookings.push(addMinutes(startDateString, 0).toString().slice(16, 21));
     } else {
       bookings.push(
-        addMinutes(startDateString, props.lengthOfSessions! * i)
+        addMinutes(startDateString, props.sessionLength! * i)
           .toString()
           .slice(16, 21)
       );

@@ -49,7 +49,9 @@ const AdminDashboard = () => {
                     >
                       <h5>{session.name}</h5>
                       <p>{formatDate(session.date)}</p>
-                      <p>Available Sessions: {session.availableTimes.length}</p>
+                      <p>
+                        Available Sessions: {session.availableTimes!.length}
+                      </p>
                       <p>Booked Sessions: {session.bookings!.length}</p>
                       <p>Start Time: {session.startTime}</p>
                       <p>End Time: {session.endTime}</p>
