@@ -2,6 +2,7 @@ export const formatPhoneNumber = (value: string) => {
   if (!value) {
     return value;
   }
+
   const phoneNumber = value.replace(/[^\d]/g, "");
   if (phoneNumber.length < 4) {
     return phoneNumber;

@@ -1,12 +1,14 @@
 import React from "react";
+
 import { Link } from "react-router-dom";
 import { Card, CardGroup, Container, Col, Row } from "react-bootstrap";
 import SideNav from "./components/SideNav";
-import useAWSDatastore, { ISessionInfo } from "../hooks/useAWSData";
+
+import useSessionInfo, { ISessionInfo } from "../hooks/useSessionInfo";
 import moment from "moment";
 
 const AdminDashboard = () => {
-  const { listAllSessions } = useAWSDatastore();
+  const { getAllSessions } = useSessionInfo();
 
   const [sessions, setSessions] = React.useState<ISessionInfo[]>([]);
   const [loading, setLoading] = React.useState<boolean>(true);
@@ -19,7 +21,7 @@ const AdminDashboard = () => {
   React.useEffect(() => {
     const fetchSessions = async () => {
       try {
-        const allSessions = await listAllSessions();
+        const allSessions = await getAllSessions();
         setSessions(allSessions);
       } catch (error) {
         console.log(error);
@@ -27,6 +29,7 @@ const AdminDashboard = () => {
         setLoading(false);
       }
     };
+
     fetchSessions();
     //eslint-disable-next-line
   }, []);

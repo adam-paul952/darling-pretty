@@ -1,15 +1,16 @@
 import React from "react";
 import SideNav from "./components/SideNav";
-import useAWSDatastore, { IClientInfo } from "../hooks/useAWSData";
+import useClientInfo, { IClientInfo } from "../hooks/useClientInfo";
 import { Accordion, Col, Row } from "react-bootstrap";
 
 const DisplayClients = () => {
-  const { listAllClients } = useAWSDatastore();
+  const { getAllClients } = useClientInfo();
+
   const [clientInfo, setClientInfo] = React.useState<IClientInfo[]>([]);
 
   React.useEffect(() => {
     const fetchClientInfo = async () => {
-      const clients = await listAllClients();
+      const clients = await getAllClients();
       setClientInfo(clients);
     };
 

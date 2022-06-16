@@ -3,7 +3,7 @@ import React from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import RequiredAsterisk from "../../components/visual/RequiredAsterisk";
 // Hooks
-import { IClientInfo } from "../../hooks/useAWSData";
+import { IClientInfo } from "../../hooks/useClientInfo";
 // Helpers
 import { formatPhoneNumber } from "../../util/formatStrings";
 //Types

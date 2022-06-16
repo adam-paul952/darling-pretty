@@ -1,48 +1,19 @@
 import React from "react";
-// Components
+
 import { Link } from "react-router-dom";
 import { Card, CardGroup, Col, Row } from "react-bootstrap";
-// Hooks
-import useAWSDatastore, { ISessionInfo } from "../hooks/useAWSData";
-import { addDays } from "date-fns";
 
-const ShowAvailablePhotos = () => {
-  const [sessions, setSessions] = React.useState<ISessionInfo[]>([]);
-  const { listAllSessions } = useAWSDatastore();
+import { ISessionInfo } from "../hooks/useSessionInfo";
+interface IDisplaySessionsProps {
+  sessions: ISessionInfo[];
+}
 
-  React.useEffect(() => {
-    const fetchSessions = async () => {
-      try {
-        const allSessions = await listAllSessions();
-        const arrangeDate = allSessions
-          .map((session: any) => {
-            const date = addDays(new Date(session.date), 1)
-              .toString()
-              .slice(0, 15)
-              .replace(" ", ", ");
-            return {
-              ...session,
-              date: date,
-              price: `$${session.price}.00`,
-              sessionImage: `https://${session.sessionImage.bucket}.s3.amazonaws.com/${session.sessionImage.key}`,
-            };
-          })
-          .sort(
-            (a: ISessionInfo, b: ISessionInfo) =>
-              new Date(a.date).getTime() - new Date(b.date).getTime()
-          );
-        setSessions(arrangeDate);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchSessions();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+const DisplaySessions: React.FC<IDisplaySessionsProps> = (props) => {
+  const { sessions } = props;
 
   return (
     <>
-      {sessions.map((session: any) => {
+      {sessions.map((session: ISessionInfo) => {
         return (
           <Row key={session.id} lg={2} className="justify-content-center">
             <CardGroup>
@@ -56,7 +27,7 @@ const ShowAvailablePhotos = () => {
                     <Card.Img
                       variant="top"
                       className="photoCardImage"
-                      src={session.sessionImage}
+                      src={session.sessionImage.name}
                       alt="Darling Pretty Logo"
                     />
                   </Card.Link>
@@ -76,4 +47,4 @@ const ShowAvailablePhotos = () => {
   );
 };
 
-export default ShowAvailablePhotos;
+export default DisplaySessions;

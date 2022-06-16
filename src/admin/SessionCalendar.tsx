@@ -1,17 +1,19 @@
 import React from "react";
-// Components
+
+import { Container } from "react-bootstrap";
 import SideNav from "./components/SideNav";
 import FullCalendar from "@fullcalendar/react";
-import { Container } from "react-bootstrap";
-// FullCalendar Plugins
+
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-// Hooks
-import useAWSDatastore from "../hooks/useAWSData";
+
 import moment from "moment";
-// Types
-import { ISessionInfo, IBookingInfo } from "../hooks/useAWSData";
+
+import useSessionInfo, {
+  ISessionInfo,
+  IBookingInfo,
+} from "../hooks/useSessionInfo";
 interface IEvents {
   title: string;
   start?: Date;
@@ -20,14 +22,14 @@ interface IEvents {
 }
 
 const SessionCalendar = () => {
-  const { listAllSessions } = useAWSDatastore();
+  const { getAllSessions } = useSessionInfo();
   const [sessions, setSessions] = React.useState<IEvents[]>([]);
 
   React.useEffect(() => {
     const fetchSessions = async () => {
       const currentSessions: any[] = [];
       try {
-        const allSessions = await listAllSessions();
+        const allSessions = await getAllSessions();
         allSessions.forEach((session: ISessionInfo) => {
           session.bookings?.forEach((booking: IBookingInfo) => {
             const clientStart = `${session.date}T${booking.startTime}`;
@@ -58,6 +60,7 @@ const SessionCalendar = () => {
         console.log(error);
       }
     };
+
     fetchSessions();
     //eslint-disable-next-line
   }, []);
@@ -83,17 +86,6 @@ const SessionCalendar = () => {
           events={sessions}
           nowIndicator={true}
           slotDuration="00:20:00"
-          // weekends={this.state.weekendsVisible}
-          // initialEvents={INITIAL_EVENTS} // alternatively, use the `events` setting to fetch from a feed
-          // select={this.handleDateSelect}
-          // eventContent={renderEventContent} // custom render function
-          // eventClick={this.handleEventClick}
-          // eventsSet={this.handleEvents} // called after events are initialized/added/changed/removed
-          /* you can update a remote database when these fire:
-        eventAdd={function(){}}
-        eventChange={function(){}}
-        eventRemove={function(){}}
-        */
         />
       </div>
     </Container>

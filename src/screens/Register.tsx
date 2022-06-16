@@ -1,19 +1,20 @@
 import React from "react";
-// Components
+
 import { Link, useLocation } from "react-router-dom";
 import { Button, Container, Row } from "react-bootstrap";
 import Header from "../components/Header";
 import ClientInformation from "./contactInfo/ContactInformation";
 import BillingInformation from "./contactInfo/BillingInformation";
 import ClientInformationStatus from "../components/ClientInformationStatus";
-// Types
-import { IClientInfo, ISessionInfo } from "../hooks/useAWSData";
-export interface LocationProps {
+
+import { ISessionInfo } from "../hooks/useSessionInfo";
+import { IClientInfo } from "../hooks/useClientInfo";
+export interface RegisterLocationProps {
   session: ISessionInfo;
   sessionTime: Date;
 }
-// Initial Client State
-const initialState = {
+
+const initialClientState = {
   firstName: "",
   lastName: "",
   email: "",
@@ -27,9 +28,10 @@ const initialState = {
 };
 
 const Register = () => {
-  const { session, sessionTime } = useLocation().state as LocationProps;
+  const { session, sessionTime } = useLocation().state as RegisterLocationProps;
 
-  const [newClient, setNewClient] = React.useState<IClientInfo>(initialState);
+  const [newClient, setNewClient] =
+    React.useState<IClientInfo>(initialClientState);
 
   const [showClientContact, setShowClientContact] = React.useState(true);
   const [showClientAddress, setShowClientAddress] = React.useState(false);
@@ -88,3 +90,7 @@ const Register = () => {
 };
 
 export default Register;
+
+/*
+ *  TODO: Add display to confirm client details and edit if incorrect
+ */

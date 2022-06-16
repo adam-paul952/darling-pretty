@@ -1,25 +1,24 @@
 import React from "react";
 import { useLocation, useParams } from "react-router-dom";
-//Components
+
 import Header from "../components/Header";
-import SessionInfo from "../components/SessionDescriptionContainer";
-//Types
-import { ISessionInfo } from "../hooks/useAWSData";
+import SessionDescription from "../components/SessionDescription";
+
+import { ISessionInfo } from "../hooks/useSessionInfo";
 type LocationPropsT = {
   session: ISessionInfo;
 };
 
-const SessionDescription = () => {
+const SessionDescriptionContainer: React.FC = () => {
   const { session } = useLocation().state as LocationPropsT;
-
   const { id } = useParams();
 
   return (
     <>
       <Header title={session.date} />
-      <SessionInfo key={id} session={session} />
+      <SessionDescription key={id} session={session} />
     </>
   );
 };
 
-export default SessionDescription;
+export default SessionDescriptionContainer;

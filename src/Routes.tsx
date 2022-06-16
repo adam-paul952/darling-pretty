@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-// Screens
+
 import DarlingPrettyHome from "./App";
-import SessionDescription from "./screens/SessionDescription";
+import SessionDescriptionContainer from "./screens/SessionDescriptionContainer";
 import Register from "./screens/Register";
 import ContactForm from "./screens/Contact";
 import Checkout from "./screens/Checkout";
@@ -18,7 +18,7 @@ const DarlingPrettyRouter = () => {
     <Router>
       <Routes>
         <Route path="/" element={<DarlingPrettyHome />} />
-        <Route path="/photo/:id" element={<SessionDescription />} />
+        <Route path="/photo/:id" element={<SessionDescriptionContainer />} />
         <Route path="/register" element={<Register />} />
         <Route path="/contact" element={<ContactForm />} />
         <Route path="/login" element={<LoginPage />} />

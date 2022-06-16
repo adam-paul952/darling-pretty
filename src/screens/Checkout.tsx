@@ -1,24 +1,25 @@
 import React from "react";
-// Components
+
 import { Col, Container, Row } from "react-bootstrap";
 import Header from "../components/Header";
 import Paypal from "./Paypal";
-// Hooks
-import moment from "moment";
+
 import { useLocation } from "react-router-dom";
-import useAWSData, { IBookingInfo, IClientInfo } from "../hooks/useAWSData";
-// Types
-import { LocationProps } from "../screens/Register";
-interface ILocationCheckout extends LocationProps {
+import useSessionInfo, { IBookingInfo } from "../hooks/useSessionInfo";
+import useClientInfo, { IClientInfo } from "../hooks/useClientInfo";
+import moment from "moment";
+
+import { RegisterLocationProps } from "../screens/Register";
+interface ILocationCheckout extends RegisterLocationProps {
   clientInfo: IClientInfo;
 }
 
 const Checkout = () => {
   const { session, sessionTime, clientInfo } = useLocation()
     .state as ILocationCheckout;
-  const { createNewClient, updateBookingWithClient } = useAWSData();
+  const { updateBookingWithClient } = useSessionInfo();
+  const { createNewClient } = useClientInfo();
 
-  // Destructure session & client info
   const { id, date, availableTimes, bookings, price, name, _version } = session;
   const { firstName, lastName } = clientInfo;
 
@@ -38,6 +39,7 @@ const Checkout = () => {
     const filtered: string[] = arrayOfAvailableTimes.filter(
       (time) => time !== sessionStartTime
     );
+
     return filtered;
   };
 
@@ -48,11 +50,13 @@ const Checkout = () => {
         ...clientInfo,
         sessionBooked: bookingDate,
       });
+
       const bookingDetails: IBookingInfo = {
         clientId: newClient.id,
         clientName: clientName,
         startTime: sessionStartTime,
       };
+
       return bookingDetails;
     } catch (err: any) {
       console.log(err);
@@ -77,6 +81,7 @@ const Checkout = () => {
         }
       }
     };
+
     handleSessionUpdate();
     //eslint-disable-next-line
   }, [isComplete]);

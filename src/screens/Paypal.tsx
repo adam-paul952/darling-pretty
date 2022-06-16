@@ -1,5 +1,5 @@
 import React from "react";
-// Paypal
+
 import { usePayPalScriptReducer, PayPalButtons } from "@paypal/react-paypal-js";
 
 interface IPaypalProps {
@@ -9,7 +9,9 @@ interface IPaypalProps {
   setComplete: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Paypal = (props: IPaypalProps) => {
+const Paypal: React.FC<IPaypalProps> = (props) => {
+  const { price, sessionName, isComplete, setComplete } = props;
+
   const [{ options, isPending }] = usePayPalScriptReducer();
 
   return (
@@ -24,10 +26,10 @@ const Paypal = (props: IPaypalProps) => {
             .create({
               purchase_units: [
                 {
-                  description: props.sessionName,
+                  description: sessionName,
                   amount: {
                     currency_code: options.currency,
-                    value: props.price.slice(1),
+                    value: price.slice(1),
                   },
                 },
               ],
@@ -39,7 +41,7 @@ const Paypal = (props: IPaypalProps) => {
         onApprove={async (data, actions) => {
           return await actions.order!.capture().then(async (details) => {
             if (details.status === "COMPLETED") {
-              props.setComplete(!props.isComplete);
+              setComplete(!isComplete);
             }
           });
         }}

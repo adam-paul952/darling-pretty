@@ -1,5 +1,5 @@
 import React from "react";
-// Components
+
 import { useLocation } from "react-router-dom";
 import { Button, Col, Container, Form, Image, Row } from "react-bootstrap";
 import { EditorState, ContentState, convertToRaw } from "draft-js";
@@ -7,20 +7,16 @@ import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
 import htmlToDraft from "html-to-draftjs";
 import SideNav from "./components/SideNav";
-// Hooks
-import useAWSDatastore, { ISessionInfo } from "../hooks/useAWSData";
+
+import useSessionInfo, { ISessionInfo } from "../hooks/useSessionInfo";
 import { parseDateTime } from "../util/parseDate";
 import moment from "moment";
-// Types
+
 interface ICreateSessionLocation {
   sessionId: string | null;
 }
-type ImageDetailsT = {
-  name: string;
-  mimeType: string;
-};
 
-const initialState = {
+const initialSessionState = {
   id: "",
   date: "",
   startTime: "",
@@ -40,16 +36,14 @@ const initialState = {
 
 const CreateSessionScreen: React.FC = () => {
   const { sessionId } = useLocation().state as ICreateSessionLocation;
-  const {
-    createNewSession,
-    getSessionById,
-    adminUpateSession,
-    getPhotosFromStorage,
-    listAllSessions,
-  } = useAWSDatastore();
+  const { createNewSession, getSessionById, adminUpateSession } =
+    useSessionInfo();
 
   const [sessionDetails, setSessionDetails] =
-    React.useState<ISessionInfo>(initialState);
+    React.useState<ISessionInfo>(initialSessionState);
+
+  const { startTime, endTime, sessionLength } = sessionDetails;
+  const formattedDate = moment(sessionDetails.date).format("YYYY-MM-DD");
 
   const [editorState, setEditorState] = React.useState<EditorState>(
     EditorState.createEmpty()
@@ -60,24 +54,12 @@ const CreateSessionScreen: React.FC = () => {
 
   const [loading, setLoading] = React.useState<boolean>(true);
 
-  const formattedDate = moment(sessionDetails.date).format("YYYY-MM-DD");
-  const { startTime, endTime, sessionLength } = sessionDetails;
-
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setImagePreview(URL.createObjectURL(event.target.files![0]));
     setSessionDetails({
       ...sessionDetails,
       sessionImage: event.target.files![0],
     });
-  };
-
-  const assignSessionImage = () => {
-    const file = sessionDetails.sessionImage;
-    if (imageName === "") {
-      return file;
-    } else {
-      return { ...file, name: imageName };
-    }
   };
 
   const onCreateSession = async () => {
@@ -91,7 +73,6 @@ const CreateSessionScreen: React.FC = () => {
       const sessionData = {
         ...sessionDetails,
         date: formattedDate,
-        sessionImage: assignSessionImage(),
         availableTimes: availableBookings,
       };
       await createNewSession(sessionData);
@@ -107,7 +88,7 @@ const CreateSessionScreen: React.FC = () => {
   };
 
   const resetFormData = () => {
-    setSessionDetails(initialState);
+    setSessionDetails(initialSessionState);
     setImagePreview("");
     setEditorState(EditorState.createEmpty());
   };
@@ -119,11 +100,10 @@ const CreateSessionScreen: React.FC = () => {
         return;
       } else {
         const session = await getSessionById(sessionId);
+        const { bucket, key } = session.sessionImage;
+
         setSessionDetails(session);
-        const spacesRemoved = session.sessionImage.key?.replace(/ /g, "+");
-        setImagePreview(
-          `https://${session.sessionImage.bucket}.s3.amazonaws.com/${spacesRemoved}`
-        );
+        setImagePreview(`https://${bucket}.s3.amazonaws.com/${key}`);
         // Convert HTML string to draft
         const contentBlock = htmlToDraft(session.sessionDetails);
         const contentState = ContentState.createFromBlockArray(
@@ -134,6 +114,7 @@ const CreateSessionScreen: React.FC = () => {
         setEditorState(editorState);
       }
     };
+
     checkForEdit();
     // eslint-disable-next-line
   }, []);
@@ -250,16 +231,6 @@ const CreateSessionScreen: React.FC = () => {
                 <option>Open to select previously uploaded photo</option>
               </Form.Select>
             </Form.Group>
-            {/* <Form.Group as={Col} controlId="imageName">
-              <Form.Label>Image Name</Form.Label>
-              <Form.Control
-                placeholder=""
-                value={imageName}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  setImageName(event.target.value);
-                }}
-              />
-            </Form.Group> */}
             {sessionDetails.sessionImage && (
               <Col>
                 <Image src={imagePreview} thumbnail fluid />
