@@ -2,11 +2,9 @@ import React from "react";
 
 import { Container } from "react-bootstrap";
 import Header from "./components/Header";
-import DisplaySessions from "./components/DisplaySessions";
 
 import { useTheme } from "@mui/material/styles";
-import useSessionInfo, { ISessionInfo } from "./hooks/useSessionInfo";
-import moment from "moment";
+
 import Hero from "./components/Hero";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
@@ -18,6 +16,18 @@ import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
+import Grid from "@mui/material/Grid";
+import FamilyRestroomIcon from "@mui/icons-material/FamilyRestroom";
+import PortraitIcon from "@mui/icons-material/Portrait";
+import SchoolIcon from "@mui/icons-material/School";
+import PetsIcon from "@mui/icons-material/Pets";
+import PregnantWomanIcon from "@mui/icons-material/PregnantWoman";
+import ChildFriendlyIcon from "@mui/icons-material/ChildFriendly";
+import DiamondIcon from "@mui/icons-material/Diamond";
+import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
+import Card from "@mui/material/Card";
+import { CardContent, CardMedia } from "@mui/material";
+import Footer from "./components/Footer";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -26,194 +36,123 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 const servicesAvailable = [
   {
     id: 1,
-    service: "Family",
+    name: "Family",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Aliquet bibendum enim facilisis gravida neque convallis a cras. Ac placerat vestibulum lectus mauris ultrices eros.",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    thumbnail: <FamilyRestroomIcon sx={{ fontSize: 50 }} />,
   },
   {
     id: 2,
-    service: "Portrait",
+    name: "Portrait",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Aliquet bibendum enim facilisis gravida neque convallis a cras. Ac placerat vestibulum lectus mauris ultrices eros.",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    thumbnail: <PortraitIcon sx={{ fontSize: 50 }} />,
   },
   {
     id: 3,
-    service: "Graduation",
+    name: "Graduation",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Aliquet bibendum enim facilisis gravida neque convallis a cras. Ac placerat vestibulum lectus mauris ultrices eros.",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    thumbnail: <SchoolIcon sx={{ fontSize: 50 }} />,
   },
   {
     id: 4,
-    service: "Couples & Engagement",
+    name: "Couples & Engagement",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Aliquet bibendum enim facilisis gravida neque convallis a cras. Ac placerat vestibulum lectus mauris ultrices eros.",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    thumbnail: <DiamondIcon sx={{ fontSize: 50 }} />,
   },
   {
     id: 5,
-    service: "Boudoir",
+    name: "Boudoir",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Aliquet bibendum enim facilisis gravida neque convallis a cras. Ac placerat vestibulum lectus mauris ultrices eros.",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    thumbnail: <PhotoCameraIcon sx={{ fontSize: 50 }} />,
   },
   {
     id: 6,
-    service: "Pet",
+    name: "Pet",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Aliquet bibendum enim facilisis gravida neque convallis a cras. Ac placerat vestibulum lectus mauris ultrices eros.",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    thumbnail: <PetsIcon sx={{ fontSize: 50 }} />,
   },
   {
     id: 7,
-    service: "Newborn",
+    name: "Newborn",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Aliquet bibendum enim facilisis gravida neque convallis a cras. Ac placerat vestibulum lectus mauris ultrices eros.",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    thumbnail: <ChildFriendlyIcon sx={{ fontSize: 50 }} />,
   },
   {
     id: 8,
-    service: "Maternity",
+    name: "Maternity",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Aliquet bibendum enim facilisis gravida neque convallis a cras. Ac placerat vestibulum lectus mauris ultrices eros.",
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    thumbnail: <PregnantWomanIcon sx={{ fontSize: 50 }} />,
   },
 ];
 
+const heroTitle = `Lorem ipsum dolor amet.`;
+const heroCaption = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`;
+
 const App: React.FC = () => {
-  const { getAllSessions } = useSessionInfo();
-
-  const [sessions, setSessions] = React.useState<ISessionInfo[]>([]);
-
-  React.useEffect(() => {
-    const fetchSessions = async () => {
-      try {
-        const allSessions = await getAllSessions();
-        const arrangeDate = allSessions
-          .sort(
-            (a: ISessionInfo, b: ISessionInfo) =>
-              new Date(a.date).getTime() - new Date(b.date).getTime()
-          )
-          .map((session: ISessionInfo) => {
-            const date = moment(session.date).format("ddd, MMMM Do YYYY");
-            return {
-              ...session,
-              date: date,
-              price: `$${session.price}.00`,
-              sessionImage: {
-                name: `https://${session.sessionImage.bucket}.s3.amazonaws.com/${session.sessionImage.key}`,
-              },
-            };
-          });
-
-        setSessions(arrangeDate);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchSessions();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const theme = useTheme();
-  const [activeStep, setActiveStep] = React.useState(0);
-  const maxSteps = servicesAvailable.length;
-
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const handleStepChange = (step: number) => {
-    setActiveStep(step);
-  };
-
   return (
     <>
       {/* <Authenticator hideSignUp={true}> */}
       <Header title="Darling Pretty Photography" />
-      <Hero />
+      <Hero header={heroTitle} caption={heroCaption} />
       <Box
         sx={{
-          maxWidth: 400,
+          maxWidth: "100%",
           flexGrow: 1,
           display: "flex",
           flexDirection: "column",
           marginLeft: "auto",
           marginRight: "auto",
-          marginTop: "30px",
+          marginTop: "1px",
+          paddingTop: "25px",
+          backgroundColor: "gainsboro",
         }}
       >
-        <Paper
-          square
-          elevation={0}
+        <Grid
+          container
           sx={{
             display: "flex",
             alignItems: "center",
-            height: 50,
-            pl: 2,
-            bgcolor: "background.default",
+            justifyContent: "center",
+            width: "100%",
+            minHeight: "500px",
           }}
         >
-          <Typography variant="h6">
-            {servicesAvailable[activeStep].service}
-          </Typography>
-        </Paper>
-        <AutoPlaySwipeableViews
-          axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-          index={activeStep}
-          onChangeIndex={handleStepChange}
-          enableMouseEvents
-        >
           {servicesAvailable.map((service, index) => (
-            <div key={service.service}>
-              {Math.abs(activeStep - index) <= 2 ? (
-                <Paper>
-                  <p>{service.description}</p>
-
-                  <Button className="CheckButton">
-                    Check List of current sessions
-                  </Button>
-                </Paper>
-              ) : null}
-            </div>
+            <Grid
+              item
+              xs={12}
+              md={3}
+              minHeight={300}
+              key={service.id}
+              sx={{
+                backgroundColor: "#f2f0f1",
+                textAlign: "center",
+                padding: "30px",
+                width: "200px",
+                borderRadius: "10px",
+                margin: "10px !important",
+              }}
+            >
+              <Typography variant="h5" sx={{ padding: "10px" }}>
+                {service.name}
+              </Typography>
+              {service.thumbnail}
+              <Typography sx={{ padding: "10px" }}>
+                {service.description}
+              </Typography>
+            </Grid>
           ))}
-        </AutoPlaySwipeableViews>
-        <MobileStepper
-          steps={maxSteps}
-          position="static"
-          activeStep={activeStep}
-          nextButton={
-            <Button
-              size="small"
-              onClick={handleNext}
-              disabled={activeStep === maxSteps - 1}
-            >
-              Next
-              {theme.direction === "rtl" ? (
-                <KeyboardArrowLeft />
-              ) : (
-                <KeyboardArrowRight />
-              )}
-            </Button>
-          }
-          backButton={
-            <Button
-              size="small"
-              onClick={handleBack}
-              disabled={activeStep === 0}
-            >
-              {theme.direction === "rtl" ? (
-                <KeyboardArrowRight />
-              ) : (
-                <KeyboardArrowLeft />
-              )}
-              Back
-            </Button>
-          }
-        />
+        </Grid>
       </Box>
-      {/* <Container className="mt-2 mx-auto flex flex-column items-center">
-        <DisplaySessions sessions={sessions} />
-      </Container> */}
       {/* </Authenticator> */}
+      <Footer />
     </>
   );
 };

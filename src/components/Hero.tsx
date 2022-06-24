@@ -7,10 +7,16 @@ import Button from "@mui/material/Button";
 import { heroStyles } from "../styles/styles";
 import image from "../images/darling-pretty1.jpg";
 
-const Hero = () => {
+interface IHeroProps {
+  header: string;
+  caption: string;
+}
+
+const Hero: React.FC<IHeroProps> = (props) => {
+  const { header, caption } = props;
   const { heroBox, gridContainer, title, subtitle, largeImage } = heroStyles;
   return (
-    <Paper classes={heroBox} sx={{ width: "100%" }}>
+    <Paper sx={heroBox}>
       <Grid
         container
         spacing={6}
@@ -22,22 +28,44 @@ const Hero = () => {
           marginLeft: "0",
         }}
       >
-        <Grid item xs={12} md={6} sx={{}}>
+        <Grid
+          item
+          xs={12}
+          md={6}
+          sx={{ display: "flex", flexDirection: "column" }}
+        >
           <Typography variant="h3" classes={title}>
-            Let&apos;s scale your business
+            {header}
           </Typography>
           <Typography variant="h6" classes={subtitle}>
-            Hire professionals who [..truccated..] we are your best client.
+            {caption}
           </Typography>
           <Button
             variant="contained"
-            color="primary"
-            sx={{ width: "200px", fontSize: "16px" }}
+            href="/sessions"
+            sx={{
+              width: "200px",
+              fontSize: "16px",
+              marginTop: "25px",
+              "&:hover": {
+                color: "white",
+                backgroundColor: "darkblue",
+              },
+              backgroundColor: "#000",
+            }}
           >
-            HIRE US
+            View Sessions
           </Button>
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid
+          item
+          xs={12}
+          md={6}
+          sx={{
+            paddingLeft: { xs: "10px !important" },
+            paddingRight: { xs: "10px !important" },
+          }}
+        >
           <img src={image} alt="Darling Pretty Logo" style={largeImage} />
         </Grid>
       </Grid>

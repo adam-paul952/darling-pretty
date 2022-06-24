@@ -2,8 +2,15 @@ import React from "react";
 // Components
 import ReCAPTCHAV2 from "react-google-recaptcha";
 import Header from "../components/Header";
-import { Button, Container, Form, Row } from "react-bootstrap";
 import SubmissionComplete from "../components/visual/ContactSuccessMessage";
+import {
+  Container,
+  Box,
+  Typography,
+  TextField,
+  TextareaAutosize,
+  Button,
+} from "@mui/material";
 // Hooks
 import useContactForm from "../hooks/useContactForm";
 import RequiredAsterisk from "../components/visual/RequiredAsterisk";
@@ -42,86 +49,82 @@ const ContactForm = () => {
   }, [success]);
 
   return (
-    <>
-      <Header title="Contact" />
-      <Container>
-        <Row className="margin-top-5">
-          <h3 className="text-center">
-            Reach out with any questions or comments!
-          </h3>
-        </Row>
-        <Form className="contact-form-container">
-          <Form.Group
-            className="mb-3 contact-form-input"
-            controlId="contactName"
-          >
-            <Form.Label>
-              Name <RequiredAsterisk />
-            </Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="John Doe"
-              required
-              value={name}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setName(e.target.value)
-              }
-            />
-          </Form.Group>
-          <Form.Group
-            className="mb-3 contact-form-input"
-            controlId="contactEmail"
-          >
-            <Form.Label>
-              Email <RequiredAsterisk />
-            </Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="john.doe@email.com"
-              required
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setEmail(e.target.value);
-              }}
-              value={email}
-            />
-          </Form.Group>
-          <Form.Group
-            className="mb-3 contact-form-input"
-            controlId="contactSubject"
-          >
-            <Form.Label>
-              Subject <RequiredAsterisk />
-            </Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Subject"
-              required
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setSubject(e.target.value);
-              }}
-              value={subject}
-            />
-          </Form.Group>
-          <Form.Group
-            className="mb-3 contact-form-input"
-            controlId="contactMessage"
-          >
-            <Form.Label>
-              Message <RequiredAsterisk />
-            </Form.Label>
-            <Form.Control
-              as="textarea"
-              placeholder="Type your message here..."
-              required
-              rows={3}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setMessage(e.target.value);
-              }}
-              value={message}
-            />
-          </Form.Group>
+    <Container sx={{ backgroundColor: "slategray", overflow: "hidden" }}>
+      <Header />
+      <Box
+        sx={{
+          flexGrow: 1,
+          padding: "11px",
+          maxWidth: "755px",
+          margin: "10px auto",
+          backgroundColor: "gainsboro",
+        }}
+      >
+        <Typography variant="h4" sx={{ textAlign: "center" }}>
+          Reach out with any questions or comments!
+        </Typography>
+        <Box
+          sx={{ marginTop: "30px" }}
+          component="form"
+          noValidate
+          autoComplete="off"
+        >
+          <TextField
+            label="Full Name"
+            defaultValue="John Doe"
+            variant="standard"
+            fullWidth
+            required
+            sx={{ marginBottom: "20px !important" }}
+            value={name}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setName(e.target.value)
+            }
+          />
+
+          <TextField
+            label="Email"
+            variant="standard"
+            fullWidth
+            required
+            sx={{ marginBottom: "20px !important" }}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setEmail(e.target.value);
+            }}
+            value={email}
+          />
+
+          <TextField
+            label="Subject"
+            variant="standard"
+            fullWidth
+            required
+            sx={{ marginBottom: "20px !important" }}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setSubject(e.target.value);
+            }}
+            value={subject}
+          />
+
+          <TextareaAutosize
+            aria-label="minimum height"
+            minRows={6}
+            required
+            placeholder="Enter a message"
+            style={{
+              width: "100%",
+              marginBottom: "20px",
+              fontSize: "16px",
+              padding: "10px",
+            }}
+            spellCheck
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+              setMessage(e.target.value);
+            }}
+            value={message}
+          />
           {!success ? (
-            <Container className="col-center">
+            <>
               <ReCAPTCHAV2
                 className="my-1"
                 sitekey={process.env.REACT_APP_SITE_KEY!}
@@ -129,19 +132,21 @@ const ContactForm = () => {
                 onExpired={handleExpireToken}
               />
               <Button
-                className="align-self-center"
-                onClick={handleSubmit}
-                disabled={!token}
+                variant="contained"
+                type="submit"
+                color="primary"
+                style={{ width: "200px", fontSize: "16px" }}
+                onClick={() => null}
               >
-                Send Message
+                Submit
               </Button>
-            </Container>
+            </>
           ) : (
             <SubmissionComplete />
           )}
-        </Form>
-      </Container>
-    </>
+        </Box>
+      </Box>
+    </Container>
   );
 };
 

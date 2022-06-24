@@ -12,12 +12,14 @@ import CreateSessionScreen from "./admin/CreateSession";
 import LoginPage from "./screens/Login";
 import ContactFormSubmissions from "./admin/ContactFormSubmissions";
 import DisplayClients from "./admin/DisplayClients";
+import DisplayAvailableSessions from "./screens/DisplaySessions";
 
 const DarlingPrettyRouter = () => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<DarlingPrettyHome />} />
+        <Route path="/sessions" element={<DisplayAvailableSessions />} />
         <Route path="/photo/:id" element={<SessionDescriptionContainer />} />
         <Route path="/register" element={<Register />} />
         <Route path="/contact" element={<ContactForm />} />
