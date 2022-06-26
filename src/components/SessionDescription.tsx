@@ -1,8 +1,9 @@
 import React from "react";
 
 import { Link } from "react-router-dom";
-import { Button, Col, Container, Image, Row } from "react-bootstrap";
 import ShowAvailableTime from "./ShowAvailableTime";
+
+import { Button, Container, Grid, Typography } from "@mui/material";
 
 import moment from "moment";
 
@@ -28,50 +29,48 @@ const SessionDescription: React.FC<ISessionDescriptionProps> = (props) => {
   });
 
   return (
-    <Container key={session.id} className="mt-4 pt-4">
-      <Row lg={2} className="mt-2 pt-2">
-        <Col>
-          <Image
-            fluid
+    <Container sx={{ marginTop: "30px" }}>
+      <Grid container spacing={4} sx={{ maxWidth: "100%" }}>
+        <Grid item md={7}>
+          <img
             src={session.sessionImage.name}
             alt="Darling-Pretty logo"
+            style={{ width: "100%" }}
           />
-        </Col>
-        <Col className="align-self-center">
-          <h2>Price</h2>
-          <p>{session.price}</p>
-          <hr className="w-25" />
-          <h3>Date</h3>
-          <p>{session.date}</p>
-        </Col>
-      </Row>
-      <hr />
-      <Row lg={2} md={1}>
-        <Col className="px-1">
-          <h2>Session Includes:</h2>
-          <div dangerouslySetInnerHTML={sanitizeData()} />
-        </Col>
-        <Col lg={3} className="available-time-container">
-          <p>Available Times:</p>
+        </Grid>
+        <Grid item md={5} xs={12}>
+          <Typography
+            component="h3"
+            sx={{ fontWeight: "bold", padding: "10px 0" }}
+          >
+            {session.name}
+          </Typography>
+          <Typography sx={{ padding: "10px 0" }}>{session.price}</Typography>
+          <Typography
+            component="div"
+            sx={{ maxWidth: "90%", padding: "10px 0" }}
+            dangerouslySetInnerHTML={sanitizeData()}
+          />
+          <Typography sx={{ padding: "10px 0" }}>{session.date}</Typography>
+          <Typography sx={{ padding: "5px 0" }}>Available Times:</Typography>
           <ShowAvailableTime
             session={session}
             startDate={startDate}
             setStartDate={setStartDate}
           />
           <Link
-            className="buttonLink"
-            to="/register"
+            to="/checkout"
             state={{
               session: session,
               sessionTime: startDate,
             }}
           >
-            <Button variant="primary" className="w-100">
+            <Button variant="contained" color="primary">
               Add to Cart
             </Button>
           </Link>
-        </Col>
-      </Row>
+        </Grid>
+      </Grid>
     </Container>
   );
 };

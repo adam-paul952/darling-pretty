@@ -1,10 +1,11 @@
-import { Container } from "react-bootstrap";
-import { BeatLoader } from "react-spinners";
+import React from "react";
 
-const Loading = () => {
-  <Container className="spinner">
-    <BeatLoader size={15} />
-  </Container>;
-};
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
 
+const Loading: React.FC = () => (
+  <Container>
+    <Typography component="h3">Loading...</Typography>
+  </Container>
+);
 export default Loading;

@@ -142,7 +142,7 @@ const useSessionInfo = () => {
           },
         })
       );
-
+      console.log(`Updated session from useSession: `, updatedSession);
       return updatedSession;
     } catch (error) {
       console.log(error);

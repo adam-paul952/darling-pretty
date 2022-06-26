@@ -1,18 +1,19 @@
 import React from "react";
-import useSessionInfo, { ISessionInfo } from "../hooks/useSessionInfo";
-import moment from "moment";
-import DisplaySessions from "../components/DisplaySessions";
+
 import Header from "../components/Header";
-import HeroHeader from "../components/UpcomingSessions";
 import MainFeaturedPost from "../components/UpcomingSessions";
 import Grid from "@mui/material/Grid";
-import Container from "@mui/material/Container";
 import Footer from "../components/Footer";
+import Loading from "../components/Loading";
+import Typography from "@mui/material/Typography";
+
+import useSessionInfo, { ISessionInfo } from "../hooks/useSessionInfo";
+import moment from "moment";
 
 const DisplayAvailableSessions = () => {
   const { getAllSessions } = useSessionInfo();
 
-  const [sessions, setSessions] = React.useState<ISessionInfo[]>([]);
+  const [sessions, setSessions] = React.useState<ISessionInfo[] | null>(null);
 
   React.useEffect(() => {
     const fetchSessions = async () => {
@@ -44,27 +45,36 @@ const DisplayAvailableSessions = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // if (!sessions) {
-  //   return "Loading...";
-  // }
-
   return (
-    <>
-      <Container maxWidth="lg" sx={{ backgroundColor: "slategrey" }}>
-        <Header />
-        <Grid
-          container
-          rowSpacing={3}
-          sx={{ paddingTop: "30px", justifyContent: "center" }}
-        >
-          {sessions.map((session) => {
+    <React.Fragment>
+      <Header />
+      <Grid
+        container
+        rowSpacing={3}
+        sx={{ paddingTop: "30px", justifyContent: "center", minHeight: "75vh" }}
+      >
+        {!sessions ? (
+          <Grid
+            item
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Typography component="h1" sx={{ fontSize: "32px" }}>
+              Loading...
+            </Typography>
+          </Grid>
+        ) : (
+          sessions.map((session) => {
             return <MainFeaturedPost key={session.id} post={session} />;
-          })}
-        </Grid>
-        {/* <DisplaySessions sessions={sessions} /> */}
-        <Footer />
-      </Container>
-    </>
+          })
+        )}
+      </Grid>
+      {/* <DisplaySessions sessions={sessions} /> */}
+      <Footer />
+    </React.Fragment>
   );
 };
 

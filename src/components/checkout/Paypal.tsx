@@ -1,16 +1,16 @@
 import React from "react";
 
 import { usePayPalScriptReducer, PayPalButtons } from "@paypal/react-paypal-js";
+import { OrderedMap } from "immutable";
 
 interface IPaypalProps {
   price: string;
   sessionName: string;
-  isComplete: boolean;
-  setComplete: React.Dispatch<React.SetStateAction<boolean>>;
+  setStatus: React.Dispatch<any>;
 }
 
 const Paypal: React.FC<IPaypalProps> = (props) => {
-  const { price, sessionName, isComplete, setComplete } = props;
+  const { price, sessionName, setStatus } = props;
 
   const [{ options, isPending }] = usePayPalScriptReducer();
 
@@ -18,9 +18,8 @@ const Paypal: React.FC<IPaypalProps> = (props) => {
     <>
       {isPending ? <h2>Load Smart Payment Button...</h2> : null}
       <PayPalButtons
-        className="paypal-button-container"
         style={{ layout: "vertical" }}
-        disabled={true}
+        // disabled={true}
         createOrder={(data, actions) => {
           return actions.order
             .create({
@@ -41,7 +40,7 @@ const Paypal: React.FC<IPaypalProps> = (props) => {
         onApprove={async (data, actions) => {
           return await actions.order!.capture().then(async (details) => {
             if (details.status === "COMPLETED") {
-              setComplete(!isComplete);
+              setStatus({ status: details.status, orderId: details.id });
             }
           });
         }}

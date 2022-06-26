@@ -13,7 +13,6 @@ import {
 } from "@mui/material";
 // Hooks
 import useContactForm from "../hooks/useContactForm";
-import RequiredAsterisk from "../components/visual/RequiredAsterisk";
 
 const ContactForm = () => {
   const { sendContactForm } = useContactForm();
@@ -49,14 +48,14 @@ const ContactForm = () => {
   }, [success]);
 
   return (
-    <Container sx={{ backgroundColor: "slategray", overflow: "hidden" }}>
+    <Container sx={{}}>
       <Header />
       <Box
         sx={{
           flexGrow: 1,
-          padding: "11px",
+          padding: "12px",
           maxWidth: "755px",
-          margin: "10px auto",
+          margin: "6px auto 12px",
           backgroundColor: "gainsboro",
         }}
       >
@@ -64,30 +63,38 @@ const ContactForm = () => {
           Reach out with any questions or comments!
         </Typography>
         <Box
-          sx={{ marginTop: "30px" }}
+          sx={{ marginTop: "30px", display: "flex", flexDirection: "column" }}
           component="form"
           noValidate
           autoComplete="off"
         >
           <TextField
             label="Full Name"
-            defaultValue="John Doe"
+            placeholder="John Doe"
             variant="standard"
-            fullWidth
+            // fullWidth
             required
-            sx={{ marginBottom: "20px !important" }}
+            sx={{
+              marginBottom: "20px !important",
+              marginLeft: "auto",
+              marginRight: "auto",
+              width: "75%",
+            }}
             value={name}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setName(e.target.value)
             }
           />
-
           <TextField
             label="Email"
             variant="standard"
-            fullWidth
             required
-            sx={{ marginBottom: "20px !important" }}
+            sx={{
+              marginBottom: "20px !important",
+              marginLeft: "auto",
+              marginRight: "auto",
+              width: "75%",
+            }}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setEmail(e.target.value);
             }}
@@ -97,9 +104,13 @@ const ContactForm = () => {
           <TextField
             label="Subject"
             variant="standard"
-            fullWidth
             required
-            sx={{ marginBottom: "20px !important" }}
+            sx={{
+              marginBottom: "20px !important",
+              marginLeft: "auto",
+              marginRight: "auto",
+              width: "75%",
+            }}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setSubject(e.target.value);
             }}
@@ -112,10 +123,12 @@ const ContactForm = () => {
             required
             placeholder="Enter a message"
             style={{
-              width: "100%",
               marginBottom: "20px",
               fontSize: "16px",
               padding: "10px",
+              marginLeft: "auto",
+              marginRight: "auto",
+              width: "75%",
             }}
             spellCheck
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -124,7 +137,14 @@ const ContactForm = () => {
             value={message}
           />
           {!success ? (
-            <>
+            <Container
+              sx={{
+                width: "75%",
+                marginLeft: "auto",
+                marginRight: "auto",
+                padding: "0 !important",
+              }}
+            >
               <ReCAPTCHAV2
                 className="my-1"
                 sitekey={process.env.REACT_APP_SITE_KEY!}
@@ -136,11 +156,12 @@ const ContactForm = () => {
                 type="submit"
                 color="primary"
                 style={{ width: "200px", fontSize: "16px" }}
-                onClick={() => null}
+                onClick={handleSubmit}
+                disabled={!token}
               >
                 Submit
               </Button>
-            </>
+            </Container>
           ) : (
             <SubmissionComplete />
           )}

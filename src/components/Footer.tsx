@@ -51,7 +51,12 @@ const Footer = () => {
               href="#"
               sx={{
                 color: "#fff",
-                "&:hover": { color: "#fff", opacity: "0.5" },
+                textDecoration: "none",
+                "&:hover": {
+                  color: "#fff",
+                  opacity: "0.5",
+                  textDecoration: "underline",
+                },
               }}
             >
               (555)&nbsp;555-5555
@@ -63,7 +68,12 @@ const Footer = () => {
               href="#"
               sx={{
                 color: "#fff",
-                "&:hover": { color: "#fff", opacity: "0.5" },
+                textDecoration: "none",
+                "&:hover": {
+                  color: "#fff",
+                  opacity: "0.5",
+                  textDecoration: "underline",
+                },
               }}
             >
               email@email.com

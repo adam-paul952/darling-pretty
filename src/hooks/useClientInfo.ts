@@ -23,7 +23,10 @@ const useClientInfo = () => {
       const client: any = await API.graphql(
         graphqlOperation(createClients, { input: newClient })
       );
-
+      console.log(
+        `From use client hook, newClient:`,
+        client.data.createClients
+      );
       return client.data.createClients;
     } catch (error) {
       console.log(error);
