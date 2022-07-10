@@ -121,7 +121,7 @@ const CreateSessionScreen: React.FC = () => {
 
   return (
     <Container className="dashboard-container">
-      <SideNav />
+      {/* <SideNav /> */}
       <Container className="d-flex justify-content-center">
         <Row>{sessionId ? <p>Edit Session</p> : <p>Create Session</p>}</Row>
       </Container>

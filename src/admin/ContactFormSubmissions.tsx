@@ -1,8 +1,11 @@
 import React from "react";
 
-import { Container } from "react-bootstrap";
 import SideNav from "../admin/components/SideNav";
 import ContactEntries from "./components/ContactEntries";
+
+import Box from "@mui/material/Box";
+import DashboardHeader from "./components/DashboardHeader";
+import Typography from "@mui/material/Typography";
 
 import useContactForm, { IContactFormProps } from "../hooks/useContactForm";
 
@@ -12,6 +15,12 @@ const ContactFormSubmissions = () => {
   const [contactEntries, setContactEntries] = React.useState<
     IContactFormProps[]
   >([]);
+
+  const [open, setOpen] = React.useState(false);
+
+  const toggleDrawer = () => {
+    setOpen(!open);
+  };
 
   React.useEffect(
     () => {
@@ -28,17 +37,46 @@ const ContactFormSubmissions = () => {
 
   return (
     <>
-      <SideNav />
-      <div className="dashboard-container">
-        <h2 className="text-center">Contact Form Submissions</h2>
-        <Container>
+      <Box sx={{ display: "flex" }}>
+        <DashboardHeader open={open} toggleDrawer={toggleDrawer} />
+        <SideNav open={open} toggleDrawer={toggleDrawer} />
+        <Box
+          component="main"
+          sx={{
+            backgroundColor: (theme) =>
+              theme.palette.mode === "light"
+                ? theme.palette.grey[100]
+                : theme.palette.grey[900],
+            flexGrow: 1,
+            height: "100vh",
+            overflow: "auto",
+          }}
+        >
+          <Typography
+            component="h2"
+            sx={{
+              textAlign: "center",
+              padding: "20px",
+              fontSize: "28px",
+              marginTop: "60px",
+            }}
+          >
+            Contact Entries
+          </Typography>
           {contactEntries.length > 0 ? (
             <ContactEntries contactEntries={contactEntries} />
           ) : (
-            <div>No submissions</div>
+            <Box>
+              <Typography
+                component="h2"
+                sx={{ textAlign: "center", padding: "20px", fontSize: "28px" }}
+              >
+                No submissions
+              </Typography>
+            </Box>
           )}
-        </Container>
-      </div>
+        </Box>
+      </Box>
     </>
   );
 };

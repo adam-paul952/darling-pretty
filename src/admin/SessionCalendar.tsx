@@ -1,8 +1,10 @@
 import React from "react";
 
-import { Container } from "react-bootstrap";
 import SideNav from "./components/SideNav";
 import FullCalendar from "@fullcalendar/react";
+import DashboardHeader from "./components/DashboardHeader";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Box";
 
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -24,6 +26,12 @@ interface IEvents {
 const SessionCalendar = () => {
   const { getAllSessions } = useSessionInfo();
   const [sessions, setSessions] = React.useState<IEvents[]>([]);
+
+  const [open, setOpen] = React.useState(false);
+
+  const toggleDrawer = () => {
+    setOpen(!open);
+  };
 
   React.useEffect(() => {
     const fetchSessions = async () => {
@@ -66,29 +74,44 @@ const SessionCalendar = () => {
   }, []);
 
   return (
-    <Container className="calendar-container">
-      <SideNav />
-      <div>
-        <FullCalendar
-          contentHeight={575}
-          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-          headerToolbar={{
-            left: "prev,next today",
-            center: "title",
-            right: "dayGridMonth,timeGridWeek,timeGridDay",
-          }}
-          initialView="timeGridWeek"
-          editable={false}
-          selectable={true}
-          selectMirror={true}
-          dayMaxEvents={true}
-          initialDate={new Date()}
-          events={sessions}
-          nowIndicator={true}
-          slotDuration="00:20:00"
-        />
-      </div>
-    </Container>
+    <Box sx={{ display: "flex" }}>
+      <DashboardHeader open={open} toggleDrawer={toggleDrawer} />
+      <SideNav open={open} toggleDrawer={toggleDrawer} />
+      <Box
+        component="main"
+        sx={{
+          backgroundColor: (theme) =>
+            theme.palette.mode === "light"
+              ? theme.palette.grey[100]
+              : theme.palette.grey[900],
+          flexGrow: 1,
+          height: "100vh",
+          overflow: "auto",
+        }}
+      >
+        <Toolbar />
+        <Box sx={{ paddingLeft: "5%" }}>
+          <FullCalendar
+            contentHeight={630}
+            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+            headerToolbar={{
+              left: "prev,next today",
+              center: "title",
+              right: "dayGridMonth,timeGridWeek,timeGridDay",
+            }}
+            initialView="timeGridWeek"
+            editable={false}
+            selectable={true}
+            selectMirror={true}
+            dayMaxEvents={true}
+            initialDate={new Date()}
+            events={sessions}
+            nowIndicator={true}
+            slotDuration="00:20:00"
+          />
+        </Box>
+      </Box>
+    </Box>
   );
 };
 

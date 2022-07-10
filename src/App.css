@@ -20,51 +20,6 @@
   flex-direction: column;
   align-items: center;
 }
-/* SideNav */
-.sidebar {
-  display: flex;
-  flex-direction: column;
-  position: fixed;
-  top: 0;
-  left: -300px;
-  width: 19%;
-  height: 100%;
-  background-color: #87ceeb;
-  transition: left 300ms ease-out;
-}
-.sidebar.active {
-  display: flex;
-  flex-direction: column;
-  left: 0;
-  z-index: 10;
-}
-.sidebar ol {
-  margin-top: 40%;
-  padding: 0 7%;
-}
-.sidebar li {
-  list-style: none;
-  height: 38%;
-}
-.sidebar li a {
-  font-size: 18px;
-  text-decoration: none;
-  padding: 10px;
-  display: block;
-  color: #000;
-}
-.sidebar li a:hover {
-  color: #000;
-}
-.hamburger {
-  border: none;
-  outline: 0;
-  width: 50px;
-  position: absolute;
-  right: -65px;
-  top: 10px;
-  background-color: peru;
-}
 /* Dashboard */
 .dashboard-container {
   width: 100%;

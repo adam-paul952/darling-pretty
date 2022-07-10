@@ -15,6 +15,7 @@ export interface IClientInfo {
   province: string;
   country: string;
   sessionBooked?: string;
+  updatedAt?: string;
 }
 
 const useClientInfo = () => {
@@ -43,7 +44,19 @@ const useClientInfo = () => {
     }
   };
 
-  return { createNewClient, getAllClients };
+  const getRecentClientOrders = async () => {
+    try {
+      const clientList: any = await API.graphql(
+        graphqlOperation(listClients, { limit: 5 })
+      );
+
+      return clientList.data.listClients.items;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return { createNewClient, getAllClients, getRecentClientOrders };
 };
 
 export default useClientInfo;

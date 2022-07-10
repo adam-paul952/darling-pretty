@@ -1,10 +1,9 @@
 import React from "react";
 
 import Header from "../components/Header";
-import MainFeaturedPost from "../components/UpcomingSessions";
-import Grid from "@mui/material/Grid";
+import DisplaySessions from "../components/DisplaySessions";
 import Footer from "../components/Footer";
-import Loading from "../components/Loading";
+import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
 import useSessionInfo, { ISessionInfo } from "../hooks/useSessionInfo";
@@ -46,7 +45,7 @@ const DisplayAvailableSessions = () => {
   }, []);
 
   return (
-    <React.Fragment>
+    <>
       <Header />
       <Grid
         container
@@ -67,14 +66,13 @@ const DisplayAvailableSessions = () => {
             </Typography>
           </Grid>
         ) : (
-          sessions.map((session) => {
-            return <MainFeaturedPost key={session.id} post={session} />;
-          })
+          sessions.map((session) => (
+            <DisplaySessions key={session.id} session={session} />
+          ))
         )}
       </Grid>
-      {/* <DisplaySessions sessions={sessions} /> */}
       <Footer />
-    </React.Fragment>
+    </>
   );
 };
 

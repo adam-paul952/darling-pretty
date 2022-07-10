@@ -1,42 +1,64 @@
 import React from "react";
-import { Nav } from "react-bootstrap";
-import { Link } from "react-router-dom";
 
-const SideNav = () => {
+import { styled } from "@mui/material/styles";
+import MuiDrawer from "@mui/material/Drawer";
+import Toolbar from "@mui/material/Toolbar";
+import List from "@mui/material/List";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import { MainListItems } from "./sidenavListItems";
+import { IDashboardChildrenProps } from "../AdminDashboard";
+
+const drawerWidth = 240;
+
+const Drawer = styled(MuiDrawer, {
+  shouldForwardProp: (prop) => prop !== "open",
+})(({ theme, open }) => ({
+  "& .MuiDrawer-paper": {
+    position: "relative",
+    whiteSpace: "nowrap",
+    width: drawerWidth,
+    transition: theme.transitions.create("width", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    boxSizing: "border-box",
+    ...(!open && {
+      overflowX: "hidden",
+      transition: theme.transitions.create("width", {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+      width: theme.spacing(7),
+      [theme.breakpoints.up("sm")]: {
+        width: theme.spacing(9),
+      },
+    }),
+  },
+}));
+
+const SideNav = (props: IDashboardChildrenProps) => {
+  const { open, toggleDrawer } = props;
   return (
-    <Nav defaultActiveKey="#section" className={"sidebar active"}>
-      <ol>
-        <li>
-          <Nav.Link as={Link} to="/admin/dashboard">
-            Overview
-          </Nav.Link>
-        </li>
-        <li>
-          <Nav.Link as={Link} to="/admin/calendar">
-            Calendar
-          </Nav.Link>
-        </li>
-        <li>
-          <Nav.Link
-            as={Link}
-            to="/admin/createsession"
-            state={{ sessionId: null }}
-          >
-            Add Session
-          </Nav.Link>
-        </li>
-        <li>
-          <Nav.Link as={Link} to="/admin/contactform">
-            Contact Form Entries
-          </Nav.Link>
-        </li>
-        <li>
-          <Nav.Link as={Link} to="/admin/clients">
-            Clients
-          </Nav.Link>
-        </li>
-      </ol>
-    </Nav>
+    <Drawer variant="permanent" open={open}>
+      <Toolbar
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "flex-end",
+          px: [1],
+        }}
+      >
+        <IconButton onClick={toggleDrawer}>
+          <ChevronLeftIcon />
+        </IconButton>
+      </Toolbar>
+      <Divider />
+      <List component="nav">
+        <MainListItems />
+      </List>
+    </Drawer>
   );
 };
 

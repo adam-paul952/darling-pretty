@@ -1,27 +1,53 @@
 import React from "react";
 
-import { Link } from "react-router-dom";
-import { Card, CardGroup, Container, Col, Row } from "react-bootstrap";
 import SideNav from "./components/SideNav";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import CircularProgress from "@mui/material/CircularProgress";
+import DashboardHeader from "./components/DashboardHeader";
+import SessionOverview from "./components/SessionOverview";
+import RecentClients from "./components/RecentClients";
 
 import useSessionInfo, { ISessionInfo } from "../hooks/useSessionInfo";
+import useClientInfo, { IClientInfo } from "../hooks/useClientInfo";
 import moment from "moment";
+
+export interface IDashboardChildrenProps {
+  open: boolean;
+  toggleDrawer: () => void;
+}
 
 const AdminDashboard = () => {
   const { getAllSessions } = useSessionInfo();
+  const { getRecentClientOrders } = useClientInfo();
 
   const [sessions, setSessions] = React.useState<ISessionInfo[]>([]);
+  const [clients, setClients] = React.useState<IClientInfo[]>([]);
   const [loading, setLoading] = React.useState<boolean>(true);
 
-  const formatDate = React.useCallback((date) => {
+  const [open, setOpen] = React.useState(false);
+
+  const toggleDrawer = () => {
+    setOpen(!open);
+  };
+
+  const formatDate = React.useCallback((date: string) => {
     const formattedDate = moment(date).format("MMMM DD YYYY");
     return formattedDate;
   }, []);
 
   React.useEffect(() => {
     const fetchSessions = async () => {
+      setLoading(true);
       try {
         const allSessions = await getAllSessions();
+        allSessions.sort(
+          (a: ISessionInfo, b: ISessionInfo) =>
+            Date.parse(a.date) - Date.parse(b.date)
+        );
         setSessions(allSessions);
       } catch (error) {
         console.log(error);
@@ -34,43 +60,74 @@ const AdminDashboard = () => {
     //eslint-disable-next-line
   }, []);
 
+  React.useEffect(() => {
+    const fetchRecentClients = async () => {
+      setLoading(true);
+      try {
+        const recentClients = await getRecentClientOrders();
+        recentClients.sort(
+          (a: IClientInfo, b: IClientInfo) =>
+            Date.parse(b.updatedAt!) - Date.parse(a.updatedAt!)
+        );
+        setClients(recentClients);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRecentClients();
+    //eslint-disable-next-line
+  }, []);
+
   return (
-    <div className="dashboard-container">
-      <SideNav />
-      <Container>
-        <h3>Current Sessions:</h3>
-        <Row lg={4} sm={2}>
-          {!loading && sessions.length > 0 ? (
-            sessions.map((session: ISessionInfo) => {
-              return (
-                <CardGroup key={session.id}>
-                  <Card as={Col} className="dashboard-session-card">
-                    <Card.Link
-                      as={Link}
-                      to="/admin/createsession"
-                      state={{ sessionId: session.id }}
-                    >
-                      <h5>{session.name}</h5>
-                      <p>{formatDate(session.date)}</p>
-                      <p>
-                        Available Sessions: {session.availableTimes!.length}
-                      </p>
-                      <p>Booked Sessions: {session.bookings!.length}</p>
-                      <p>Start Time: {session.startTime}</p>
-                      <p>End Time: {session.endTime}</p>
-                    </Card.Link>
-                  </Card>
-                </CardGroup>
-              );
-            })
-          ) : (
-            <Container fluid>
-              <h3>No Sessions Found..</h3>
+    <>
+      <Box sx={{ display: "flex" }}>
+        <DashboardHeader open={open} toggleDrawer={toggleDrawer} />
+        <SideNav open={open} toggleDrawer={toggleDrawer} />
+        {loading ? (
+          <Box
+            sx={{
+              display: "flex",
+              height: "100vh",
+              width: "100%",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <CircularProgress />
+          </Box>
+        ) : (
+          <Box
+            component="main"
+            sx={{
+              backgroundColor: (theme) =>
+                theme.palette.mode === "light"
+                  ? theme.palette.grey[100]
+                  : theme.palette.grey[900],
+              flexGrow: 1,
+              height: "100vh",
+              overflow: "auto",
+            }}
+          >
+            <Toolbar />
+            <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+              <Grid container spacing={3}>
+                <SessionOverview sessions={sessions} formatDate={formatDate} />
+                <Grid item xs={12}>
+                  <Paper
+                    sx={{ p: 2, display: "flex", flexDirection: "column" }}
+                  >
+                    <RecentClients clients={clients} />
+                  </Paper>
+                </Grid>
+              </Grid>
             </Container>
-          )}
-        </Row>
-      </Container>
-    </div>
+          </Box>
+        )}
+      </Box>
+    </>
   );
 };
 
