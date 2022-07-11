@@ -36,7 +36,8 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 const DashboardHeader = (props: IDashboardChildrenProps) => {
-  const { open, toggleDrawer } = props;
+  const { open, toggleDrawer, unreadMessages } = props;
+
   return (
     <AppBar position="absolute" open={open} sx={{ backgroundColor: "#000" }}>
       <Toolbar
@@ -73,7 +74,10 @@ const DashboardHeader = (props: IDashboardChildrenProps) => {
             "&:hover": { color: "inherit", transform: "scale(1.05)" },
           }}
         >
-          <Badge badgeContent={4} color="secondary">
+          <Badge
+            badgeContent={unreadMessages ? unreadMessages : 0}
+            color="secondary"
+          >
             <MailIcon />
           </Badge>
         </IconButton>

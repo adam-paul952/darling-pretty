@@ -15,11 +15,11 @@ const SessionDescriptionContainer: React.FC = () => {
   const { id } = useParams();
 
   return (
-    <React.Fragment>
-      <Header title={session.date} />
+    <>
+      <Header />
       <SessionDescription key={id} session={session} />
       <Footer />
-    </React.Fragment>
+    </>
   );
 };
 

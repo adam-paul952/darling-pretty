@@ -7,13 +7,14 @@ import { heroStyles } from "../styles/styles";
 import image from "../images/darling-pretty1.jpg";
 
 interface IHeroProps {
-  header: string;
-  caption: string;
+  header?: string;
+  subtitle?: string;
+  buttonText?: string;
 }
 
 const Hero: React.FC<IHeroProps> = (props) => {
-  const { header, caption } = props;
-  const { heroBox, gridContainer, title, subtitle, largeImage } = heroStyles;
+  const { header, subtitle, buttonText } = props;
+  const { heroBox, gridContainer, title, largeImage } = heroStyles;
   return (
     <Paper sx={heroBox}>
       <Grid
@@ -36,9 +37,7 @@ const Hero: React.FC<IHeroProps> = (props) => {
           <Typography variant="h3" classes={title}>
             {header}
           </Typography>
-          <Typography variant="h6" classes={subtitle}>
-            {caption}
-          </Typography>
+          <Typography variant="h6">{subtitle}</Typography>
           <Button
             variant="contained"
             href="/sessions"
@@ -53,7 +52,7 @@ const Hero: React.FC<IHeroProps> = (props) => {
               backgroundColor: "#000",
             }}
           >
-            View Sessions
+            {buttonText}
           </Button>
         </Grid>
         <Grid

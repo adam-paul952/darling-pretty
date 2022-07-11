@@ -1,16 +1,28 @@
 import React from "react";
 
 import { useLocation } from "react-router-dom";
-import { Button, Col, Container, Form, Image, Row } from "react-bootstrap";
 import { EditorState, ContentState, convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
 import htmlToDraft from "html-to-draftjs";
 import SideNav from "./components/SideNav";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import Button from "@mui/material/Button";
 
 import useSessionInfo, { ISessionInfo } from "../hooks/useSessionInfo";
 import { parseDateTime } from "../util/parseDate";
 import moment from "moment";
+import DashboardHeader from "./components/DashboardHeader";
+import { InputLabel, Typography } from "@mui/material";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Stack from "@mui/material/Stack";
 
 interface ICreateSessionLocation {
   sessionId: string | null;
@@ -119,168 +131,244 @@ const CreateSessionScreen: React.FC = () => {
     // eslint-disable-next-line
   }, []);
 
+  React.useEffect(() => {
+    console.log(`Session Details`, sessionDetails);
+  }, [sessionDetails]);
+
+  const [open, setOpen] = React.useState(false);
+
+  const toggleDrawer = () => {
+    setOpen(!open);
+  };
+
   return (
-    <Container className="dashboard-container">
-      {/* <SideNav /> */}
-      <Container className="d-flex justify-content-center">
-        <Row>{sessionId ? <p>Edit Session</p> : <p>Create Session</p>}</Row>
-      </Container>
-      <>
-        <Form>
-          <Row className="m-3">
-            <Form.Group as={Col} controlId="date">
-              <Form.Label>Date</Form.Label>
-              <Form.Control
-                placeholder="YYYY-MM-DD"
-                value={sessionDetails.date}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  setSessionDetails({
-                    ...sessionDetails,
-                    date: event.target.value,
-                  });
-                }}
-              />
-            </Form.Group>
-            <Form.Group as={Col} controlId="sessionName">
-              <Form.Label>Session Name</Form.Label>
-              <Form.Control
-                placeholder="Family Photos"
-                value={sessionDetails.name}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                  setSessionDetails({
-                    ...sessionDetails,
-                    name: event.target.value,
-                  })
-                }
-              />
-            </Form.Group>
-            <Form.Group as={Col} controlId="sessionPrice">
-              <Form.Label>Session Price</Form.Label>
-              <Form.Control
-                placeholder="150"
-                value={sessionDetails.price}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  setSessionDetails({
-                    ...sessionDetails,
-                    price: parseInt(event.target.value, 10),
-                  });
-                }}
-              />
-            </Form.Group>
-          </Row>
-          <Row className="m-3">
-            <Form.Group as={Col} controlId="startTime">
-              <Form.Label>Start Time</Form.Label>
-              <Form.Control
-                placeholder="08:00"
-                value={sessionDetails.startTime}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  setSessionDetails({
-                    ...sessionDetails,
-                    startTime: event.target.value,
-                  });
-                }}
-              />
-            </Form.Group>
-            <Form.Group as={Col} controlId="endTime">
-              <Form.Label>End Time</Form.Label>
-              <Form.Control
-                placeholder="14:00"
-                value={sessionDetails.endTime}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  setSessionDetails({
-                    ...sessionDetails,
-                    endTime: event.target.value,
-                  });
-                }}
-              />
-            </Form.Group>
-            <Form.Group as={Col} controlId="lengthOfSessions">
-              <Form.Label>Length Of Sessions</Form.Label>
-              <Form.Control
-                placeholder="30"
-                value={sessionDetails.sessionLength}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                  setSessionDetails({
-                    ...sessionDetails,
-                    sessionLength: parseInt(event.target.value, 10),
-                  })
-                }
-              />
-            </Form.Group>
-          </Row>
-          <Row className="m-3">
-            <Form.Group as={Col} controlId="sessionInfo">
-              <Form.Label>Session Info</Form.Label>
-              <Form.Control
-                placeholder="This gets displayed on Paypal Sale"
-                value={sessionDetails.sessionInfo}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                  setSessionDetails({
-                    ...sessionDetails,
-                    sessionInfo: event.target.value,
-                  })
-                }
-              />
-            </Form.Group>
-          </Row>
-          <Row className="m-3" style={{ alignItems: "center" }}>
-            <Form.Group as={Col} controlId="selectSessionImage">
-              <Form.Label>Select Image</Form.Label>
-              <Form.Select aria-label="Session picture dropdown">
-                <option>Open to select previously uploaded photo</option>
-              </Form.Select>
-            </Form.Group>
-            {sessionDetails.sessionImage && (
-              <Col>
-                <Image src={imagePreview} thumbnail fluid />
-              </Col>
-            )}
-            <Form.Group as={Col} controlId="sessionImage">
-              <Form.Label>Session Image</Form.Label>
-              <Form.Control
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-              />
-            </Form.Group>
-          </Row>
-          <Row className="m-3">
-            <Form.Group controlId="sessionDetails">
-              <Form.Label>Session Details</Form.Label>
-              <Editor
-                editorState={editorState}
-                toolbarClassName="toolbarClassName"
-                wrapperClassName="editor-wrapper"
-                editorClassName="editor"
-                onEditorStateChange={(newState: any) => {
-                  setEditorState(newState);
-                  setSessionDetails({
-                    ...sessionDetails,
-                    sessionDetails: draftToHtml(
-                      convertToRaw(newState.getCurrentContent())
-                    ),
-                  });
-                }}
-              />
-            </Form.Group>
-          </Row>
-        </Form>
-      </>
-      <Container>
-        <Row className="m-3 justify-content-end">
-          {sessionId ? (
-            <Button disabled onClick={() => onEditSession()}>
-              Edit Session
+    <LocalizationProvider dateAdapter={AdapterMoment}>
+      <Box sx={{ display: "flex" }}>
+        <DashboardHeader open={open} toggleDrawer={toggleDrawer} />
+        <SideNav open={open} toggleDrawer={toggleDrawer} />
+        <Box
+          component="main"
+          sx={{
+            backgroundColor: (theme) =>
+              theme.palette.mode === "light"
+                ? theme.palette.grey[100]
+                : theme.palette.grey[900],
+            flexGrow: 1,
+            height: "100vh",
+            overflow: "auto",
+          }}
+        >
+          <Box
+            sx={{
+              height: "inherit",
+              maxWidth: "80%",
+              marginLeft: "auto",
+              marginRight: "auto",
+            }}
+          >
+            <Typography
+              variant="h3"
+              sx={{ textAlign: "center", marginTop: "70px" }}
+            >
+              {sessionId ? "Edit Session" : "Create Session"}
+            </Typography>
+            <Box component="form">
+              <Stack
+                direction="row"
+                spacing={12}
+                sx={{ justifyContent: "center", padding: "15px 0" }}
+              >
+                <FormControl>
+                  <DatePicker
+                    label="Session Date"
+                    inputFormat="MM-ddd-yyyy"
+                    value={sessionDetails.date}
+                    onChange={(newValue: any) => {
+                      setSessionDetails({
+                        ...sessionDetails,
+                        date: newValue,
+                      });
+                    }}
+                    renderInput={(params) => (
+                      <TextField {...params} error={false} />
+                    )}
+                  />
+                </FormControl>
+                <FormControl>
+                  <TextField
+                    id="outlined-basic"
+                    label="Session Name"
+                    variant="outlined"
+                    value={sessionDetails.name}
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                      setSessionDetails({
+                        ...sessionDetails,
+                        name: event.target.value,
+                      })
+                    }
+                  />
+                </FormControl>
+                <FormControl>
+                  <TextField
+                    id="outlined-basic"
+                    label="Session Price"
+                    variant="outlined"
+                    value={
+                      sessionDetails.price === 0 ? "" : sessionDetails.price
+                    }
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                      setSessionDetails({
+                        ...sessionDetails,
+                        price: parseInt(event.target.value, 10),
+                      });
+                    }}
+                  />
+                </FormControl>
+              </Stack>
+              <Stack
+                direction="row"
+                spacing={10}
+                sx={{ justifyContent: "center", padding: "15px 0" }}
+              >
+                <FormControl>
+                  <TimePicker
+                    label="Start Time"
+                    value={sessionDetails.startTime}
+                    onChange={(newValue: any) => {
+                      setSessionDetails({
+                        ...sessionDetails,
+                        startTime: newValue,
+                      });
+                    }}
+                    renderInput={(params) => (
+                      <TextField {...params} error={false} />
+                    )}
+                  />
+                </FormControl>
+                <FormControl>
+                  <TimePicker
+                    label="End Time"
+                    value={sessionDetails.endTime}
+                    onChange={(newValue: any) => {
+                      setSessionDetails({
+                        ...sessionDetails,
+                        endTime: newValue,
+                      });
+                    }}
+                    renderInput={(params) => (
+                      <TextField {...params} error={false} />
+                    )}
+                  />
+                </FormControl>
+                <FormControl>
+                  <TextField
+                    id="outlined-basic"
+                    label="Length of Sessions"
+                    variant="outlined"
+                    value={
+                      sessionDetails.sessionLength === 0
+                        ? ""
+                        : sessionDetails.sessionLength
+                    }
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                      setSessionDetails({
+                        ...sessionDetails,
+                        sessionLength: parseInt(event.target.value, 10),
+                      })
+                    }
+                  />
+                </FormControl>
+              </Stack>
+              <Stack
+                direction="row"
+                spacing={10}
+                sx={{ justifyContent: "center", padding: "15px 0" }}
+              >
+                <img
+                  src={imagePreview}
+                  alt="Test image"
+                  loading="lazy"
+                  className="img-fluid"
+                  style={{ maxWidth: "300px" }}
+                />
+                <Button variant="contained" component="label">
+                  Upload File
+                  <input type="file" hidden onChange={handleImageChange} />
+                </Button>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value=""
+                  label="Age"
+                  // onChange={handleChange}
+                >
+                  <MenuItem value={10}>Ten</MenuItem>
+                  <MenuItem value={20}>Twenty</MenuItem>
+                  <MenuItem value={30}>Thirty</MenuItem>
+                </Select>
+                <TextField
+                  id="outlined-basic"
+                  label="Session Info"
+                  variant="outlined"
+                  value={sessionDetails.sessionInfo}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                    setSessionDetails({
+                      ...sessionDetails,
+                      sessionInfo: event.target.value,
+                    })
+                  }
+                />
+              </Stack>
+              <Stack>
+                <InputLabel>Session Details:</InputLabel>
+                <Editor
+                  editorState={editorState}
+                  toolbarClassName="toolbarClassName"
+                  wrapperClassName="editor-wrapper"
+                  editorClassName="editor"
+                  onEditorStateChange={(newState: any) => {
+                    setEditorState(newState);
+                    setSessionDetails({
+                      ...sessionDetails,
+                      sessionDetails: draftToHtml(
+                        convertToRaw(newState.getCurrentContent())
+                      ),
+                    });
+                  }}
+                />
+              </Stack>
+            </Box>
+            <Button
+              variant="contained"
+              disabled
+              onClick={
+                sessionId ? () => onEditSession() : () => onCreateSession()
+              }
+              sx={{ margin: "20px 0" }}
+            >
+              {sessionId ? "Edit Session" : "Create New Session"}
             </Button>
-          ) : (
-            <Button disabled onClick={() => onCreateSession()}>
-              Create New Session
-            </Button>
-          )}
-        </Row>
-      </Container>
-    </Container>
+          </Box>
+        </Box>
+      </Box>
+    </LocalizationProvider>
+
+    //       </Row>
+    //       <Row className="m-3" style={{ alignItems: "center" }}>
+    //         <Form.Group as={Col} controlId="selectSessionImage">
+    //           <Form.Label>Select Image</Form.Label>
+    //           <Form.Select aria-label="Session picture dropdown">
+    //             <option>Open to select previously uploaded photo</option>
+    //           </Form.Select>
+    //         </Form.Group>
+    //         {sessionDetails.sessionImage && (
+    //           <Col>
+    //             <Image src={imagePreview} thumbnail fluid />
+    //           </Col>
+    //         )}
+    //       </Row>
+    //     </Form>
+    //   </>
   );
 };
 

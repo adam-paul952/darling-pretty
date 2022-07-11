@@ -118,7 +118,7 @@ const Checkout = () => {
 
   return (
     <>
-      <Header title="Checkout" />
+      <Header />
       <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
         <Paper
           variant="outlined"

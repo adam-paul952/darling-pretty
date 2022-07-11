@@ -3,6 +3,7 @@ import React from "react";
 import Header from "../components/Header";
 import DisplaySessions from "../components/DisplaySessions";
 import Footer from "../components/Footer";
+import NoAvailableSessions from "../components/NoAvailableSessions";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
@@ -70,6 +71,7 @@ const DisplayAvailableSessions = () => {
             <DisplaySessions key={session.id} session={session} />
           ))
         )}
+        {sessions !== null && sessions.length === 0 && <NoAvailableSessions />}
       </Grid>
       <Footer />
     </>

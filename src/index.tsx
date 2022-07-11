@@ -6,7 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "./App.css";
 import CssBaseline from "@mui/material/CssBaseline";
-import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import reportWebVitals from "./reportWebVitals";
 import DarlingPrettyRouter from "./Routes";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";

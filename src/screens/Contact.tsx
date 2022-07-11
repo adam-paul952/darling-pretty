@@ -34,7 +34,8 @@ const ContactForm = () => {
   };
 
   const handleSubmit: React.MouseEventHandler<HTMLButtonElement> = async () => {
-    await sendContactForm({ name, email, subject, message });
+    const read = false;
+    await sendContactForm({ name, email, subject, message, read });
     setSuccess(true);
   };
 
@@ -153,7 +154,6 @@ const ContactForm = () => {
               />
               <Button
                 variant="contained"
-                type="submit"
                 color="primary"
                 style={{ width: "200px", fontSize: "16px" }}
                 onClick={handleSubmit}

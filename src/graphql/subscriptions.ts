@@ -160,6 +160,7 @@ export const onCreateContact = /* GraphQL */ `
       email
       subject
       message
+      read
       createdAt
       updatedAt
     }
@@ -173,6 +174,7 @@ export const onUpdateContact = /* GraphQL */ `
       email
       subject
       message
+      read
       createdAt
       updatedAt
     }
@@ -186,6 +188,7 @@ export const onDeleteContact = /* GraphQL */ `
       email
       subject
       message
+      read
       createdAt
       updatedAt
     }

@@ -1,6 +1,4 @@
 import React from "react";
-import { Container, Image, Nav, Navbar, NavDropdown } from "react-bootstrap";
-import image from "../images/darling-pretty1.jpg";
 
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -20,23 +18,14 @@ import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 
-import { headerStyles } from "../styles/styles";
-
-export interface HeaderProps {
-  title: string;
-}
-
 const drawerWidth = 240;
 export const navItems = [
   { id: 1, route: "Home", url: "/" },
-  { id: 2, route: "Log In", url: "/admin/dashboard" },
+  { id: 2, route: "Log In", url: "/login" },
   { id: 3, route: "Contact", url: "/contact" },
 ];
 
-// const { toolBar, logo, link } = headerStyles;
-
-const Header: React.FC<any> = (props) => {
-  // const classes = useCl
+const Header: React.FC = () => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
@@ -96,7 +85,6 @@ const Header: React.FC<any> = (props) => {
             </IconButton>
             <Typography
               variant="h6"
-              // classes={logo}
               component="div"
               sx={{ flexGrow: 1, display: { sm: "block" }, color: "#fff" }}
             >
@@ -123,14 +111,13 @@ const Header: React.FC<any> = (props) => {
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
+            keepMounted: true,
           }}
           sx={{
             display: { xs: "block", sm: "none" },
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
-              // paddingTop: { xs: "25%" },
             },
           }}
         >
@@ -141,63 +128,4 @@ const Header: React.FC<any> = (props) => {
   );
 };
 
-// const Header = (props: HeaderProps) => {
-//   return (
-//     <>
-//       <Navbar
-//         sticky="top"
-//         collapseOnSelect
-//         expand="lg"
-//         style={{ backgroundColor: "transparent" }}
-//       >
-//         <Container>
-//           <Navbar.Toggle />
-//           <Navbar.Collapse className="justify-content-center">
-//             <Nav className="d-flex flex-row bd-highlight">
-//               <Nav.Link
-//                 href="/"
-//                 style={{ margin: "5px 15px", padding: "0 15px" }}
-//               >
-//                 Home
-//               </Nav.Link>
-//               <Nav.Link
-//                 href="/admin/dashboard"
-//                 style={{ margin: "5px 15px", padding: "0 15px" }}
-//               >
-//                 Log in
-//               </Nav.Link>
-//               <Nav.Link
-//                 href="/contact"
-//                 style={{ margin: "5px 15px", padding: "0 15px" }}
-//               >
-//                 Contact
-//               </Nav.Link>
-//             </Nav>
-//           </Navbar.Collapse>
-//         </Container>
-//       </Navbar>
-//     </>
-//   );
-// };
-
 export default Header;
-
-const styles = {
-  toolBar: {
-    height: "10vh",
-    display: "flex",
-    justifyContent: "space-between",
-    padding: "20px",
-    backgroundColor: "white",
-  },
-  logo: {
-    color: "blue",
-    cursor: "pointer",
-  },
-  link: {
-    color: "#000",
-  },
-  menuIcon: {
-    color: "#000",
-  },
-};

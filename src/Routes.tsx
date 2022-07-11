@@ -5,13 +5,16 @@ import DarlingPrettyHome from "./App";
 import SessionDescriptionContainer from "./screens/SessionDescriptionContainer";
 import ContactForm from "./screens/Contact";
 import Checkout from "./screens/Checkout";
-import SessionCalendar from "./admin/SessionCalendar";
+const SessionCalendar = lazy(() => import("./admin/SessionCalendar"));
 const AdminDashboard = lazy(() => import("./admin/AdminDashboard"));
-import CreateSessionScreen from "./admin/CreateSession";
+const CreateSessionScreen = lazy(() => import("./admin/CreateSession"));
 import LoginPage from "./screens/Login";
-import ContactFormSubmissions from "./admin/ContactFormSubmissions";
-import DisplayClients from "./admin/DisplayClients";
+const ContactFormSubmissions = lazy(
+  () => import("./admin/ContactFormSubmissions")
+);
+const DisplayClients = lazy(() => import("./admin/DisplayClients"));
 import DisplayAvailableSessions from "./screens/DisplaySessionsContainer";
+import NotFound from "./screens/NotFound";
 
 const DarlingPrettyRouter = () => {
   return (
@@ -35,6 +38,7 @@ const DarlingPrettyRouter = () => {
             element={<ContactFormSubmissions />}
           />
           <Route path="/admin/clients" element={<DisplayClients />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
     </Router>

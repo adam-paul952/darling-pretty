@@ -4,12 +4,20 @@ import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
 import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { navItems } from "./Header";
 
 const Footer = () => {
   return (
-    <>
+    <Box
+      sx={{
+        position: "fixed",
+        bottom: 0,
+        width: "inherit",
+        paddingTop: "20px",
+      }}
+    >
       <hr style={{ marginTop: "30px" }} />
       <Grid container sx={{ backgroundColor: "#000" }}>
         <Grid item xs={12} md={3}>
@@ -92,15 +100,8 @@ const Footer = () => {
           </Link>
         </Grid>
       </Grid>
-    </>
+    </Box>
   );
 };
 
 export default Footer;
-
-const footerInformation = {
-  title: "Darling Pretty Photography",
-  phoneNumber: "(555) 555-5555",
-  email: "email@email.com",
-  facebook: "#",
-};

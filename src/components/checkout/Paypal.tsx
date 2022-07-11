@@ -1,7 +1,6 @@
 import React from "react";
 
 import { usePayPalScriptReducer, PayPalButtons } from "@paypal/react-paypal-js";
-import { OrderedMap } from "immutable";
 
 interface IPaypalProps {
   price: string;

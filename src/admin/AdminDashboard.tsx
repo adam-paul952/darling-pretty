@@ -18,6 +18,7 @@ import moment from "moment";
 export interface IDashboardChildrenProps {
   open: boolean;
   toggleDrawer: () => void;
+  unreadMessages?: number;
 }
 
 const AdminDashboard = () => {

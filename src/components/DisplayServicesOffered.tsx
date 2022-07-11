@@ -1,10 +1,14 @@
 import React from "react";
 import { Box, Grid, Typography } from "@mui/material";
 
-import { getServiceThumbnail } from "./getServiceThumbnail";
-import { servicesAvailable } from "../constants/app";
+interface IDisplayServicesOfferedProps {
+  servicesOffered: any[];
+}
 
-const DisplayServicesOffered = () => {
+const DisplayServicesOffered: React.FC<IDisplayServicesOfferedProps> = (
+  props
+) => {
+  const { servicesOffered } = props;
   return (
     <Box
       sx={{
@@ -22,13 +26,13 @@ const DisplayServicesOffered = () => {
           width: "100%",
         }}
       >
-        {servicesAvailable.map((service) => (
+        {servicesOffered.reverse().map((service) => (
           <Grid
             item
             xs={12}
             md={3}
             maxHeight={300}
-            key={service.id}
+            key={service.serviceName}
             sx={{
               backgroundColor: "#f2f0f1",
               textAlign: "center",
@@ -39,11 +43,11 @@ const DisplayServicesOffered = () => {
             }}
           >
             <Typography variant="h5" sx={{ padding: "10px" }}>
-              {service.name}
+              {service.serviceName}
             </Typography>
-            {getServiceThumbnail(service.name)}
+            <img src={service.serviceImage.url} />
             <Typography sx={{ padding: "10px" }}>
-              {service.description}
+              {service.serviceDescription}
             </Typography>
           </Grid>
         ))}

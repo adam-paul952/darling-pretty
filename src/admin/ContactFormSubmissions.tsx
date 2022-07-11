@@ -15,6 +15,7 @@ const ContactFormSubmissions = () => {
   const [contactEntries, setContactEntries] = React.useState<
     IContactFormProps[]
   >([]);
+  const [unreadMessage, setUnread] = React.useState<number>(0);
 
   const [open, setOpen] = React.useState(false);
 
@@ -26,6 +27,10 @@ const ContactFormSubmissions = () => {
     () => {
       const getContactSubmissions = async () => {
         const contactSubmissions = await getContactFormSubmissions();
+        contactSubmissions.forEach(
+          (message: IContactFormProps) =>
+            message.read === false && setUnread((prev) => prev + 1)
+        );
         setContactEntries(contactSubmissions);
       };
 
@@ -38,7 +43,11 @@ const ContactFormSubmissions = () => {
   return (
     <>
       <Box sx={{ display: "flex" }}>
-        <DashboardHeader open={open} toggleDrawer={toggleDrawer} />
+        <DashboardHeader
+          open={open}
+          toggleDrawer={toggleDrawer}
+          unreadMessages={unreadMessage}
+        />
         <SideNav open={open} toggleDrawer={toggleDrawer} />
         <Box
           component="main"

@@ -264,6 +264,7 @@ export type CreateContactInput = {
   email: string,
   subject: string,
   message: string,
+  read: boolean,
 };
 
 export type ModelContactConditionInput = {
@@ -271,9 +272,17 @@ export type ModelContactConditionInput = {
   email?: ModelStringInput | null,
   subject?: ModelStringInput | null,
   message?: ModelStringInput | null,
+  read?: ModelBooleanInput | null,
   and?: Array< ModelContactConditionInput | null > | null,
   or?: Array< ModelContactConditionInput | null > | null,
   not?: ModelContactConditionInput | null,
+};
+
+export type ModelBooleanInput = {
+  ne?: boolean | null,
+  eq?: boolean | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
 };
 
 export type Contact = {
@@ -283,6 +292,7 @@ export type Contact = {
   email: string,
   subject: string,
   message: string,
+  read: boolean,
   createdAt: string,
   updatedAt: string,
 };
@@ -293,6 +303,7 @@ export type UpdateContactInput = {
   email?: string | null,
   subject?: string | null,
   message?: string | null,
+  read?: boolean | null,
 };
 
 export type DeleteContactInput = {
@@ -329,6 +340,7 @@ export type ModelContactFilterInput = {
   email?: ModelStringInput | null,
   subject?: ModelStringInput | null,
   message?: ModelStringInput | null,
+  read?: ModelBooleanInput | null,
   and?: Array< ModelContactFilterInput | null > | null,
   or?: Array< ModelContactFilterInput | null > | null,
   not?: ModelContactFilterInput | null,
@@ -340,13 +352,13 @@ export type ModelContactConnection = {
   nextToken?: string | null,
 };
 
-export type ListSessionsWithBookingsQueryVariables = {
+export type ListCompleteSessionsQueryVariables = {
   filter?: ModelSessionsFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type ListSessionsWithBookingsQuery = {
+export type ListCompleteSessionsQuery = {
   listSessions?:  {
     __typename: "ModelSessionsConnection",
     items:  Array< {
@@ -367,25 +379,16 @@ export type ListSessionsWithBookingsQuery = {
         clientName: string,
         startTime: string,
       } | null > | null,
+      sessionImage:  {
+        __typename: "S3ImageObject",
+        name: string,
+        bucket: string,
+        key: string,
+        region: string,
+        mimeType: string,
+      },
       createdAt: string,
       updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type ListSessionsWithDatesQueryVariables = {
-  filter?: ModelSessionsFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ListSessionsWithDatesQuery = {
-  listSessions?:  {
-    __typename: "ModelSessionsConnection",
-    items:  Array< {
-      __typename: "Sessions",
-      date: string,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -590,6 +593,7 @@ export type CreateContactMutation = {
     email: string,
     subject: string,
     message: string,
+    read: boolean,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -608,6 +612,7 @@ export type UpdateContactMutation = {
     email: string,
     subject: string,
     message: string,
+    read: boolean,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -626,6 +631,7 @@ export type DeleteContactMutation = {
     email: string,
     subject: string,
     message: string,
+    read: boolean,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -761,6 +767,7 @@ export type GetContactQuery = {
     email: string,
     subject: string,
     message: string,
+    read: boolean,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -782,6 +789,7 @@ export type ListContactsQuery = {
       email: string,
       subject: string,
       message: string,
+      read: boolean,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -953,6 +961,7 @@ export type OnCreateContactSubscription = {
     email: string,
     subject: string,
     message: string,
+    read: boolean,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -966,6 +975,7 @@ export type OnUpdateContactSubscription = {
     email: string,
     subject: string,
     message: string,
+    read: boolean,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -979,6 +989,7 @@ export type OnDeleteContactSubscription = {
     email: string,
     subject: string,
     message: string,
+    read: boolean,
     createdAt: string,
     updatedAt: string,
   } | null,

@@ -7,7 +7,7 @@ import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import { MainListItems } from "./sidenavListItems";
+import { MainListItems } from "./MainListItems";
 import { IDashboardChildrenProps } from "../AdminDashboard";
 
 const drawerWidth = 240;

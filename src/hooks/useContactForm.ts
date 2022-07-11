@@ -9,6 +9,7 @@ export interface IContactFormProps {
   email: string;
   subject: string;
   message: string;
+  read: boolean;
 }
 
 const useContactForm = () => {

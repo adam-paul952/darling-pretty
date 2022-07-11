@@ -112,6 +112,7 @@ export const getContact = /* GraphQL */ `
       email
       subject
       message
+      read
       createdAt
       updatedAt
     }
@@ -130,6 +131,7 @@ export const listContacts = /* GraphQL */ `
         email
         subject
         message
+        read
         createdAt
         updatedAt
       }
