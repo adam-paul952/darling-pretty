@@ -2,17 +2,27 @@ import React from "react";
 
 const AuthContext = React.createContext({});
 
-const initialState = {};
+const useAuthContext = () => {
+  const [authState, setAuthState] = React.useState(true);
 
-const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [authState, setAuthState] = React.useState({});
-  return (
-    <AuthContext.Provider value={{ authState, setAuthState }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  const login = () => {
+    return new Promise<boolean>((res) => {
+      setAuthState((prevState) => !prevState);
+      res(true);
+    });
+  };
+
+  const logout = () => {
+    setAuthState(false);
+  };
+
+  return { authState, login, logout };
 };
 
-const useAuthContext = () => {};
+const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const auth = useAuthContext();
+
+  return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
+};
 
 export { AuthProvider, useAuthContext };

@@ -7,17 +7,57 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { navItems } from "./Header";
+import axios from "axios";
+
+const query = `
+{
+  footerCollection {
+    items {
+      name
+      navLinkHome
+      navLinkTextHome
+      navLinkLogIn
+      navLinkTextLogIn
+      navLinkContact
+      navLinkTextContact
+      phoneNumber
+      email
+      facebookLink
+    }
+  }
+}
+`;
 
 const Footer = () => {
+  const [footerDetails, setFooterDetails] = React.useState<any>({});
+  React.useEffect(() => {
+    const getPageData = async () => {
+      // setLoading(true);
+      const config = {
+        url: process.env.REACT_APP_CONTENTFUL_URL,
+        method: "post",
+        data: JSON.stringify({ query }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.REACT_APP_CONTENTFUL_ACCESS_TOKEN}`,
+          Accept: "application/json",
+        },
+      };
+      try {
+        const response = await axios(config);
+        console.log(response);
+        setFooterDetails(response.data.data.footerCollection.items[0]);
+      } catch (err) {
+        console.log(err);
+      }
+      // finally {
+      //   setLoading(false);
+      // }
+    };
+    getPageData();
+  }, []);
   return (
-    <Box
-      sx={{
-        position: "fixed",
-        bottom: 0,
-        width: "inherit",
-        paddingTop: "20px",
-      }}
-    >
+    <Box sx={{}}>
       <hr style={{ marginTop: "30px" }} />
       <Grid container sx={{ backgroundColor: "#000" }}>
         <Grid item xs={12} md={3}>
@@ -29,7 +69,7 @@ const Footer = () => {
               color: "#fff",
             }}
           >
-            Darling Pretty Photography
+            {footerDetails.name}
           </Typography>
         </Grid>
         <Grid

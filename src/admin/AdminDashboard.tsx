@@ -1,13 +1,10 @@
 import React from "react";
 
-import SideNav from "./components/SideNav";
 import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import CircularProgress from "@mui/material/CircularProgress";
-import DashboardHeader from "./components/DashboardHeader";
 import SessionOverview from "./components/SessionOverview";
 import RecentClients from "./components/RecentClients";
 
@@ -28,12 +25,6 @@ const AdminDashboard = () => {
   const [sessions, setSessions] = React.useState<ISessionInfo[]>([]);
   const [clients, setClients] = React.useState<IClientInfo[]>([]);
   const [loading, setLoading] = React.useState<boolean>(true);
-
-  const [open, setOpen] = React.useState(false);
-
-  const toggleDrawer = () => {
-    setOpen(!open);
-  };
 
   const formatDate = React.useCallback((date: string) => {
     const formattedDate = moment(date).format("MMMM DD YYYY");
@@ -84,50 +75,53 @@ const AdminDashboard = () => {
 
   return (
     <>
-      <Box sx={{ display: "flex" }}>
-        <DashboardHeader open={open} toggleDrawer={toggleDrawer} />
-        <SideNav open={open} toggleDrawer={toggleDrawer} />
-        {loading ? (
-          <Box
-            sx={{
-              display: "flex",
-              height: "100vh",
-              width: "100%",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
+      {loading ? (
+        <Box
+          sx={{
+            display: "flex",
+            height: "100vh",
+            width: "100%",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      ) : (
+        <Box
+          component="main"
+          sx={{
+            backgroundColor: (theme) =>
+              theme.palette.mode === "light"
+                ? theme.palette.grey[100]
+                : theme.palette.grey[900],
+            flexGrow: 1,
+            height: "100vh",
+            overflow: "auto",
+          }}
+        >
+          <Container
+            maxWidth="lg"
+            sx={{ mt: 4, mb: 4, height: "100%", marginTop: { md: "80px" } }}
           >
-            <CircularProgress />
-          </Box>
-        ) : (
-          <Box
-            component="main"
-            sx={{
-              backgroundColor: (theme) =>
-                theme.palette.mode === "light"
-                  ? theme.palette.grey[100]
-                  : theme.palette.grey[900],
-              flexGrow: 1,
-              height: "100vh",
-              overflow: "auto",
-            }}
-          >
-            <Toolbar />
-            <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-              <Grid container spacing={3}>
-                <SessionOverview sessions={sessions} formatDate={formatDate} />
-                <Grid item xs={12}>
-                  <Paper
-                    sx={{ p: 2, display: "flex", flexDirection: "column" }}
-                  >
-                    <RecentClients clients={clients} />
-                  </Paper>
-                </Grid>
+            <Grid container spacing={3} sx={{ height: "100%" }}>
+              <Grid item xs={12}>
+                <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+                  <SessionOverview
+                    sessions={sessions}
+                    formatDate={formatDate}
+                  />
+                </Paper>
               </Grid>
-            </Container>
-          </Box>
-        )}
-      </Box>
+              <Grid item xs={12}>
+                <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+                  <RecentClients clients={clients} />
+                </Paper>
+              </Grid>
+            </Grid>
+          </Container>
+        </Box>
+      )}
     </>
   );
 };

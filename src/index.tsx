@@ -10,24 +10,11 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import reportWebVitals from "./reportWebVitals";
 import DarlingPrettyRouter from "./Routes";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import { AuthProvider } from "./context/AuthContext";
 
 import { Amplify } from "aws-amplify";
 import awsExports from "./aws-exports";
 Amplify.configure(awsExports);
-
-declare module "@mui/material/styles" {
-  interface Theme {
-    status: {
-      danger: string;
-    };
-  }
-  // allow configuration using `createTheme`
-  interface ThemeOptions {
-    status?: {
-      danger?: string;
-    };
-  }
-}
 
 const theme = createTheme({
   components: {
@@ -40,17 +27,19 @@ const theme = createTheme({
 });
 
 ReactDOM.render(
-  <ThemeProvider theme={theme}>
-    <PayPalScriptProvider
-      options={{
-        "client-id": process.env.REACT_APP_PAYPAL_CLIENT_ID,
-        currency: "CAD",
-      }}
-    >
-      <CssBaseline />
-      <DarlingPrettyRouter />
-    </PayPalScriptProvider>
-  </ThemeProvider>,
+  <AuthProvider>
+    <ThemeProvider theme={theme}>
+      <PayPalScriptProvider
+        options={{
+          "client-id": process.env.REACT_APP_PAYPAL_CLIENT_ID,
+          currency: "CAD",
+        }}
+      >
+        <CssBaseline />
+        <DarlingPrettyRouter />
+      </PayPalScriptProvider>
+    </ThemeProvider>
+  </AuthProvider>,
   document.getElementById("root")
 );
 

@@ -9,21 +9,15 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableTitle from "./TableTitle";
 
+import NoInfoAvailable from "./NoInfoAvailable";
+
 import { IClientInfo } from "../../hooks/useClientInfo";
 
 const RecentClients = ({ clients }: { clients: IClientInfo[] }) => {
   return (
     <>
       {clients.length === 0 ? (
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          No current Clients...
-        </Box>
+        <NoInfoAvailable variant="clients" />
       ) : (
         <>
           <TableTitle>Recent Clients</TableTitle>

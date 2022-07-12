@@ -1,3 +1,4 @@
+import React from "react";
 import { API, graphqlOperation } from "aws-amplify";
 import { createContact } from "../graphql/mutations";
 import { deleteContact } from "../graphql/mutations";
@@ -13,6 +14,27 @@ export interface IContactFormProps {
 }
 
 const useContactForm = () => {
+  const [unreadMessage, setUnread] = React.useState<number>(0);
+  const [contactEntries, setContactEntries] = React.useState<
+    IContactFormProps[]
+  >([]);
+
+  React.useEffect(
+    () => {
+      const getContactSubmissions = async () => {
+        const contactSubmissions = await getContactFormSubmissions();
+        contactSubmissions.forEach(
+          (message: IContactFormProps) =>
+            message.read === false && setUnread((prev) => prev + 1)
+        );
+        setContactEntries(contactSubmissions);
+      };
+
+      getContactSubmissions();
+    },
+    //eslint-disable-next-line
+    []
+  );
   const sendContactForm = async (data: IContactFormProps) => {
     try {
       return await API.graphql(
@@ -47,7 +69,8 @@ const useContactForm = () => {
 
   return {
     sendContactForm,
-    getContactFormSubmissions,
+    unreadMessage,
+    contactEntries,
     deleteContactFormSubmission,
   };
 };
