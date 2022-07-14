@@ -1,32 +1,48 @@
 import React from "react";
 
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Accordion from "@mui/material/Accordion";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import DeleteIcon from "@mui/icons-material/Delete";
-import SendIcon from "@mui/icons-material/Send";
-import Stack from "@mui/material/Stack";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Badge,
+  Box,
+  Button,
+  Stack,
+  Typography,
+} from "@mui/material";
+import { Delete, ExpandMore, Send } from "@mui/icons-material";
 
 import useContactForm, { IContactFormProps } from "../../hooks/useContactForm";
 
 interface IContactEntriesProps {
   contactEntries: IContactFormProps[];
+  setContactEntries: any;
 }
 
 const ContactEntries: React.FC<IContactEntriesProps> = (props) => {
-  const { contactEntries } = props;
+  const { contactEntries, setContactEntries } = props;
 
-  const { deleteContactFormSubmission } = useContactForm();
+  const { deleteContactFormSubmission, updateMessageReadStatus } =
+    useContactForm();
 
   const [expanded, setExpanded] = React.useState<string | false>(false);
 
   const handleChange =
-    (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+    (panel: string, id: string) =>
+    async (event: React.SyntheticEvent, isExpanded: boolean) => {
       setExpanded(isExpanded ? panel : false);
+
+      if (expanded === panel) {
+        await updateMessageReadStatus(id);
+        setContactEntries((prev: any) =>
+          prev.map((entry: any) => {
+            if (entry.id === id) {
+              entry.read = true;
+            }
+            return entry;
+          })
+        );
+      }
     };
 
   const emailSubject = `Response to Inquiry from Darling Pretty Photography`;
@@ -35,6 +51,10 @@ const ContactEntries: React.FC<IContactEntriesProps> = (props) => {
     await deleteContactFormSubmission(id);
   };
 
+  React.useEffect(() => {
+    console.log(contactEntries);
+  }, [contactEntries]);
+
   return (
     <>
       {contactEntries.map((entry) => {
@@ -42,7 +62,7 @@ const ContactEntries: React.FC<IContactEntriesProps> = (props) => {
           <Accordion
             key={entry.id}
             expanded={expanded === `panel${entry.id}`}
-            onChange={handleChange(`panel${entry.id}`)}
+            onChange={handleChange(`panel${entry.id}`, entry.id!)}
             sx={{
               width: "95%",
               marginLeft: "auto",
@@ -55,16 +75,26 @@ const ContactEntries: React.FC<IContactEntriesProps> = (props) => {
             }}
           >
             <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
+              expandIcon={<ExpandMore />}
               aria-controls={`panel${entry.id}bh-content`}
               id={`panel${entry.id}bh-header`}
             >
               <Typography sx={{ width: "33%", flexShrink: 0 }}>
                 {entry.name}
               </Typography>
-              <Typography sx={{ color: "text.secondary" }}>
+              <Typography
+                sx={{ width: "33%", flexShrink: 0, color: "text.secondary" }}
+              >
                 {entry.email}
               </Typography>
+              {entry.read === false ? (
+                <Badge
+                  badgeContent={1}
+                  color="secondary"
+                  anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                  sx={{ marginBottom: "10px" }}
+                />
+              ) : null}
             </AccordionSummary>
             <AccordionDetails>
               <Box component="div" sx={{}}>
@@ -81,7 +111,7 @@ const ContactEntries: React.FC<IContactEntriesProps> = (props) => {
                 >
                   <Button
                     variant="contained"
-                    endIcon={<SendIcon />}
+                    endIcon={<Send />}
                     href={`mailto:${entry.email}?subject=${emailSubject}`}
                   >
                     Reply
@@ -89,7 +119,7 @@ const ContactEntries: React.FC<IContactEntriesProps> = (props) => {
                   <Button
                     variant="outlined"
                     color="error"
-                    startIcon={<DeleteIcon />}
+                    startIcon={<Delete />}
                     onClick={() => removeEntry(entry.id!)}
                     disabled
                   >

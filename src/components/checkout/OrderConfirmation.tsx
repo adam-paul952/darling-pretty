@@ -4,7 +4,7 @@ import { Button, Typography } from "@mui/material";
 
 const OrderConfirmation = ({ orderId }: { orderId: string }) => {
   return (
-    <React.Fragment>
+    <>
       <Typography variant="h5" gutterBottom>
         Thank you for your order.
       </Typography>
@@ -15,7 +15,7 @@ const OrderConfirmation = ({ orderId }: { orderId: string }) => {
       <Button component="a" href="/" variant="contained" sx={{ mt: 3, ml: 1 }}>
         Return to Darling Pretty Home
       </Button>
-    </React.Fragment>
+    </>
   );
 };
 

@@ -1,12 +1,11 @@
 import React from "react";
 
 import FullCalendar from "@fullcalendar/react";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Box";
-
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
+
+import { Box, Toolbar } from "@mui/material";
 
 import moment from "moment";
 
@@ -45,13 +44,10 @@ const SessionCalendar = () => {
             });
           });
 
-          const startTime = `${session.date}T${session.startTime}`;
-          const momentDate = moment().format(startTime);
-
           currentSessions.push({
             title: session.name,
             allDay: true,
-            start: momentDate,
+            start: new Date(session.date),
           });
         });
 

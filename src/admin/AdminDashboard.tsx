@@ -1,16 +1,12 @@
 import React from "react";
 
-import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
-import CircularProgress from "@mui/material/CircularProgress";
+import moment from "moment";
+import { Box, CircularProgress, Container, Grid, Paper } from "@mui/material";
+
 import SessionOverview from "./components/SessionOverview";
 import RecentClients from "./components/RecentClients";
-
 import useSessionInfo, { ISessionInfo } from "../hooks/useSessionInfo";
 import useClientInfo, { IClientInfo } from "../hooks/useClientInfo";
-import moment from "moment";
 
 export interface IDashboardChildrenProps {
   open: boolean;

@@ -1,22 +1,23 @@
 import React from "react";
 
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
-import Drawer from "@mui/material/Drawer";
-import IconButton from "@mui/material/IconButton";
-import List from "@mui/material/List";
-import Link from "@mui/material/Link";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-import MenuIcon from "@mui/icons-material/Menu";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import CloseIcon from "@mui/icons-material/Close";
-import Slide from "@mui/material/Slide";
-import useScrollTrigger from "@mui/material/useScrollTrigger";
+import {
+  AppBar,
+  Box,
+  Button,
+  Divider,
+  Drawer,
+  IconButton,
+  Link,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  Toolbar,
+  Typography,
+  Slide,
+  useScrollTrigger,
+} from "@mui/material";
+import { Close, Menu } from "@mui/icons-material";
 
 const drawerWidth = 240;
 export const navItems = [
@@ -39,7 +40,7 @@ const Header: React.FC = () => {
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <List>
         <IconButton onClick={handleDrawerToggle}>
-          <CloseIcon />
+          <Close />
         </IconButton>
         <Divider />
         {navItems.map((item) => (
@@ -81,7 +82,7 @@ const Header: React.FC = () => {
               onClick={handleDrawerToggle}
               sx={{ mr: 2, display: { sm: "none" }, color: "#fff" }}
             >
-              <MenuIcon />
+              <Menu />
             </IconButton>
             <Typography
               variant="h6"

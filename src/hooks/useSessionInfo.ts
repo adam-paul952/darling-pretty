@@ -5,6 +5,7 @@ import { getSessions } from "../graphql/queries";
 import { listCompleteSessions } from "../graphql/customQueries";
 import awsmobile from "../aws-exports";
 import useImageStorage from "./useImageStorage";
+import moment from "moment";
 
 export interface ISessionInfo {
   id?: string;
@@ -48,6 +49,30 @@ const useSessionInfo = () => {
   const { uploadImageToStorage } = useImageStorage();
 
   const [isLoading, setLoading] = React.useState<boolean>(false);
+
+  const getAvailableBookings = (
+    startTime: string,
+    endTime: string,
+    length: number
+  ) => {
+    const availableBookings: string[] = [];
+    const start = moment(startTime, "HH:mm:ss A");
+    const end = moment(endTime, "HH:mm:ss A");
+    const numberOfSessions =
+      moment.duration(end.diff(start)).asMinutes() / length;
+    for (let i = 0; i < Math.round(numberOfSessions) + 1; i++) {
+      if (i === 0) {
+        availableBookings.push(start.format("hh:mm:ss A"));
+      } else {
+        availableBookings.push(
+          moment(availableBookings[0], "h:mm:ss A")
+            .add(i * length, "minutes")
+            .format("hh:mm:ss A")
+        );
+      }
+    }
+    return availableBookings;
+  };
 
   const createNewSession = async (newSession: ISessionInfo) => {
     setLoading(true);
@@ -158,6 +183,7 @@ const useSessionInfo = () => {
     getSessionById,
     updateBookingWithClient,
     adminUpateSession,
+    getAvailableBookings,
   };
 };
 

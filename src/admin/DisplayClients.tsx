@@ -1,12 +1,16 @@
 import React from "react";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Accordion from "@mui/material/Accordion";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import Link from "@mui/material/Link";
-import Paper from "@mui/material/Paper";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Link,
+  Paper,
+  Typography,
+} from "@mui/material";
+
+import { ExpandMore } from "@mui/icons-material";
 
 import useClientInfo, { IClientInfo } from "../hooks/useClientInfo";
 import NoInfoAvailable from "./components/NoInfoAvailable";
@@ -79,7 +83,7 @@ const DisplayClients = () => {
                   }}
                 >
                   <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
+                    expandIcon={<ExpandMore />}
                     aria-controls={`panel${client.id}bh-content`}
                     id={`panel${client.id}bh-header`}
                   >

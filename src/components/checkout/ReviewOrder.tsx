@@ -18,7 +18,7 @@ const ReviewOrder = ({ order, client }: { order: any; client: any }) => {
   const clientAddress = `${addressOne} ${city} ${province} ${country} ${postalCode}`;
 
   return (
-    <React.Fragment>
+    <>
       <Typography variant="h6" gutterBottom>
         Order summary
       </Typography>
@@ -43,7 +43,7 @@ const ReviewOrder = ({ order, client }: { order: any; client: any }) => {
           <Typography gutterBottom>{clientAddress}</Typography>
         </Grid>
       </Grid>
-    </React.Fragment>
+    </>
   );
 };
 

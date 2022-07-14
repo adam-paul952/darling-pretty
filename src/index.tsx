@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
 import "react-datepicker/dist/react-datepicker.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
@@ -8,6 +7,7 @@ import "./App.css";
 import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import reportWebVitals from "./reportWebVitals";
+
 import DarlingPrettyRouter from "./Routes";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import { AuthProvider } from "./context/AuthContext";

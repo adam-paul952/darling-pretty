@@ -1,18 +1,20 @@
 import React from "react";
 
 import { Link } from "react-router-dom";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardHeader from "@mui/material/CardHeader";
-import GlobalStyles from "@mui/material/GlobalStyles";
-import { ISessionInfo } from "../../hooks/useSessionInfo";
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  Container,
+  GlobalStyles,
+  Grid,
+  Typography,
+} from "@mui/material";
 
 import NoInfoAvailable from "./NoInfoAvailable";
+import { ISessionInfo } from "../../hooks/useSessionInfo";
 
 interface ISessionOverviewProps {
   sessions: ISessionInfo[];
@@ -43,9 +45,9 @@ const SessionOverview: React.FC<ISessionOverviewProps> = (props) => {
             }}
           />
           <Container maxWidth="md" component="main">
-            <Grid container spacing={5} alignItems="flex-end">
+            <Grid container spacing={5}>
               {sessions.map((session: ISessionInfo) => (
-                <Grid item key={session.name} xs={12} md={12 / sessions.length}>
+                <Grid item key={session.name} xs={12} md={4}>
                   <Card>
                     <CardHeader
                       title={session.name}

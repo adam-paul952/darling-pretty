@@ -1,16 +1,16 @@
 import React from "react";
 
-import Link from "@mui/material/Link";
-import Box from "@mui/material/Box";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
+import {
+  Link,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+} from "@mui/material";
+
 import TableTitle from "./TableTitle";
-
 import NoInfoAvailable from "./NoInfoAvailable";
-
 import { IClientInfo } from "../../hooks/useClientInfo";
 
 const RecentClients = ({ clients }: { clients: IClientInfo[] }) => {

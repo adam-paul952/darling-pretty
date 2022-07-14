@@ -1,25 +1,32 @@
 import React from "react";
 
 import { useLocation } from "react-router-dom";
+import moment from "moment";
+import useSessionInfo, { ISessionInfo } from "../hooks/useSessionInfo";
+
 import { EditorState, ContentState, convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
 import htmlToDraft from "html-to-draftjs";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
+
+import {
+  Box,
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
+
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
-import Button from "@mui/material/Button";
 
-import useSessionInfo, { ISessionInfo } from "../hooks/useSessionInfo";
-import moment from "moment";
-import { InputLabel, Typography } from "@mui/material";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import Stack from "@mui/material/Stack";
+import useImageStorage from "../hooks/useImageStorage";
 
 interface ICreateSessionLocation {
   sessionId: string | null;
@@ -44,9 +51,14 @@ const initialSessionState = {
 };
 
 const CreateSessionScreen: React.FC = () => {
+  const { listStorageItems } = useImageStorage();
   const { sessionId } = useLocation().state as ICreateSessionLocation;
-  const { createNewSession, getSessionById, adminUpateSession } =
-    useSessionInfo();
+  const {
+    createNewSession,
+    getSessionById,
+    // adminUpateSession,
+    getAvailableBookings,
+  } = useSessionInfo();
 
   const [sessionDetails, setSessionDetails] =
     React.useState<ISessionInfo>(initialSessionState);
@@ -55,7 +67,6 @@ const CreateSessionScreen: React.FC = () => {
     EditorState.createEmpty()
   );
 
-  const [imageName, setImageName] = React.useState<string>("");
   const [imagePreview, setImagePreview] = React.useState<any>("");
 
   const [loading, setLoading] = React.useState<boolean>(true);
@@ -69,33 +80,27 @@ const CreateSessionScreen: React.FC = () => {
   };
 
   const onCreateSession = async () => {
-    const start = moment(sessionDetails.startTime, "hh:mm:ss A");
-    const end = moment(sessionDetails.endTime, "hh:mm:ss A");
-    const availableBookings =
-      moment.duration(end.diff(start)).asMinutes() /
-      sessionDetails.sessionLength;
-    console.log(Math.round(availableBookings));
+    const availableBookings = getAvailableBookings(
+      sessionDetails.startTime,
+      sessionDetails.endTime,
+      sessionDetails.sessionLength
+    );
     try {
       const sessionData = {
         ...sessionDetails,
-        date: moment(sessionDetails.date).format("DD MM YYYY"),
-        startTime: moment(sessionDetails.startTime).format("HH:mm:ss A"),
-        endTime: moment(sessionDetails.endTime).format("HH:mm:ss A"),
-        // availableTimes: availableBookings,
+        date: moment(sessionDetails.date).format("YYYY-MM-DD"),
+        startTime: moment(sessionDetails.startTime).format("h:mm:ss A"),
+        endTime: moment(sessionDetails.endTime).format("h:mm:ss A"),
+        availableTimes: availableBookings,
       };
-      // await createNewSession(sessionData);
-      console.log(sessionData);
+      await createNewSession(sessionData);
       resetFormData();
       alert("Session created successfully");
     } catch (error: any) {
       console.log(error);
+      alert(error);
     }
   };
-
-  React.useEffect(() => {
-    console.log(moment(sessionDetails.startTime).format("h:mm:ss A"));
-    console.log(moment(sessionDetails.endTime).format("h:mm:ss A"));
-  }, [sessionDetails.startTime, sessionDetails.endTime]);
 
   const onEditSession = async () => {
     return null;
@@ -134,8 +139,13 @@ const CreateSessionScreen: React.FC = () => {
   }, []);
 
   React.useEffect(() => {
-    console.log(`Session Details`, sessionDetails);
-  }, [sessionDetails]);
+    const listItemsFromStorage = async () => {
+      const items = await listStorageItems();
+      console.log(items);
+    };
+    listItemsFromStorage();
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <LocalizationProvider dateAdapter={AdapterMoment}>
@@ -174,7 +184,7 @@ const CreateSessionScreen: React.FC = () => {
               <FormControl>
                 <DatePicker
                   label="Session Date"
-                  inputFormat="DD MMM yyyy"
+                  inputFormat="YYYY-MM-DD"
                   disableMaskedInput
                   value={sessionDetails.date}
                   onChange={(newValue: any) => {
@@ -276,14 +286,25 @@ const CreateSessionScreen: React.FC = () => {
               spacing={10}
               sx={{ justifyContent: "center", padding: "15px 0" }}
             >
-              <img
-                src={imagePreview}
-                alt="Test image"
-                loading="lazy"
-                className="img-fluid"
-                style={{ maxWidth: "300px" }}
-              />
-              <Button variant="contained" component="label">
+              {sessionDetails.sessionImage && (
+                <img
+                  src={imagePreview}
+                  alt="Image Preview"
+                  loading="lazy"
+                  className="img-fluid"
+                  style={{ maxWidth: "300px" }}
+                />
+              )}
+
+              <Button
+                variant="contained"
+                component="label"
+                sx={{
+                  maxHeight: { md: "56px" },
+                  minWidth: { md: "127.4px" },
+                  alignSelf: { md: "center" },
+                }}
+              >
                 Upload File
                 <input type="file" hidden onChange={handleImageChange} />
               </Button>

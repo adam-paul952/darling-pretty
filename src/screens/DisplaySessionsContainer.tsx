@@ -1,11 +1,8 @@
 import React from "react";
 
-import Header from "../components/Header";
 import DisplaySessions from "../components/DisplaySessions";
-import Footer from "../components/Footer";
 import NoAvailableSessions from "../components/NoAvailableSessions";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
+import { Grid, Typography } from "@mui/material";
 
 import useSessionInfo, { ISessionInfo } from "../hooks/useSessionInfo";
 import moment from "moment";
@@ -37,6 +34,7 @@ const DisplayAvailableSessions = () => {
           });
 
         setSessions(arrangeDate);
+        // console.log(arrangeDate);
       } catch (error) {
         console.log(error);
       }
@@ -47,11 +45,15 @@ const DisplayAvailableSessions = () => {
 
   return (
     <>
-      <Header />
       <Grid
         container
         rowSpacing={3}
-        sx={{ paddingTop: "30px", justifyContent: "center", minHeight: "75vh" }}
+        sx={{
+          marginTop: { md: "20px" },
+          justifyContent: "center",
+          minHeight: { md: "65vh" },
+          alignItems: "center",
+        }}
       >
         {!sessions ? (
           <Grid
@@ -73,7 +75,6 @@ const DisplayAvailableSessions = () => {
         )}
         {sessions !== null && sessions.length === 0 && <NoAvailableSessions />}
       </Grid>
-      <Footer />
     </>
   );
 };

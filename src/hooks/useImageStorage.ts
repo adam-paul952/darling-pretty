@@ -14,8 +14,19 @@ const useImageStorage = () => {
     }
   };
 
+  const listStorageItems = async () => {
+    try {
+      const storageImages = await Storage.list("");
+      console.log(storageImages);
+      return storageImages;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return {
     uploadImageToStorage,
+    listStorageItems,
   };
 };
 

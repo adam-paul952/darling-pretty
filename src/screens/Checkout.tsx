@@ -1,24 +1,23 @@
 import React from "react";
 
-import Header from "../components/Header";
-import OrderConfirmation from "../components/checkout/OrderConfirmation";
-import Footer from "../components/Footer";
+import moment from "moment";
 import { useLocation } from "react-router-dom";
+import {
+  Container,
+  Paper,
+  Step,
+  StepLabel,
+  Stepper,
+  Typography,
+} from "@mui/material";
+
+import CheckoutStepper from "../components/checkout/CheckoutStepper";
+import OrderConfirmation from "../components/checkout/OrderConfirmation";
 import useSessionInfo, {
   IBookingInfo,
   ISessionInfo,
 } from "../hooks/useSessionInfo";
 import useClientInfo, { IClientInfo } from "../hooks/useClientInfo";
-import moment from "moment";
-import CheckoutStepper from "../components/checkout/CheckoutStepper";
-
-import Container from "@mui/material/Container";
-import Paper from "@mui/material/Paper";
-import Stepper from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
-import Typography from "@mui/material/Typography";
-
 import { initialClientState, steps } from "../constants/checkout";
 
 interface ILocationCheckout {
@@ -118,7 +117,6 @@ const Checkout = () => {
 
   return (
     <>
-      <Header />
       <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
         <Paper
           variant="outlined"
@@ -151,7 +149,6 @@ const Checkout = () => {
           </React.Fragment>
         </Paper>
       </Container>
-      <Footer />
     </>
   );
 };

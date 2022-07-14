@@ -1,16 +1,13 @@
 import React from "react";
 
+import { Box, Paper, Typography } from "@mui/material";
+
 import ContactEntries from "./components/ContactEntries";
-
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
-
 import useContactForm from "../hooks/useContactForm";
 import NoInfoAvailable from "./components/NoInfoAvailable";
 
 const ContactFormSubmissions = () => {
-  const { contactEntries } = useContactForm();
+  const { contactEntries, setContactEntries } = useContactForm();
 
   return (
     <Box
@@ -37,7 +34,10 @@ const ContactFormSubmissions = () => {
         Contact Entries
       </Typography>
       {contactEntries.length > 0 ? (
-        <ContactEntries contactEntries={contactEntries} />
+        <ContactEntries
+          contactEntries={contactEntries}
+          setContactEntries={setContactEntries}
+        />
       ) : (
         <Box>
           <Paper sx={{ p: 2 }}>

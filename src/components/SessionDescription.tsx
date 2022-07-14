@@ -10,6 +10,7 @@ import moment from "moment";
 import DOMPurify from "dompurify";
 
 import { ISessionInfo } from "../hooks/useSessionInfo";
+
 interface ISessionDescriptionProps {
   session: ISessionInfo;
 }
@@ -29,7 +30,7 @@ const SessionDescription: React.FC<ISessionDescriptionProps> = (props) => {
   });
 
   return (
-    <Container sx={{ marginTop: "30px" }}>
+    <Container sx={{ marginTop: { md: "52px", minHeight: "65vh" } }}>
       <Grid container spacing={4} sx={{ maxWidth: "100%" }}>
         <Grid item md={7}>
           <img
@@ -48,7 +49,7 @@ const SessionDescription: React.FC<ISessionDescriptionProps> = (props) => {
           <Typography sx={{ padding: "10px 0" }}>{session.price}</Typography>
           <Typography
             component="div"
-            sx={{ maxWidth: "90%", padding: "10px 0" }}
+            sx={{ padding: "10px 0" }}
             dangerouslySetInnerHTML={sanitizeData()}
           />
           <Typography sx={{ padding: "10px 0" }}>{session.date}</Typography>

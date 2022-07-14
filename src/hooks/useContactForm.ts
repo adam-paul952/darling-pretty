@@ -1,7 +1,11 @@
 import React from "react";
+
 import { API, graphqlOperation } from "aws-amplify";
-import { createContact } from "../graphql/mutations";
-import { deleteContact } from "../graphql/mutations";
+import {
+  createContact,
+  updateContact,
+  deleteContact,
+} from "../graphql/mutations";
 import { listContacts } from "../graphql/queries";
 
 export interface IContactFormProps {
@@ -19,22 +23,19 @@ const useContactForm = () => {
     IContactFormProps[]
   >([]);
 
-  React.useEffect(
-    () => {
-      const getContactSubmissions = async () => {
-        const contactSubmissions = await getContactFormSubmissions();
-        contactSubmissions.forEach(
-          (message: IContactFormProps) =>
-            message.read === false && setUnread((prev) => prev + 1)
-        );
-        setContactEntries(contactSubmissions);
-      };
+  React.useEffect(() => {
+    const getContactSubmissions = async () => {
+      const contactSubmissions = await getContactFormSubmissions();
+      contactSubmissions.forEach(
+        (message: IContactFormProps) =>
+          message.read === false && setUnread((prev) => prev + 1)
+      );
+      setContactEntries(contactSubmissions);
+    };
 
-      getContactSubmissions();
-    },
-    //eslint-disable-next-line
-    []
-  );
+    getContactSubmissions();
+  }, []);
+
   const sendContactForm = async (data: IContactFormProps) => {
     try {
       return await API.graphql(
@@ -67,11 +68,24 @@ const useContactForm = () => {
     }
   };
 
+  const updateMessageReadStatus = async (id: string) => {
+    try {
+      await API.graphql(
+        graphqlOperation(updateContact, { input: { id, read: true } })
+      );
+      console.log(`Message has been marked as read!!`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return {
     sendContactForm,
     unreadMessage,
     contactEntries,
     deleteContactFormSubmission,
+    updateMessageReadStatus,
+    setContactEntries,
   };
 };
 

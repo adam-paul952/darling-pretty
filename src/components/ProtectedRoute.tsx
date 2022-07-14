@@ -1,10 +1,11 @@
 import React, { Suspense } from "react";
+
 import { Navigate, useLocation, Outlet } from "react-router-dom";
+import { Box, CircularProgress } from "@mui/material";
+
+import { useAuthContext } from "../context/AuthContext";
 import DashboardHeader from "../admin/components/DashboardHeader";
 import SideNav from "../admin/components/SideNav";
-import { useAuthContext } from "../context/AuthContext";
-import Box from "@mui/material/Box";
-
 import useContactForm from "../hooks/useContactForm";
 
 const ProtectedRoute: React.FC = () => {
@@ -25,7 +26,9 @@ const ProtectedRoute: React.FC = () => {
         unreadMessages={unreadMessage}
       />
       <SideNav open={open} toggleDrawer={toggleDrawer} />
-      <Outlet />
+      <Suspense fallback={<CircularProgress />}>
+        <Outlet />
+      </Suspense>
     </Box>
   ) : (
     <Navigate to="/login" replace state={{ pathname: location.pathname }} />

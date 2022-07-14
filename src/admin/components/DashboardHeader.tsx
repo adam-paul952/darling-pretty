@@ -1,13 +1,15 @@
 import React from "react";
 
-import { styled } from "@mui/material/styles";
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
-import Badge from "@mui/material/Badge";
-import MenuIcon from "@mui/icons-material/Menu";
-import MailIcon from "@mui/icons-material/Mail";
+import {
+  AppBar as MuiAppBar,
+  AppBarProps as MuiAppBarProps,
+  Badge,
+  IconButton,
+  styled,
+  Toolbar,
+  Typography,
+} from "@mui/material";
+import { Mail, Menu } from "@mui/icons-material";
 
 import { IDashboardChildrenProps } from "../AdminDashboard";
 
@@ -55,7 +57,7 @@ const DashboardHeader = (props: IDashboardChildrenProps) => {
             ...(open && { display: "none" }),
           }}
         >
-          <MenuIcon />
+          <Menu />
         </IconButton>
         <Typography
           component="h1"
@@ -78,7 +80,7 @@ const DashboardHeader = (props: IDashboardChildrenProps) => {
             badgeContent={unreadMessages ? unreadMessages : 0}
             color="secondary"
           >
-            <MailIcon />
+            <Mail />
           </Badge>
         </IconButton>
       </Toolbar>

@@ -1,13 +1,8 @@
 import React from "react";
-import { useLocation, Link } from "react-router-dom";
 
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import PeopleIcon from "@mui/icons-material/People";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import AddBoxIcon from "@mui/icons-material/AddBox";
+import { useLocation, Link } from "react-router-dom";
+import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
+import { AddBox, CalendarMonth, Dashboard, People } from "@mui/icons-material";
 
 export const MainListItems = () => {
   const { pathname } = useLocation();
@@ -20,16 +15,22 @@ export const MainListItems = () => {
         disabled={pathname === "/admin/dashboard" ? true : false}
         sx={
           pathname === "/admin/dashboard"
-            ? { backgroundColor: "black", "&.Mui-disabled": { opacity: 1 } }
-            : {}
+            ? {
+                backgroundColor: "black",
+                "&.Mui-disabled": { opacity: 1 },
+              }
+            : { "&:hover": { color: "#000" } }
         }
       >
         <ListItemIcon>
-          <DashboardIcon
+          <Dashboard
             sx={pathname === "/admin/dashboard" ? { color: "white" } : {}}
           />
         </ListItemIcon>
-        <ListItemText primary="Overview" />
+        <ListItemText
+          primary="Overview"
+          sx={pathname === "/admin/dashboard" ? { color: "white" } : {}}
+        />
       </ListItemButton>
       <ListItemButton
         component="a"
@@ -38,15 +39,18 @@ export const MainListItems = () => {
         sx={
           pathname === "/admin/clients"
             ? { backgroundColor: "black", "&.Mui-disabled": { opacity: 1 } }
-            : {}
+            : { "&:hover": { color: "#000" } }
         }
       >
         <ListItemIcon>
-          <PeopleIcon
+          <People
             sx={pathname === "/admin/clients" ? { color: "white" } : {}}
           />
         </ListItemIcon>
-        <ListItemText primary="Clients" />
+        <ListItemText
+          primary="Clients"
+          sx={pathname === "/admin/clients" ? { color: "white" } : {}}
+        />
       </ListItemButton>
       <ListItemButton
         component="a"
@@ -55,15 +59,18 @@ export const MainListItems = () => {
         sx={
           pathname === "/admin/calendar"
             ? { backgroundColor: "black", "&.Mui-disabled": { opacity: 1 } }
-            : {}
+            : { "&:hover": { color: "#000" } }
         }
       >
         <ListItemIcon>
-          <CalendarMonthIcon
+          <CalendarMonth
             sx={pathname === "/admin/calendar" ? { color: "white" } : {}}
           />
         </ListItemIcon>
-        <ListItemText primary="Calendar" />
+        <ListItemText
+          primary="Calendar"
+          sx={pathname === "/admin/calendar" ? { color: "white" } : {}}
+        />
       </ListItemButton>
       <ListItemButton
         component={Link}
@@ -73,15 +80,18 @@ export const MainListItems = () => {
         sx={
           pathname === "/admin/createsession"
             ? { backgroundColor: "black", "&.Mui-disabled": { opacity: 1 } }
-            : {}
+            : { "&:hover": { color: "#000" } }
         }
       >
         <ListItemIcon>
-          <AddBoxIcon
+          <AddBox
             sx={pathname === "/admin/createsession" ? { color: "white" } : {}}
           />
         </ListItemIcon>
-        <ListItemText primary="Create Session" />
+        <ListItemText
+          primary="Create Session"
+          sx={pathname === "/admin/createsession" ? { color: "white" } : {}}
+        />
       </ListItemButton>
     </>
   );

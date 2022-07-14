@@ -2,7 +2,15 @@ import React from "react";
 import { Box, Grid, Typography } from "@mui/material";
 
 interface IDisplayServicesOfferedProps {
-  servicesOffered: any[];
+  servicesOffered: IServicesOffered[];
+}
+
+interface IServicesOffered {
+  serviceName: string;
+  serviceDescription: string;
+  serviceImage: {
+    url: string;
+  };
 }
 
 const DisplayServicesOffered: React.FC<IDisplayServicesOfferedProps> = (

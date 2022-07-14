@@ -1,11 +1,7 @@
 import React from "react";
 
 import { Link } from "react-router-dom";
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
+import { Card, CardContent, CardMedia, Grid, Typography } from "@mui/material";
 
 import { ISessionInfo } from "../hooks/useSessionInfo";
 interface IDisplaySessionsProps {

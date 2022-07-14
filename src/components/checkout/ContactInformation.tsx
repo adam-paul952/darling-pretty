@@ -15,7 +15,7 @@ const ClientInformation: React.FC<IClientInfoProps> = (props) => {
   const { firstName, lastName, email, phoneNumber } = props.newClient;
 
   return (
-    <React.Fragment>
+    <>
       <Typography variant="h6" gutterBottom>
         Contact Information
       </Typography>
@@ -78,6 +78,7 @@ const ClientInformation: React.FC<IClientInfoProps> = (props) => {
         </Grid>
         <Grid item xs={12}>
           <TextField
+            required
             id="phoneNumber"
             name="phoneNumber"
             label="Phone Number"
@@ -94,7 +95,7 @@ const ClientInformation: React.FC<IClientInfoProps> = (props) => {
           />
         </Grid>
       </Grid>
-    </React.Fragment>
+    </>
   );
 };
 
