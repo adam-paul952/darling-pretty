@@ -19,7 +19,7 @@ import {
 } from "@mui/material";
 import { Close, Menu } from "@mui/icons-material";
 
-const drawerWidth = 240;
+const drawerWidth = 200;
 export const navItems = [
   { id: 1, route: "Home", url: "/" },
   { id: 2, route: "Log In", url: "/login" },
@@ -37,17 +37,24 @@ const Header: React.FC = () => {
   });
 
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
+    <Box
+      onClick={handleDrawerToggle}
+      sx={{ textAlign: "center", backgroundColor: "#000", height: "100%" }}
+    >
       <List>
         <IconButton onClick={handleDrawerToggle}>
-          <Close />
+          <Close sx={{ color: "#FFF" }} />
         </IconButton>
         <Divider />
         {navItems.map((item) => (
-          <ListItem key={item.id} disablePadding>
-            <Link href={item.url}>
+          <ListItem
+            key={item.id}
+            disablePadding
+            sx={{ justifyContent: "center" }}
+          >
+            <Link href={item.url} sx={{ textDecoration: "none" }}>
               <ListItemButton sx={{ textAlign: "center" }}>
-                <ListItemText primary={item.route} />
+                <ListItemText primary={item.route} sx={{ color: "#fff" }} />
               </ListItemButton>
             </Link>
           </ListItem>
@@ -60,7 +67,6 @@ const Header: React.FC = () => {
     <Box
       sx={{
         display: "flex",
-        paddingBottom: "70px",
         backgroundColor: "#000",
       }}
     >
@@ -71,7 +77,7 @@ const Header: React.FC = () => {
           sx={{
             backgroundColor: "#000",
             boxShadow: "none",
-            minHeight: { sm: "64px", md: "76px" },
+            // minHeight: { sm: "64px", md: "76px" },
           }}
         >
           <Toolbar classes={toolbar}>

@@ -1,11 +1,13 @@
 import React from "react";
+
 import { Box, Button } from "@mui/material";
 import Paypal from "./Paypal";
+
 import { getStepContent } from "./checkoutSteps";
 
 interface ICheckoutStepperProps {
-  activeStep: any;
-  setActiveStep: any;
+  activeStep: number;
+  setActiveStep: React.Dispatch<React.SetStateAction<number>>;
   clientDetails: any;
   setClientDetails: any;
   session: any;
@@ -32,11 +34,11 @@ const CheckoutStepper = (props: ICheckoutStepperProps) => {
     setActiveStep(activeStep - 1);
   };
   return (
-    <React.Fragment>
+    <>
       {getStepContent(activeStep, clientDetails, setClientDetails, session)}
       <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
         {activeStep !== 0 && (
-          <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
+          <Button onClick={handleBack} sx={{ mt: 3, ml: 1, color: "#000" }}>
             Back
           </Button>
         )}
@@ -50,13 +52,22 @@ const CheckoutStepper = (props: ICheckoutStepperProps) => {
           <Button
             variant="contained"
             onClick={handleNext}
-            sx={{ mt: 3, ml: 1 }}
+            sx={{
+              mt: 3,
+              ml: 1,
+              fontSize: "14px",
+              "&:hover": {
+                color: "white",
+                backgroundColor: "darkblue",
+              },
+              backgroundColor: "#000",
+            }}
           >
             Next
           </Button>
         )}
       </Box>
-    </React.Fragment>
+    </>
   );
 };
 

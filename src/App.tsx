@@ -1,14 +1,15 @@
-import React, { Suspense } from "react";
+import React from "react";
+
+import { Box } from "@mui/material";
 
 import axios from "axios";
-
 import Hero from "./components/Hero";
 import DisplayServicesOffered from "./components/DisplayServicesOffered";
-import { Box, LinearProgress, Typography } from "@mui/material";
+import HeroSkeletonLoading from "./skeletonScreens/HeroLoading";
+import DisplayServicesOfferedLoading from "./skeletonScreens/DisplayServicesOfferedLoading";
 
 // import { Authenticator } from "@aws-amplify/ui-react";
-
-const query = `
+const query = /* GraphQL */ `
   query {
     servicesOfferedCollection {
       items {
@@ -66,64 +67,34 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <Suspense
-      fallback={
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: "Column",
-            alignItems: "center",
-            height: "60vh",
-          }}
-        >
-          <Typography variant="h4">Darling Pretty Photograhpy</Typography>
-
-          <Box sx={{ width: "50%", padding: "20px 0" }}>
-            <LinearProgress />
-          </Box>
-        </Box>
-      }
+    <Box
+      sx={{
+        maxWidth: "100%",
+        width: "100%",
+        height: "100%",
+        maxHeight: "100%",
+      }}
     >
-      <Box
-        sx={{
-          maxWidth: "100%",
-          width: "100%",
-          height: "100%",
-          maxHeight: "100%",
-        }}
-      >
-        {/* <Authenticator hideSignUp={true}> */}
-        {/* {isLoading ? (
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: "Column",
-            alignItems: "center",
-            height: "60vh",
-          }}
-        >
-          <Typography variant="h4">Darling Pretty Photograhpy</Typography>
-
-          <Box sx={{ width: "50%", padding: "20px 0" }}>
-            <LinearProgress />
-          </Box>
-        </Box>
-      ) : ( */}
+      {/* <Authenticator hideSignUp={true}> */}
+      {isLoading ? (
+        <>
+          <HeroSkeletonLoading />
+          <DisplayServicesOfferedLoading />
+        </>
+      ) : (
         <>
           <Hero
             header={heroSection.heroTitle}
             subtitle={heroSection.heroSubTitle}
             buttonText={heroSection.heroButtonText}
+            image={heroSection.heroImage.url}
           />
           <DisplayServicesOffered servicesOffered={servicesOffered} />
         </>
-        {/* )} */}
+      )}
 
-        {/* </Authenticator> */}
-      </Box>
-    </Suspense>
+      {/* </Authenticator> */}
+    </Box>
   );
 };
 

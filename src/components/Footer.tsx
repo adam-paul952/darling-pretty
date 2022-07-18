@@ -2,9 +2,9 @@ import React from "react";
 
 import axios from "axios";
 import { FacebookRounded } from "@mui/icons-material";
-import { Box, Button, Grid, Link, Typography } from "@mui/material";
+import { Button, Grid, Link, Typography } from "@mui/material";
 
-const query = `
+const query = /* GraphQL */ `
   query {
     footerCollection {
       items {
@@ -73,13 +73,21 @@ const Footer = () => {
   }
 
   return (
-    <Box sx={{}}>
+    <>
       <hr style={{ marginTop: "30px" }} />
-      <Grid container sx={{ backgroundColor: "#000" }}>
-        <Grid item xs={12} md={3}>
+      <Grid
+        container
+        sx={{
+          backgroundColor: "#000",
+          display: { xs: "flex" },
+          flexDirection: { xs: "column", md: "row" },
+        }}
+      >
+        <Grid item xs={12} md={3} sx={{ alignSelf: { md: "center" } }}>
           <Typography
             sx={{
-              display: "flex",
+              display: { md: "flex" },
+              textAlign: { xs: "center" },
               justifyContent: "flex-end",
               paddingTop: "6px",
               color: "#fff",
@@ -92,24 +100,40 @@ const Footer = () => {
           item
           xs={12}
           md={3}
-          sx={{ display: "flex", flexDirection: "column" }}
+          sx={{
+            display: "flex",
+            flexDirection: { md: "column", xs: "row" },
+            justifyContent: { xs: "space-evenly" },
+          }}
         >
-          {footerDetails?.navLinksCollection.items.map((item: any) => (
-            <Button
-              component="a"
-              href={item.navLink}
-              key={item.linkText}
-              sx={{
-                color: "#fff",
-                "&:hover": { color: "#fff", opacity: "0.5" },
-              }}
-            >
-              {item.linkText}
-            </Button>
-          ))}
+          {footerDetails?.navLinksCollection.items.map(
+            (item: { navLink: string; linkText: string }) => (
+              <Button
+                component="a"
+                href={item.navLink}
+                key={item.linkText}
+                sx={{
+                  color: "#fff",
+                  "&:hover": { color: "#fff", opacity: "0.5" },
+                }}
+              >
+                {item.linkText}
+              </Button>
+            )
+          )}
         </Grid>
-        <Grid item xs={12} md={3}>
-          <Typography sx={{ color: "#fff", paddingTop: "6px" }}>
+        <Grid
+          item
+          xs={12}
+          md={3}
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column" },
+            alignItems: { xs: "center" },
+            justifyContent: { md: "center" },
+          }}
+        >
+          <Typography sx={{ color: "#fff", paddingTop: { md: "6px" } }}>
             Tel:&nbsp;
             <Link
               href={`tel:${footerDetails?.phoneNumber}`}
@@ -144,7 +168,16 @@ const Footer = () => {
             </Link>
           </Typography>
         </Grid>
-        <Grid item xs={12} md={3} sx={{ padding: "10px 20px" }}>
+        <Grid
+          item
+          xs={12}
+          md={3}
+          sx={{
+            padding: "10px 20px",
+            textAlign: { xs: "center", md: "left" },
+            alignSelf: { md: "center" },
+          }}
+        >
           <Link href={footerDetails?.facebookLink}>
             <FacebookRounded
               sx={{
@@ -156,7 +189,7 @@ const Footer = () => {
           </Link>
         </Grid>
       </Grid>
-    </Box>
+    </>
   );
 };
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography, Skeleton } from "@mui/material";
 
 interface IDisplayServicesOfferedProps {
   servicesOffered: IServicesOffered[];
@@ -17,6 +17,7 @@ const DisplayServicesOffered: React.FC<IDisplayServicesOfferedProps> = (
   props
 ) => {
   const { servicesOffered } = props;
+
   return (
     <Box
       sx={{
@@ -34,12 +35,12 @@ const DisplayServicesOffered: React.FC<IDisplayServicesOfferedProps> = (
           width: "100%",
         }}
       >
-        {servicesOffered.reverse().map((service) => (
+        {servicesOffered.map((service) => (
           <Grid
             item
-            xs={12}
+            xs={10}
             md={3}
-            maxHeight={300}
+            sm={7}
             key={service.serviceName}
             sx={{
               backgroundColor: "#f2f0f1",

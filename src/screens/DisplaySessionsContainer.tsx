@@ -1,11 +1,12 @@
 import React from "react";
 
+import moment from "moment";
+import { Grid } from "@mui/material";
+
 import DisplaySessions from "../components/DisplaySessions";
 import NoAvailableSessions from "../components/NoAvailableSessions";
-import { Grid, Typography } from "@mui/material";
-
+import Loading from "../components/Loading";
 import useSessionInfo, { ISessionInfo } from "../hooks/useSessionInfo";
-import moment from "moment";
 
 const DisplayAvailableSessions = () => {
   const { getAllSessions } = useSessionInfo();
@@ -49,25 +50,14 @@ const DisplayAvailableSessions = () => {
         container
         rowSpacing={3}
         sx={{
-          marginTop: { md: "20px" },
+          marginTop: { md: "20px", sm: "5%", xs: "10%" },
           justifyContent: "center",
-          minHeight: { md: "65vh" },
+          minHeight: { md: "72vh", sm: "60vh", xs: "72vh" },
           alignItems: "center",
         }}
       >
         {!sessions ? (
-          <Grid
-            item
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Typography component="h1" sx={{ fontSize: "32px" }}>
-              Loading...
-            </Typography>
-          </Grid>
+          <Loading />
         ) : (
           sessions.map((session) => (
             <DisplaySessions key={session.id} session={session} />

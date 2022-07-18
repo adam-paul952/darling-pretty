@@ -1,28 +1,37 @@
 import React from "react";
 
-const AuthContext = React.createContext({});
+interface IAuthContext {
+  authState: boolean;
+  login: () => Promise<void>;
+  logout: () => Promise<void>;
+}
 
-const useAuthContext = () => {
-  const [authState, setAuthState] = React.useState(true);
+const AuthContext = React.createContext({} as IAuthContext);
 
-  const login = () => {
-    return new Promise<boolean>((res) => {
-      setAuthState((prevState) => !prevState);
-      res(true);
-    });
+const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const [authState, setAuthState] = React.useState(false);
+
+  const login = async () => {
+    setAuthState(true);
   };
 
-  const logout = () => {
+  const logout = async () => {
     setAuthState(false);
   };
 
-  return { authState, login, logout };
+  return (
+    <AuthContext.Provider value={{ authState, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
-const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const auth = useAuthContext();
-
-  return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
+const useAuthContext = () => {
+  const context = React.useContext(AuthContext);
+  if (context === undefined) {
+    throw Error("Context must be used in a provider");
+  }
+  return context;
 };
 
 export { AuthProvider, useAuthContext };

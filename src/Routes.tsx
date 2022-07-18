@@ -22,6 +22,8 @@ const ContactFormSubmissions = lazy(
   () => import("./admin/ContactFormSubmissions")
 );
 const DisplayClients = lazy(() => import("./admin/DisplayClients"));
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 const DarlingPrettyRouter = () => {
   return (
@@ -35,6 +37,7 @@ const DarlingPrettyRouter = () => {
             <Route path="contact" element={<ContactForm />} />
             <Route path="login" element={<LoginPage />} />
             <Route path="checkout" element={<Checkout />} />
+            <Route path="*" element={<NotFound />} />
           </Route>
           <Route path="/admin" element={<ProtectedRoute />}>
             <Route path="dashboard" element={<AdminDashboard />} />
@@ -42,8 +45,8 @@ const DarlingPrettyRouter = () => {
             <Route path="createsession" element={<CreateSessionScreen />} />
             <Route path="contactform" element={<ContactFormSubmissions />} />
             <Route path="clients" element={<DisplayClients />} />
+            <Route path="*" element={<NotFound />} />
           </Route>
-          <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
     </Router>

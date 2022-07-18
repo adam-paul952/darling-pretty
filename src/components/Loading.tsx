@@ -1,11 +1,21 @@
 import React from "react";
 
-import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
+import { Box, CircularProgress, Typography } from "@mui/material";
 
 const Loading: React.FC = () => (
-  <Container>
-    <Typography component="h3">Loading...</Typography>
-  </Container>
+  <Box
+    sx={{
+      display: "flex",
+      justifyContent: "center",
+      flexDirection: "Column",
+      alignItems: "center",
+      height: { md: "78vh" },
+    }}
+  >
+    <Typography variant="h4">Darling Pretty Photograhpy</Typography>
+    <Box sx={{ padding: "20px 0" }}>
+      <CircularProgress />
+    </Box>
+  </Box>
 );
 export default Loading;

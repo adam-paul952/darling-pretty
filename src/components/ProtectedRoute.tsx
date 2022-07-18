@@ -1,7 +1,7 @@
-import React, { Suspense } from "react";
+import React from "react";
 
 import { Navigate, useLocation, Outlet } from "react-router-dom";
-import { Box, CircularProgress } from "@mui/material";
+import { Box } from "@mui/material";
 
 import { useAuthContext } from "../context/AuthContext";
 import DashboardHeader from "../admin/components/DashboardHeader";
@@ -12,6 +12,7 @@ const ProtectedRoute: React.FC = () => {
   const { unreadMessage } = useContactForm();
   const { authState } = useAuthContext();
   const location = useLocation();
+
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = () => {
@@ -26,9 +27,7 @@ const ProtectedRoute: React.FC = () => {
         unreadMessages={unreadMessage}
       />
       <SideNav open={open} toggleDrawer={toggleDrawer} />
-      <Suspense fallback={<CircularProgress />}>
-        <Outlet />
-      </Suspense>
+      <Outlet />
     </Box>
   ) : (
     <Navigate to="/login" replace state={{ pathname: location.pathname }} />

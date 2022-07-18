@@ -18,11 +18,11 @@ import useSessionInfo, {
   ISessionInfo,
 } from "../hooks/useSessionInfo";
 import useClientInfo, { IClientInfo } from "../hooks/useClientInfo";
-import { initialClientState, steps } from "../constants/checkout";
+import { steps } from "../constants/checkout";
+import useCheckout from "../hooks/useCheckout";
 
 interface ILocationCheckout {
   clientInfo: IClientInfo;
-
   session: ISessionInfo;
   sessionTime: Date;
 }
@@ -31,24 +31,19 @@ const Checkout = () => {
   const { session, sessionTime } = useLocation().state as ILocationCheckout;
   const { updateBookingWithClient } = useSessionInfo();
   const { createNewClient } = useClientInfo();
-
-  const [activeStep, setActiveStep] = React.useState(0);
-
-  const handleNext = () => {
-    setActiveStep(activeStep + 1);
-  };
-
-  const [clientDetails, setClientDetails] =
-    React.useState<IClientInfo>(initialClientState);
+  const {
+    activeStep,
+    setActiveStep,
+    handleNext,
+    clientDetails,
+    setClientDetails,
+    filterAvailableTimes,
+    orderStatus,
+    setStatus,
+  } = useCheckout();
 
   const { id, date, availableTimes, bookings, _version } = session;
   const { firstName, lastName } = clientDetails;
-
-  // Determine if transaction was completed
-  const [orderStatus, setStatus] = React.useState<any>({
-    status: "",
-    orderId: "",
-  });
 
   const sessionStartTime = moment(sessionTime).format("HH:mm");
   const dateString = `${sessionTime.toTimeString().slice(0, 5)} ${
@@ -58,14 +53,6 @@ const Checkout = () => {
   const version = _version!;
   const clientName = `${firstName} ${lastName}`;
   const bookingDate = moment(date).format(`DD MMMM YYYY [at ${dateString}]`);
-
-  const filterAvailableTimes = (arrayOfAvailableTimes: string[]) => {
-    const filtered: string[] = arrayOfAvailableTimes.filter(
-      (time) => time !== sessionStartTime
-    );
-
-    return filtered;
-  };
 
   React.useEffect(() => {
     console.log(orderStatus);
@@ -101,7 +88,10 @@ const Checkout = () => {
           await updateBookingWithClient({
             id: id!,
             bookings: [...bookings!, bookingDetails],
-            availableTimes: filterAvailableTimes(availableTimes!),
+            availableTimes: filterAvailableTimes(
+              availableTimes!,
+              sessionStartTime
+            ),
             version: version,
           });
           handleNext();
@@ -117,10 +107,10 @@ const Checkout = () => {
 
   return (
     <>
-      <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
+      <Container component="main" maxWidth="sm" sx={{ my: 4 }}>
         <Paper
-          variant="outlined"
-          sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
+          elevation={5}
+          sx={{ mt: { xs: 3, md: 10 }, p: { xs: 2, md: 3 } }}
         >
           <Typography component="h1" variant="h4" align="center">
             Checkout
@@ -128,11 +118,18 @@ const Checkout = () => {
           <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
             {steps.map((label) => (
               <Step key={label}>
-                <StepLabel>{label}</StepLabel>
+                <StepLabel
+                  sx={{
+                    ".Mui-active": { color: "#000" },
+                    ".Mui-completed": { color: "#000" },
+                  }}
+                >
+                  {label}
+                </StepLabel>
               </Step>
             ))}
           </Stepper>
-          <React.Fragment>
+          <>
             {activeStep === steps.length ? (
               <OrderConfirmation orderId={orderStatus.orderId} />
             ) : (
@@ -146,7 +143,7 @@ const Checkout = () => {
                 setStatus={setStatus}
               />
             )}
-          </React.Fragment>
+          </>
         </Paper>
       </Container>
     </>

@@ -20,10 +20,15 @@ Originally, I began to write this project with React Javascript, as I learned Ty
 
 - [Create React App](https://reactjs.org/docs/create-a-new-react-app.html)
 - [React.js](https://reactjs.org/)
-- [React Router](https://reactrouter.com/web/guides/quick-start)
-- [React Bootstrap](https://react-bootstrap.github.io/)
-- [React Icons](https://react-icons.github.io/react-icons/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [MUI](https://mui.com/)
 - [AWS Amplify](https://aws.amazon.com/amplify/)
 - [PayPal](https://www.paypal.com/ca/home)
+- [Full Calendar](https://fullcalendar.io/)
+- [Axios](https://axios-http.com/)
+- [MomentJS](https://momentjs.com/)
+- [React Draft WYSIWYG](https://github.com/jpuri/react-draft-wysiwyg#readme)
+- [React DatePicker](https://github.com/Hacker0x01/react-datepicker#react-date-picker)
+- [Contentful](https://www.contentful.com/)
 
 ---

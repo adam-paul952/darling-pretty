@@ -1,41 +1,43 @@
 import React from "react";
 
-import { Button, Grid, Paper, Typography } from "@mui/material";
-
-import { heroStyles } from "../styles/styles";
-import image from "../images/darling-pretty1.jpg";
+import { Button, Container, Paper, Stack, Typography } from "@mui/material";
 
 interface IHeroProps {
   header?: string;
   subtitle?: string;
   buttonText?: string;
+  image?: string;
 }
 
 const Hero: React.FC<IHeroProps> = (props) => {
-  const { header, subtitle, buttonText } = props;
-  const { heroBox, gridContainer, title, largeImage } = heroStyles;
+  const { header, subtitle, buttonText, image } = props;
+
   return (
-    <Paper sx={heroBox}>
-      <Grid
-        container
-        spacing={6}
-        classes={gridContainer}
+    <Paper
+      sx={{
+        width: "100%",
+        display: "flex",
+        minHeight: "500px",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "slategray",
+        borderRadius: "0",
+      }}
+    >
+      <Container
         sx={{
-          alignItems: "center",
-          textAlign: "left",
-          width: "100%",
-          marginLeft: "0",
+          paddingTop: { xs: "62px" },
+          display: { sm: "flex" },
+          alignItems: { sm: "center" },
         }}
       >
-        <Grid
-          item
-          xs={12}
-          md={6}
-          sx={{ display: "flex", flexDirection: "column" }}
+        <Stack
+          sx={{
+            alignItems: { xs: "center" },
+            padding: { xs: "10px 0" },
+          }}
         >
-          <Typography variant="h3" classes={title}>
-            {header}
-          </Typography>
+          <Typography variant="h3">{header}</Typography>
           <Typography variant="h6">{subtitle}</Typography>
           <Button
             variant="contained"
@@ -49,23 +51,21 @@ const Hero: React.FC<IHeroProps> = (props) => {
                 backgroundColor: "darkblue",
               },
               backgroundColor: "#000",
+              alignSelf: { sm: "center" },
             }}
           >
             {buttonText}
           </Button>
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          md={6}
+        </Stack>
+        <Stack
           sx={{
-            paddingLeft: { xs: "10px !important" },
-            paddingRight: { xs: "10px !important" },
+            padding: { xs: "10px 10px 30px", sm: "10px 10px" },
+            flexBasis: { sm: "fit-content" },
           }}
         >
-          <img src={image} alt="Darling Pretty Logo" style={largeImage} />
-        </Grid>
-      </Grid>
+          <img src={image} alt="Darling Pretty Logo" className="img-fluid" />
+        </Stack>
+      </Container>
     </Paper>
   );
 };

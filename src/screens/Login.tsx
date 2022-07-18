@@ -1,7 +1,5 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useAuthContext } from "../context/AuthContext";
-
 import {
   Avatar,
   Box,
@@ -9,12 +7,13 @@ import {
   Container,
   Grid,
   Link,
+  Paper,
   TextField,
   Typography,
 } from "@mui/material";
-
 import { LockOutlined } from "@mui/icons-material";
 
+import { useAuthContext } from "../context/AuthContext";
 interface ILocationLogin {
   state: {
     pathname: string;
@@ -26,21 +25,26 @@ const LoginPage = () => {
   const { login } = useAuthContext();
   const { state } = useLocation() as ILocationLogin;
 
-  const handleLogin = () => {
-    login().then(() => navigate(state?.pathname || "/admin/dashboard"));
+  const handleLogin = async () => {
+    try {
+      await login();
+      navigate(state?.pathname || "/admin/dashboard");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
-    <>
-      <Container component="main" maxWidth="xs">
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
+    <Container component="main" maxWidth="xs">
+      <Box
+        sx={{
+          marginTop: 8,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Paper>
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlined />
           </Avatar>
@@ -84,9 +88,9 @@ const LoginPage = () => {
               </Grid>
             </Grid>
           </Box>
-        </Box>
-      </Container>
-    </>
+        </Paper>
+      </Box>
+    </Container>
   );
 };
 
