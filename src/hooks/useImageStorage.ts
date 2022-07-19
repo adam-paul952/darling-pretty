@@ -1,5 +1,12 @@
 import { Storage } from "aws-amplify";
 
+interface IImageObject {
+  key?: string;
+  eTag?: string;
+  lastModified?: Date;
+  size?: number;
+}
+
 const useImageStorage = () => {
   const uploadImageToStorage = async (imageData: any) => {
     try {
@@ -16,9 +23,14 @@ const useImageStorage = () => {
 
   const listStorageItems = async () => {
     try {
+      const images: IImageObject[] = [];
       const storageImages = await Storage.list("");
-      console.log(storageImages);
-      return storageImages;
+      storageImages.forEach((image) => {
+        if (image.size! > 0) {
+          images.push(image);
+        }
+      });
+      return images;
     } catch (error) {
       console.log(error);
     }

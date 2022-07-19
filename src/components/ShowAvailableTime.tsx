@@ -23,15 +23,9 @@ const ShowAvailableTime: React.FC<IShowAvailableProps> = (props) => {
   React.useEffect(() => {
     const newBookings = (): Date[] => {
       const available: Date[] = [];
-
-      for (let i = 0; i < availableTimes!.length - 1; i++) {
-        const lengthFromStart = sessionLength * i;
-        const timesAvailable = moment(startDate)
-          .add(lengthFromStart, "m")
-          .toDate();
-
-        available.push(timesAvailable);
-      }
+      availableTimes?.forEach((time) =>
+        available.push(moment(time, "h:mm A").toDate())
+      );
 
       return available;
     };
@@ -42,14 +36,14 @@ const ShowAvailableTime: React.FC<IShowAvailableProps> = (props) => {
 
   return (
     <DatePicker
-      className="mb-2 datepicker-input"
+      className="mb-2"
       selected={startDate}
       onChange={onHandleDateChange}
       showTimeSelect
       showTimeSelectOnly
       timeIntervals={sessionLength}
       timeCaption="Time"
-      dateFormat="h:mm aa"
+      dateFormat="h:mm a"
       includeTimes={bookingOptions}
     />
   );

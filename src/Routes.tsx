@@ -22,15 +22,13 @@ const ContactFormSubmissions = lazy(
   () => import("./admin/ContactFormSubmissions")
 );
 const DisplayClients = lazy(() => import("./admin/DisplayClients"));
-import Header from "./components/Header";
-import Footer from "./components/Footer";
 
 const DarlingPrettyRouter = () => {
   return (
     <Router>
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
-          <Route path="/" element={<PublicRoute />}>
+          <Route path="" element={<PublicRoute />}>
             <Route path="/" element={<DarlingPrettyHome />} />
             <Route path="sessions" element={<DisplayAvailableSessions />} />
             <Route path="photo/:id" element={<SessionDescriptionContainer />} />
@@ -54,3 +52,5 @@ const DarlingPrettyRouter = () => {
 };
 
 export default DarlingPrettyRouter;
+
+// TODO: Suspense fallback component for skeleton loading screens

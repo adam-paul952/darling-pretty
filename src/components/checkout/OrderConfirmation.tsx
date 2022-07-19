@@ -1,10 +1,11 @@
 import React from "react";
 
-import { Button, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
+import { Box, Button, Typography } from "@mui/material";
 
 const OrderConfirmation = ({ orderId }: { orderId: string }) => {
   return (
-    <>
+    <Box>
       <Typography variant="h5" gutterBottom>
         Thank you for your order.
       </Typography>
@@ -12,10 +13,24 @@ const OrderConfirmation = ({ orderId }: { orderId: string }) => {
         Your order number is {orderId}. We have emailed your order confirmation,
         and will send you an update when your order has shipped.
       </Typography>
-      <Button component="a" href="/" variant="contained" sx={{ mt: 3, ml: 1 }}>
+      <Button
+        component={Link}
+        to="/"
+        variant="contained"
+        sx={{
+          mt: 3,
+          ml: 1,
+          fontSize: "14px",
+          "&:hover": {
+            color: "white",
+            backgroundColor: "darkblue",
+          },
+          backgroundColor: "#000",
+        }}
+      >
         Return to Darling Pretty Home
       </Button>
-    </>
+    </Box>
   );
 };
 

@@ -5,11 +5,11 @@ import { Grid } from "@mui/material";
 
 import DisplaySessions from "../components/DisplaySessions";
 import NoAvailableSessions from "../components/NoAvailableSessions";
-import Loading from "../components/Loading";
+import DisplaySessionsLoading from "../skeletonScreens/DisplaySessionsLoading";
 import useSessionInfo, { ISessionInfo } from "../hooks/useSessionInfo";
 
 const DisplayAvailableSessions = () => {
-  const { getAllSessions } = useSessionInfo();
+  const { getAllSessions, isLoading } = useSessionInfo();
 
   const [sessions, setSessions] = React.useState<ISessionInfo[] | null>(null);
 
@@ -52,14 +52,14 @@ const DisplayAvailableSessions = () => {
         sx={{
           marginTop: { md: "20px", sm: "5%", xs: "10%" },
           justifyContent: "center",
-          minHeight: { md: "72vh", sm: "60vh", xs: "72vh" },
+          minHeight: { md: "75vh", sm: "60vh", xs: "72vh" },
           alignItems: "center",
         }}
       >
-        {!sessions ? (
-          <Loading />
+        {isLoading ? (
+          <DisplaySessionsLoading />
         ) : (
-          sessions.map((session) => (
+          sessions?.map((session) => (
             <DisplaySessions key={session.id} session={session} />
           ))
         )}

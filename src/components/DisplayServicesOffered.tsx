@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Grid, Typography, Skeleton } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 
 interface IDisplayServicesOfferedProps {
   servicesOffered: IServicesOffered[];

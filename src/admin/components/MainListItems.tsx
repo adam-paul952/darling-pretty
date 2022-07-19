@@ -2,7 +2,13 @@ import React from "react";
 
 import { useLocation, Link } from "react-router-dom";
 import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
-import { AddBox, CalendarMonth, Dashboard, People } from "@mui/icons-material";
+import {
+  AddBox,
+  CalendarMonth,
+  Dashboard,
+  Home,
+  People,
+} from "@mui/icons-material";
 
 export const MainListItems = () => {
   const { pathname } = useLocation();
@@ -10,8 +16,8 @@ export const MainListItems = () => {
   return (
     <>
       <ListItemButton
-        component="a"
-        href="/admin/dashboard"
+        component={Link}
+        to="/admin/dashboard"
         disabled={pathname === "/admin/dashboard" ? true : false}
         sx={
           pathname === "/admin/dashboard"
@@ -33,8 +39,8 @@ export const MainListItems = () => {
         />
       </ListItemButton>
       <ListItemButton
-        component="a"
-        href="/admin/clients"
+        component={Link}
+        to="/admin/clients"
         disabled={pathname === "/admin/clients" ? true : false}
         sx={
           pathname === "/admin/clients"
@@ -53,8 +59,8 @@ export const MainListItems = () => {
         />
       </ListItemButton>
       <ListItemButton
-        component="a"
-        href="/admin/calendar"
+        component={Link}
+        to="/admin/calendar"
         disabled={pathname === "/admin/calendar" ? true : false}
         sx={
           pathname === "/admin/calendar"
@@ -92,6 +98,16 @@ export const MainListItems = () => {
           primary="Create Session"
           sx={pathname === "/admin/createsession" ? { color: "white" } : {}}
         />
+      </ListItemButton>
+      <ListItemButton
+        component={Link}
+        to="/"
+        sx={{ "&:hover": { color: "#000" }, mt: 10 }}
+      >
+        <ListItemIcon>
+          <Home />
+        </ListItemIcon>
+        <ListItemText primary="Darling Pretty Home" />
       </ListItemButton>
     </>
   );

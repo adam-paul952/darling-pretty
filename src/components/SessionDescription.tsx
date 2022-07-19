@@ -27,7 +27,7 @@ const SessionDescription: React.FC<ISessionDescriptionProps> = (props) => {
   });
 
   return (
-    <Container sx={{ marginTop: { xs: "75px" } }}>
+    <Container sx={{ marginTop: { xs: "75px" }, minHeight: { md: "68vh" } }}>
       <Paper elevation={5} sx={{ padding: { xs: "20px 10px" } }}>
         <Grid
           container
@@ -61,28 +61,23 @@ const SessionDescription: React.FC<ISessionDescriptionProps> = (props) => {
               startDate={startDate}
               setStartDate={setStartDate}
             />
-            <Link
+            <Button
+              variant="contained"
+              component={Link}
               to="/checkout"
-              state={{
-                session: session,
-                sessionTime: startDate,
+              state={{ session: session, sessionTime: startDate }}
+              sx={{
+                fontSize: "14px",
+                marginTop: "10px",
+                "&:hover": {
+                  color: "white",
+                  backgroundColor: "darkblue",
+                },
+                backgroundColor: "#000",
               }}
             >
-              <Button
-                variant="contained"
-                sx={{
-                  fontSize: "14px",
-                  marginTop: "10px",
-                  "&:hover": {
-                    color: "white",
-                    backgroundColor: "darkblue",
-                  },
-                  backgroundColor: "#000",
-                }}
-              >
-                Add to Cart
-              </Button>
-            </Link>
+              Add to Cart
+            </Button>
           </Grid>
         </Grid>
       </Paper>

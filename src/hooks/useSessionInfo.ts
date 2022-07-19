@@ -62,12 +62,12 @@ const useSessionInfo = () => {
       moment.duration(end.diff(start)).asMinutes() / length;
     for (let i = 0; i < Math.round(numberOfSessions) + 1; i++) {
       if (i === 0) {
-        availableBookings.push(start.format("hh:mm:ss A"));
+        availableBookings.push(start.format("hh:mm A"));
       } else {
         availableBookings.push(
-          moment(availableBookings[0], "h:mm:ss A")
+          moment(availableBookings[0], "hh:mm A")
             .add(i * length, "minutes")
-            .format("hh:mm:ss A")
+            .format("hh:mm A")
         );
       }
     }
@@ -111,6 +111,7 @@ const useSessionInfo = () => {
   };
 
   const getAllSessions = async () => {
+    setLoading(true);
     try {
       const allSessions: any = await API.graphql(
         graphqlOperation(listCompleteSessions)
@@ -119,6 +120,8 @@ const useSessionInfo = () => {
     } catch (error: any) {
       console.log(error);
       // throw new Error(error);
+    } finally {
+      setLoading(false);
     }
   };
 

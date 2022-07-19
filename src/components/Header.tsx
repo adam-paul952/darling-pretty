@@ -1,5 +1,6 @@
 import React from "react";
 
+import { Link } from "react-router-dom";
 import {
   AppBar,
   Box,
@@ -7,7 +8,7 @@ import {
   Divider,
   Drawer,
   IconButton,
-  Link,
+  // Link,
   List,
   ListItem,
   ListItemButton,
@@ -52,11 +53,15 @@ const Header: React.FC = () => {
             disablePadding
             sx={{ justifyContent: "center" }}
           >
-            <Link href={item.url} sx={{ textDecoration: "none" }}>
-              <ListItemButton sx={{ textAlign: "center" }}>
-                <ListItemText primary={item.route} sx={{ color: "#fff" }} />
-              </ListItemButton>
-            </Link>
+            {/* <Link href={item.url} sx={{ textDecoration: "none" }}> */}
+            <ListItemButton
+              component={Link}
+              to={item.url}
+              sx={{ textAlign: "center" }}
+            >
+              <ListItemText primary={item.route} sx={{ color: "#fff" }} />
+            </ListItemButton>
+            {/* </Link> */}
           </ListItem>
         ))}
       </List>
@@ -100,8 +105,8 @@ const Header: React.FC = () => {
             <Box sx={{ display: { xs: "none", sm: "block" } }}>
               {navItems.map((item) => (
                 <Button
-                  component="a"
-                  href={item.url}
+                  component={Link}
+                  to={item.url}
                   key={item.id}
                   sx={{ color: "#fff" }}
                 >

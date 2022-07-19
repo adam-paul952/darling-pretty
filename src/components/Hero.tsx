@@ -1,5 +1,6 @@
 import React from "react";
 
+import { Link } from "react-router-dom";
 import { Button, Container, Paper, Stack, Typography } from "@mui/material";
 
 interface IHeroProps {
@@ -41,7 +42,8 @@ const Hero: React.FC<IHeroProps> = (props) => {
           <Typography variant="h6">{subtitle}</Typography>
           <Button
             variant="contained"
-            href="/sessions"
+            component={Link}
+            to="/sessions"
             sx={{
               width: "200px",
               fontSize: "16px",
@@ -63,7 +65,12 @@ const Hero: React.FC<IHeroProps> = (props) => {
             flexBasis: { sm: "fit-content" },
           }}
         >
-          <img src={image} alt="Darling Pretty Logo" className="img-fluid" />
+          <img
+            src={image}
+            alt="Darling Pretty Logo"
+            className="img-fluid"
+            loading="lazy"
+          />
         </Stack>
       </Container>
     </Paper>

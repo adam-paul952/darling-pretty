@@ -45,18 +45,13 @@ const Checkout = () => {
   const { id, date, availableTimes, bookings, _version } = session;
   const { firstName, lastName } = clientDetails;
 
-  const sessionStartTime = moment(sessionTime).format("HH:mm");
-  const dateString = `${sessionTime.toTimeString().slice(0, 5)} ${
-    sessionTime.getHours() < 12 ? "AM" : "PM"
-  }`;
+  const sessionStartTime = moment(sessionTime).format("hh:mm A");
 
   const version = _version!;
   const clientName = `${firstName} ${lastName}`;
-  const bookingDate = moment(date).format(`DD MMMM YYYY [at ${dateString}]`);
-
-  React.useEffect(() => {
-    console.log(orderStatus);
-  }, [orderStatus]);
+  const bookingDate = moment(date, "ddd, MMMM Do YYYYTHH:mm").format(
+    `DD MMMM YYYY [at ${sessionStartTime}]`
+  );
 
   //Add client to DB to return ID to add with Booking details
   const addClientToDatabase = async () => {
@@ -102,12 +97,16 @@ const Checkout = () => {
     };
 
     handleSessionUpdate();
-    //eslint-disable-next-line
+    // eslint-disable-next-line
   }, [orderStatus.status]);
 
   return (
     <>
-      <Container component="main" maxWidth="sm" sx={{ my: 4 }}>
+      <Container
+        component="main"
+        maxWidth="sm"
+        sx={{ my: 4, minHeight: { md: "66vh" } }}
+      >
         <Paper
           elevation={5}
           sx={{ mt: { xs: 3, md: 10 }, p: { xs: 2, md: 3 } }}
@@ -120,8 +119,9 @@ const Checkout = () => {
               <Step key={label}>
                 <StepLabel
                   sx={{
-                    ".Mui-active": { color: "#000" },
-                    ".Mui-completed": { color: "#000" },
+                    ".MuiStepIcon-root.Mui-active": { color: "#000" },
+                    ".MuiStepIcon-root.Mui-completed": { color: "#000" },
+                    ".MuiStepIcon-root": { color: "#000" },
                   }}
                 >
                   {label}

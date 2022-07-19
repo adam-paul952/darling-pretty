@@ -33,7 +33,8 @@ const DisplaySessions: React.FC<IDisplaySessionsProps> = (props) => {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              marginTop: "1%",
+              marginBottom: "4%",
+              justifyContent: "center",
             }}
           >
             <Typography component="h2" variant="h5">

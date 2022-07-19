@@ -49,125 +49,133 @@ const ContactForm = () => {
   }, [success]);
 
   return (
-    <Container sx={{}}>
-      <Box
+    <Container sx={{ backgroundColor: "gainsboro", mt: { xs: 10 } }}>
+      {/* <Box
         sx={{
-          flexGrow: 1,
+          // flexGrow: 1,
           padding: "12px",
           maxWidth: "755px",
           margin: "6px auto 12px",
-          backgroundColor: "gainsboro",
         }}
-      >
-        <Paper variant="outlined" sx={{ padding: { md: "30px 0" } }}>
-          <Typography variant="h4" sx={{ textAlign: "center" }}>
-            Reach out with any questions or comments!
-          </Typography>
-          <Box
-            sx={{ marginTop: "30px", display: "flex", flexDirection: "column" }}
-            component="form"
-            noValidate
-            autoComplete="off"
-          >
-            <TextField
-              label="Full Name"
-              placeholder="John Doe"
-              variant="standard"
-              // fullWidth
-              required
-              sx={{
-                marginBottom: "20px !important",
-                marginLeft: "auto",
-                marginRight: "auto",
-                width: "75%",
-              }}
-              value={name}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setName(e.target.value)
-              }
-            />
-            <TextField
-              label="Email"
-              variant="standard"
-              required
-              sx={{
-                marginBottom: "20px !important",
-                marginLeft: "auto",
-                marginRight: "auto",
-                width: "75%",
-              }}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setEmail(e.target.value);
-              }}
-              value={email}
-            />
+      > */}
+      <Paper elevation={4} sx={{ p: { xs: 2 } }}>
+        <Typography variant="h4" sx={{ textAlign: "center" }}>
+          Reach out with any questions or comments!
+        </Typography>
+        <Box
+          sx={{ marginTop: "30px", display: "flex", flexDirection: "column" }}
+          component="form"
+          noValidate
+          autoComplete="off"
+        >
+          <TextField
+            label="Full Name"
+            placeholder="John Doe"
+            variant="standard"
+            // fullWidth
+            required
+            sx={{
+              marginBottom: "20px !important",
+              marginLeft: "auto",
+              marginRight: "auto",
+              width: "75%",
+            }}
+            value={name}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setName(e.target.value)
+            }
+          />
+          <TextField
+            label="Email"
+            variant="standard"
+            required
+            sx={{
+              marginBottom: "20px !important",
+              marginLeft: "auto",
+              marginRight: "auto",
+              width: "75%",
+            }}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setEmail(e.target.value);
+            }}
+            value={email}
+          />
 
-            <TextField
-              label="Subject"
-              variant="standard"
-              required
-              sx={{
-                marginBottom: "20px !important",
-                marginLeft: "auto",
-                marginRight: "auto",
-                width: "75%",
-              }}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setSubject(e.target.value);
-              }}
-              value={subject}
-            />
+          <TextField
+            label="Subject"
+            variant="standard"
+            required
+            sx={{
+              marginBottom: "20px !important",
+              marginLeft: "auto",
+              marginRight: "auto",
+              width: "75%",
+            }}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setSubject(e.target.value);
+            }}
+            value={subject}
+          />
 
-            <TextareaAutosize
-              aria-label="minimum height"
-              minRows={6}
-              required
-              placeholder="Enter a message"
-              style={{
-                marginBottom: "20px",
-                fontSize: "16px",
-                padding: "10px",
+          <TextareaAutosize
+            aria-label="minimum height"
+            minRows={6}
+            required
+            placeholder="Enter a message"
+            style={{
+              marginBottom: "20px",
+              fontSize: "16px",
+              padding: "10px",
+              marginLeft: "auto",
+              marginRight: "auto",
+              width: "75%",
+            }}
+            spellCheck
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+              setMessage(e.target.value);
+            }}
+            value={message}
+          />
+          {!success ? (
+            <Container
+              sx={{
+                maxWidth: { xs: "95%", sm: "75%" },
                 marginLeft: "auto",
                 marginRight: "auto",
-                width: "75%",
+                padding: "0 !important",
               }}
-              spellCheck
-              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-                setMessage(e.target.value);
-              }}
-              value={message}
-            />
-            {!success ? (
-              <Container
+            >
+              <ReCAPTCHAV2
+                className="my-1"
+                sitekey={process.env.REACT_APP_SITE_KEY!}
+                onChange={handleToken}
+                onExpired={handleExpireToken}
+              />
+              <Button
+                variant="contained"
+                color="primary"
                 sx={{
-                  width: "75%",
-                  marginLeft: "auto",
-                  marginRight: "auto",
-                  padding: "0 !important",
+                  width: "200px",
+                  fontSize: "16px",
+                  mt: { xs: 2 },
+                  "&:hover": {
+                    color: "white",
+                    backgroundColor: "darkblue",
+                  },
+                  backgroundColor: "#000",
                 }}
+                onClick={handleSubmit}
+                disabled={!token}
               >
-                <ReCAPTCHAV2
-                  className="my-1"
-                  sitekey={process.env.REACT_APP_SITE_KEY!}
-                  onChange={handleToken}
-                  onExpired={handleExpireToken}
-                />
-                <Button
-                  variant="contained"
-                  color="primary"
-                  style={{ width: "200px", fontSize: "16px" }}
-                  onClick={handleSubmit}
-                  disabled={!token}
-                >
-                  Submit
-                </Button>
-              </Container>
-            ) : (
-              <SubmissionComplete />
-            )}
-          </Box>
-        </Paper>
-      </Box>
+                Submit
+              </Button>
+            </Container>
+          ) : (
+            <SubmissionComplete />
+          )}
+        </Box>
+      </Paper>
+      {/* </Box> */}
     </Container>
   );
 };
