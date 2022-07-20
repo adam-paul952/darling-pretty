@@ -1,13 +1,12 @@
 import React from "react";
 
+import moment from "moment";
+import { Box, Toolbar } from "@mui/material";
+
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-
-import { Box, Toolbar } from "@mui/material";
-
-import moment from "moment";
 
 import useSessionInfo, {
   ISessionInfo,
@@ -31,11 +30,17 @@ const SessionCalendar = () => {
         const allSessions = await getAllSessions();
         allSessions.forEach((session: ISessionInfo) => {
           session.bookings?.forEach((booking: IBookingInfo) => {
-            const clientStart = `${session.date}T${booking.startTime}`;
+            const clientStart = `${session.date}T${moment(
+              booking.startTime,
+              "hh:mm A"
+            ).format("HH:mm:ss")}`;
+
             const clientEnd = moment(clientStart)
               .add(session.sessionLength, "m")
               .format("YYYY-MM-DDTHH:mm");
-            const formatClientDate = moment().format(clientStart);
+
+            const formatClientDate =
+              moment(clientStart).format("YYYY-MM-DDTHH:mm");
 
             currentSessions.push({
               title: booking.clientName,
@@ -47,7 +52,7 @@ const SessionCalendar = () => {
           currentSessions.push({
             title: session.name,
             allDay: true,
-            start: new Date(session.date),
+            start: session.date,
           });
         });
 
@@ -70,9 +75,7 @@ const SessionCalendar = () => {
             ? theme.palette.grey[100]
             : theme.palette.grey[900],
         flexGrow: 1,
-        height: "100vh",
-        overflow: "auto",
-        marginTop: { md: "65px" },
+        marginTop: { sm: "65px" },
       }}
     >
       <Toolbar />

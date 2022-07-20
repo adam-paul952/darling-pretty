@@ -1,67 +1,77 @@
 import React from "react";
+
 import { Box, Grid, Typography } from "@mui/material";
 
-interface IDisplayServicesOfferedProps {
-  servicesOffered: IServicesOffered[];
-}
+import DisplayServicesOfferedLoading from "../skeletonScreens/DisplayServicesOfferedLoading";
+import useContentful from "../hooks/useContentful";
 
-interface IServicesOffered {
-  serviceName: string;
-  serviceDescription: string;
-  serviceImage: {
-    url: string;
-  };
-}
+const query = /* GraphQL */ `
+  query {
+    servicesOfferedCollection {
+      items {
+        serviceName
+        serviceImage {
+          url
+        }
+        serviceDescription
+      }
+    }
+  }
+`;
 
-const DisplayServicesOffered: React.FC<IDisplayServicesOfferedProps> = (
-  props
-) => {
-  const { servicesOffered } = props;
+const DisplayServicesOffered: React.FC = () => {
+  const { data, loading } = useContentful(query);
 
   return (
-    <Box
-      sx={{
-        maxWidth: "100%",
-        flexGrow: 1,
-        flexDirection: "column",
-        paddingTop: "25px",
-      }}
-    >
-      <Grid
-        container
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          width: "100%",
-        }}
-      >
-        {servicesOffered.map((service) => (
+    <>
+      {loading ? (
+        <DisplayServicesOfferedLoading />
+      ) : (
+        <Box
+          sx={{
+            maxWidth: "100%",
+            flexGrow: 1,
+            flexDirection: "column",
+            paddingTop: "25px",
+          }}
+        >
           <Grid
-            item
-            xs={10}
-            md={3}
-            sm={7}
-            key={service.serviceName}
+            container
             sx={{
-              backgroundColor: "#f2f0f1",
-              textAlign: "center",
-              padding: "30px",
-              width: "200px",
-              borderRadius: "10px",
-              margin: "10px !important",
+              display: "flex",
+              justifyContent: "center",
+              width: "100%",
             }}
           >
-            <Typography variant="h5" sx={{ padding: "10px" }}>
-              {service.serviceName}
-            </Typography>
-            <img src={service.serviceImage.url} />
-            <Typography sx={{ padding: "10px" }}>
-              {service.serviceDescription}
-            </Typography>
+            {data.servicesOfferedCollection?.items.map((service: any) => (
+              <Grid
+                item
+                xs={10}
+                md={3}
+                sm={7}
+                key={service.serviceName}
+                sx={{
+                  backgroundColor: "#f2f0f1",
+                  textAlign: "center",
+                  padding: "30px",
+                  width: "200px",
+                  borderRadius: "10px",
+                  margin: "10px !important",
+                }}
+              >
+                <Typography variant="h5" sx={{ padding: "10px" }}>
+                  {service.serviceName}
+                </Typography>
+                <img src={service.serviceImage.url} />
+                <Typography sx={{ padding: "10px" }}>
+                  {service.serviceDescription}
+                </Typography>
+              </Grid>
+            ))}
           </Grid>
-        ))}
-      </Grid>
-    </Box>
+        </Box>
+      )}
+    </>
   );
 };
 

@@ -1,7 +1,8 @@
 import React from "react";
 
+import { Link } from "react-router-dom";
 import {
-  Link,
+  Button,
   Table,
   TableBody,
   TableCell,
@@ -43,9 +44,24 @@ const RecentClients = ({ clients }: { clients: IClientInfo[] }) => {
               ))}
             </TableBody>
           </Table>
-          <Link color="primary" href="/admin/clients" sx={{ mt: 3 }}>
+          <Button
+            variant="text"
+            component={Link}
+            to="/admin/clients"
+            sx={{
+              mt: 3,
+              color: "#000",
+              justifyContent: "flex-start",
+              width: "25%",
+              pl: 5,
+              textDecoration: "underline",
+              "&:hover": {
+                color: "#000",
+              },
+            }}
+          >
             See All Clients
-          </Link>
+          </Button>
         </>
       )}
     </>

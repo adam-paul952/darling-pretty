@@ -1,8 +1,9 @@
 import React from "react";
 
-import axios from "axios";
-import { FacebookRounded } from "@mui/icons-material";
 import { Button, Grid, Link, Typography } from "@mui/material";
+import { FacebookRounded } from "@mui/icons-material";
+
+import useContentful from "../hooks/useContentful";
 
 const query = /* GraphQL */ `
   query {
@@ -23,52 +24,15 @@ const query = /* GraphQL */ `
   }
 `;
 
-const config = {
-  url: process.env.REACT_APP_CONTENTFUL_URL,
-  method: "post",
-  data: JSON.stringify({ query }),
-  headers: {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${process.env.REACT_APP_CONTENTFUL_ACCESS_TOKEN}`,
-    Accept: "application/json",
-  },
-};
-
-interface IFooterDetailsState {
-  name: string;
-  email: string;
-  facebookLink: string;
-  phoneNumber: string;
-  navLinksCollection: { items: INavLinkCollectionDetails[] };
-}
-
 interface INavLinkCollectionDetails {
   linkText: string;
   navLink: string;
 }
 
 const Footer = () => {
-  const [isLoading, setLoading] = React.useState(true);
-  const [footerDetails, setFooterDetails] =
-    React.useState<IFooterDetailsState | null>();
+  const { data, loading } = useContentful(query);
 
-  React.useEffect(() => {
-    const getPageData = async () => {
-      setLoading(true);
-      try {
-        const response = await axios(config);
-        console.log(response);
-        setFooterDetails(response.data.data.footerCollection.items[0]);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    getPageData();
-  }, []);
-
-  if (isLoading) {
+  if (loading) {
     return null;
   }
 
@@ -93,7 +57,7 @@ const Footer = () => {
               color: "#fff",
             }}
           >
-            {footerDetails?.name}
+            {data.footerCollection?.items[0].name}
           </Typography>
         </Grid>
         <Grid
@@ -106,8 +70,8 @@ const Footer = () => {
             justifyContent: { xs: "space-evenly" },
           }}
         >
-          {footerDetails?.navLinksCollection.items.map(
-            (item: { navLink: string; linkText: string }) => (
+          {data.footerCollection?.items[0].navLinksCollection.items.map(
+            (item: INavLinkCollectionDetails) => (
               <Button
                 component="a"
                 href={item.navLink}
@@ -136,7 +100,7 @@ const Footer = () => {
           <Typography sx={{ color: "#fff", paddingTop: { md: "6px" } }}>
             Tel:&nbsp;
             <Link
-              href={`tel:${footerDetails?.phoneNumber}`}
+              href={`tel:${data.footerCollection?.items[0].phoneNumber}`}
               sx={{
                 color: "#fff",
                 textDecoration: "none",
@@ -147,13 +111,13 @@ const Footer = () => {
                 },
               }}
             >
-              {footerDetails?.phoneNumber}
+              {data.footerCollection?.items[0].phoneNumber}
             </Link>
           </Typography>
           <Typography sx={{ color: "#fff" }}>
             Email:&nbsp;
             <Link
-              href={`mailto:${footerDetails?.email}`}
+              href={`mailto:${data.footerCollection?.items[0].email}`}
               sx={{
                 color: "#fff",
                 textDecoration: "none",
@@ -164,7 +128,7 @@ const Footer = () => {
                 },
               }}
             >
-              {footerDetails?.email}
+              {data.footerCollection?.items[0].email}
             </Link>
           </Typography>
         </Grid>
@@ -178,7 +142,7 @@ const Footer = () => {
             alignSelf: { md: "center" },
           }}
         >
-          <Link href={footerDetails?.facebookLink}>
+          <Link href={data.footerCollection?.items[0].facebookLink}>
             <FacebookRounded
               sx={{
                 color: "#fff",

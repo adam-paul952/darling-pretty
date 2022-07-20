@@ -5,29 +5,38 @@ import {
   AppBar,
   Box,
   Button,
-  Divider,
   Drawer,
   IconButton,
-  // Link,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
   Toolbar,
   Typography,
   Slide,
   useScrollTrigger,
 } from "@mui/material";
-import { Close, Menu } from "@mui/icons-material";
+import { Menu } from "@mui/icons-material";
+
+import useContentful from "../hooks/useContentful";
+import MobileHeaderDrawer from "./MobileHeaderDrawer";
+
+const query = /* GraphQL */ `
+  query {
+    headerCollection {
+      items {
+        name
+        navLinksCollection {
+          items {
+            linkText
+            navLink
+          }
+        }
+      }
+    }
+  }
+`;
 
 const drawerWidth = 200;
-export const navItems = [
-  { id: 1, route: "Home", url: "/" },
-  { id: 2, route: "Log In", url: "/login" },
-  { id: 3, route: "Contact", url: "/contact" },
-];
 
 const Header: React.FC = () => {
+  const { data, loading } = useContentful(query);
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
@@ -37,36 +46,7 @@ const Header: React.FC = () => {
     target: window,
   });
 
-  const drawer = (
-    <Box
-      onClick={handleDrawerToggle}
-      sx={{ textAlign: "center", backgroundColor: "#000", height: "100%" }}
-    >
-      <List>
-        <IconButton onClick={handleDrawerToggle}>
-          <Close sx={{ color: "#FFF" }} />
-        </IconButton>
-        <Divider />
-        {navItems.map((item) => (
-          <ListItem
-            key={item.id}
-            disablePadding
-            sx={{ justifyContent: "center" }}
-          >
-            {/* <Link href={item.url} sx={{ textDecoration: "none" }}> */}
-            <ListItemButton
-              component={Link}
-              to={item.url}
-              sx={{ textAlign: "center" }}
-            >
-              <ListItemText primary={item.route} sx={{ color: "#fff" }} />
-            </ListItemButton>
-            {/* </Link> */}
-          </ListItem>
-        ))}
-      </List>
-    </Box>
-  );
+  if (loading) return null;
 
   return (
     <Box
@@ -82,7 +62,6 @@ const Header: React.FC = () => {
           sx={{
             backgroundColor: "#000",
             boxShadow: "none",
-            // minHeight: { sm: "64px", md: "76px" },
           }}
         >
           <Toolbar classes={toolbar}>
@@ -100,19 +79,21 @@ const Header: React.FC = () => {
               component="div"
               sx={{ flexGrow: 1, display: { sm: "block" }, color: "#fff" }}
             >
-              Darling Pretty Photography
+              {data.headerCollection?.items[0].name}
             </Typography>
             <Box sx={{ display: { xs: "none", sm: "block" } }}>
-              {navItems.map((item) => (
-                <Button
-                  component={Link}
-                  to={item.url}
-                  key={item.id}
-                  sx={{ color: "#fff" }}
-                >
-                  {item.route}
-                </Button>
-              ))}
+              {data.headerCollection?.items[0].navLinksCollection.items.map(
+                (item: any) => (
+                  <Button
+                    component={Link}
+                    to={item.navLink}
+                    key={item.linkText}
+                    sx={{ color: "#fff" }}
+                  >
+                    {item.linkText}
+                  </Button>
+                )
+              )}
             </Box>
           </Toolbar>
         </AppBar>
@@ -133,7 +114,10 @@ const Header: React.FC = () => {
             },
           }}
         >
-          {drawer}
+          <MobileHeaderDrawer
+            navLinks={data.headerCollection?.items[0].navLinksCollection.items}
+            handleDrawerToggle={handleDrawerToggle}
+          />
         </Drawer>
       </Box>
     </Box>

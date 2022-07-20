@@ -1,5 +1,6 @@
 import React from "react";
 
+import moment from "moment";
 import { Link } from "react-router-dom";
 import {
   Button,
@@ -90,7 +91,10 @@ const SessionOverview: React.FC<ISessionOverviewProps> = (props) => {
                           variant="subtitle1"
                           align="center"
                         >
-                          Start Time: {session.startTime}
+                          Start Time:&nbsp;
+                          {moment(session.startTime, "hh:mm:ss A").format(
+                            "hh:mm A"
+                          )}
                         </Typography>
                         <Typography
                           component="li"
@@ -102,13 +106,23 @@ const SessionOverview: React.FC<ISessionOverviewProps> = (props) => {
                       </ul>
                     </CardContent>
                     <CardActions>
-                      <Button fullWidth variant="outlined">
-                        <Link
-                          to="/admin/createsession"
-                          state={{ sessionId: session.id }}
-                        >
-                          Edit Session
-                        </Link>
+                      <Button
+                        fullWidth
+                        component={Link}
+                        to="/admin/createsession"
+                        state={{ sessionId: session.id }}
+                        variant="outlined"
+                        sx={{
+                          color: "#000",
+                          border: "1px solid rgba(0, 0, 0, 0.5)",
+                          "&:hover": {
+                            color: "#000",
+                            border: "1px solid #000",
+                            backgroundColor: "rgba(0, 0, 0, 0.04)",
+                          },
+                        }}
+                      >
+                        Edit Session
                       </Button>
                     </CardActions>
                   </Card>

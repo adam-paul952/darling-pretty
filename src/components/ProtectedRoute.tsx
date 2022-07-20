@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 
 import { Navigate, useLocation, Outlet } from "react-router-dom";
 import { Box } from "@mui/material";
@@ -7,6 +7,7 @@ import { useAuthContext } from "../context/AuthContext";
 import DashboardHeader from "../admin/components/DashboardHeader";
 import SideNav from "../admin/components/SideNav";
 import useContactForm from "../hooks/useContactForm";
+import Loading from "./Loading";
 
 const ProtectedRoute: React.FC = () => {
   const { unreadMessage } = useContactForm();
@@ -27,7 +28,9 @@ const ProtectedRoute: React.FC = () => {
         unreadMessages={unreadMessage}
       />
       <SideNav open={open} toggleDrawer={toggleDrawer} />
-      <Outlet />
+      <Suspense fallback={<Loading />}>
+        <Outlet />
+      </Suspense>
     </Box>
   ) : (
     <Navigate to="/login" replace state={{ pathname: location.pathname }} />

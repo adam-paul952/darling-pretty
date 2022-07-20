@@ -1,12 +1,18 @@
 import React from "react";
 
 import { useLocation, Link } from "react-router-dom";
-import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
+import {
+  Divider,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+} from "@mui/material";
 import {
   AddBox,
   CalendarMonth,
   Dashboard,
   Home,
+  OpenInNew,
   People,
 } from "@mui/icons-material";
 
@@ -99,15 +105,26 @@ export const MainListItems = () => {
           sx={pathname === "/admin/createsession" ? { color: "white" } : {}}
         />
       </ListItemButton>
+      <Divider sx={{ my: 3, width: "85%", mx: "auto" }} />
       <ListItemButton
         component={Link}
         to="/"
-        sx={{ "&:hover": { color: "#000" }, mt: 10 }}
+        sx={{ "&:hover": { color: "#000" } }}
       >
         <ListItemIcon>
           <Home />
         </ListItemIcon>
         <ListItemText primary="Darling Pretty Home" />
+      </ListItemButton>
+      <ListItemButton
+        component={Link}
+        to="#"
+        sx={{ "&:hover": { color: "#000" } }}
+      >
+        <ListItemIcon>
+          <OpenInNew />
+        </ListItemIcon>
+        <ListItemText primary="Contentful CMS" />
       </ListItemButton>
     </>
   );

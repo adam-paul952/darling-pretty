@@ -7,7 +7,7 @@ interface TitleProps {
 
 const TableTitle = (props: TitleProps) => {
   return (
-    <Typography component="h2" variant="h6" color="primary" gutterBottom>
+    <Typography component="h2" variant="h6" gutterBottom sx={{ color: "#000" }}>
       {props.children}
     </Typography>
   );

@@ -9,7 +9,6 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
-
 import { ExpandMore } from "@mui/icons-material";
 
 import useClientInfo, { IClientInfo } from "../hooks/useClientInfo";
@@ -72,11 +71,11 @@ const DisplayClients = () => {
                   expanded={expanded === `panel${client.id}`}
                   onChange={handleChange(`panel${client.id}`)}
                   sx={{
-                    width: "95%",
+                    width: "80%",
                     marginLeft: "auto",
                     marginRight: "auto",
                     "&.Mui-expanded": {
-                      width: "95%",
+                      width: "80%",
                       marginLeft: "auto",
                       marginRight: "auto",
                     },
@@ -86,6 +85,11 @@ const DisplayClients = () => {
                     expandIcon={<ExpandMore />}
                     aria-controls={`panel${client.id}bh-content`}
                     id={`panel${client.id}bh-header`}
+                    sx={{
+                      width: "60%",
+                      marginRight: "auto",
+                      marginLeft: "auto",
+                    }}
                   >
                     <Typography sx={{ width: "33%", flexShrink: 0 }}>
                       {client.firstName} {client.lastName}
@@ -101,7 +105,9 @@ const DisplayClients = () => {
                         display: "flex",
                         justifyContent: "space-evenly",
                         padding: "10px",
-                        width: "60%",
+                        width: "80%",
+                        mx: "auto",
+                        borderTop: "2px solid rgba(0, 0, 0, 0.3)",
                       }}
                     >
                       <Box>

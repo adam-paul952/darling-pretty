@@ -7,9 +7,10 @@ const Loading: React.FC = () => (
     sx={{
       display: "flex",
       justifyContent: "center",
-      flexDirection: "Column",
+      flexDirection: "column",
       alignItems: "center",
       height: { md: "78vh" },
+      mx: "auto",
     }}
   >
     <Typography variant="h4">Darling Pretty Photograhpy</Typography>
