@@ -53,7 +53,7 @@ const Hero: React.FC = () => {
                 padding: { xs: "10px 0" },
               }}
             >
-              <Typography variant="h3">
+              <Typography variant="h3" sx={{ alignSelf: "flex-start" }}>
                 {data.heroSectionCollection?.items[0].heroTitle}
               </Typography>
               <Typography variant="h6">

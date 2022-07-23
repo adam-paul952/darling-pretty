@@ -11,6 +11,7 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  SelectChangeEvent,
   Stack,
   TextField,
   Typography,
@@ -38,10 +39,21 @@ const CreateSessionScreen: React.FC = () => {
     setEditorState,
     handleImageChange,
     imagePreview,
+    setImagePreview,
     onCreateSession,
     checkForEdit,
     onEditSession,
   } = useCreateSession();
+
+  const [listOfImages, setListOfImages] = React.useState<any>([]);
+  const [dropdownText, setDropdownText] = React.useState<string>(
+    "Previously Uploaded Images"
+  );
+
+  const handleSelectChange = (event: SelectChangeEvent) => {
+    setImagePreview(event.target.value);
+    setDropdownText(event.target.value);
+  };
 
   React.useEffect(() => {
     checkForEdit(sessionId);
@@ -51,11 +63,15 @@ const CreateSessionScreen: React.FC = () => {
   React.useEffect(() => {
     const listItemsFromStorage = async () => {
       const items = await listStorageItems();
-      console.log(items);
+      setListOfImages(items);
     };
     listItemsFromStorage();
     // eslint-disable-next-line
   }, []);
+
+  React.useEffect(() => {
+    console.log(listOfImages);
+  }, [listOfImages]);
 
   return (
     <LocalizationProvider dateAdapter={AdapterMoment}>
@@ -89,9 +105,14 @@ const CreateSessionScreen: React.FC = () => {
             <Stack
               direction="row"
               spacing={12}
-              sx={{ justifyContent: "center", padding: "15px 0" }}
+              sx={{
+                justifyContent: "space-between",
+                py: 2,
+                width: "81%",
+                mx: "auto",
+              }}
             >
-              <FormControl>
+              <FormControl sx={{ width: "30%" }}>
                 <DatePicker
                   label="Session Date"
                   inputFormat="YYYY-MM-DD"
@@ -108,7 +129,7 @@ const CreateSessionScreen: React.FC = () => {
                   )}
                 />
               </FormControl>
-              <FormControl>
+              <FormControl sx={{ width: "30%" }}>
                 <TextField
                   id="outlined-basic"
                   label="Session Name"
@@ -122,7 +143,7 @@ const CreateSessionScreen: React.FC = () => {
                   }
                 />
               </FormControl>
-              <FormControl>
+              <FormControl sx={{ width: "30%" }}>
                 <TextField
                   id="outlined-basic"
                   label="Session Price"
@@ -139,10 +160,15 @@ const CreateSessionScreen: React.FC = () => {
             </Stack>
             <Stack
               direction="row"
-              spacing={10}
-              sx={{ justifyContent: "center", padding: "15px 0" }}
+              spacing={12}
+              sx={{
+                justifyContent: "space-between",
+                py: 2,
+                mx: "auto",
+                width: "81%",
+              }}
             >
-              <FormControl>
+              <FormControl sx={{ width: "30%" }}>
                 <TimePicker
                   label="Start Time"
                   value={sessionDetails.startTime}
@@ -157,7 +183,7 @@ const CreateSessionScreen: React.FC = () => {
                   )}
                 />
               </FormControl>
-              <FormControl>
+              <FormControl sx={{ width: "30%" }}>
                 <TimePicker
                   label="End Time"
                   value={sessionDetails.endTime}
@@ -172,7 +198,7 @@ const CreateSessionScreen: React.FC = () => {
                   )}
                 />
               </FormControl>
-              <FormControl>
+              <FormControl sx={{ width: "30%" }}>
                 <TextField
                   id="outlined-basic"
                   label="Length of Sessions"
@@ -193,57 +219,95 @@ const CreateSessionScreen: React.FC = () => {
             </Stack>
             <Stack
               direction="row"
-              spacing={10}
-              sx={{ justifyContent: "center", padding: "15px 0" }}
+              spacing={12}
+              sx={{
+                justifyContent: "space-between",
+                py: 2,
+                width: "81%",
+                mx: "auto",
+                alignItems: "center",
+                minHeight: "199px",
+              }}
             >
-              {sessionDetails.sessionImage && (
-                <img
-                  src={imagePreview}
-                  alt="Image Preview"
-                  loading="lazy"
-                  className="img-fluid"
-                  style={{ maxWidth: "300px" }}
-                />
-              )}
-
-              <Button
-                variant="contained"
-                component="label"
+              <Box
                 sx={{
-                  maxHeight: { md: "56px" },
-                  minWidth: { md: "127.4px" },
-                  alignSelf: { md: "center" },
+                  minWidth: "250px",
+                  display: "flex",
+                  justifyContent: "center",
                 }}
               >
-                Upload File
-                <input type="file" hidden onChange={handleImageChange} />
-              </Button>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value=""
-                label="Age"
-                // onChange={handleChange}
-              >
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
-              </Select>
-              <TextField
-                id="outlined-basic"
-                label="Session Info"
-                variant="outlined"
-                value={sessionDetails.sessionInfo}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                  setSessionDetails({
-                    ...sessionDetails,
-                    sessionInfo: event.target.value,
-                  })
-                }
-              />
+                {sessionDetails.sessionImage && (
+                  <img
+                    src={imagePreview}
+                    alt="Image Preview"
+                    loading="lazy"
+                    className="img-fluid"
+                    style={{ maxWidth: "250px" }}
+                  />
+                )}
+              </Box>
+              <Stack direction="column" spacing={1} sx={{ width: "30%" }}>
+                <Button
+                  variant="contained"
+                  component="label"
+                  sx={{
+                    maxHeight: { md: "56px" },
+                    minWidth: { md: "127.4px" },
+                    alignSelf: { md: "center" },
+                    m: 1,
+                    fontSize: "16px",
+                    "&:hover": {
+                      color: "white",
+                      backgroundColor: "darkblue",
+                    },
+                    backgroundColor: "#000",
+                  }}
+                >
+                  Upload File
+                  <input type="file" hidden onChange={handleImageChange} />
+                </Button>
+                <Typography sx={{ textAlign: "center" }}>-- OR --</Typography>
+                <Select
+                  // labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  label="Image"
+                  value={dropdownText}
+                  displayEmpty
+                  variant="outlined"
+                  onChange={handleSelectChange}
+                >
+                  <MenuItem disabled value={dropdownText}>
+                    Previously Uploaded Images
+                  </MenuItem>
+                  {listOfImages.length > 0 &&
+                    listOfImages.map((image: any) => {
+                      return (
+                        <MenuItem key={image.key} value={image.url}>
+                          {image.key}
+                        </MenuItem>
+                      );
+                    })}
+                </Select>
+              </Stack>
+              <FormControl sx={{ width: "30%" }}>
+                <TextField
+                  id="outlined-basic"
+                  label="Session Info"
+                  variant="outlined"
+                  value={sessionDetails.sessionInfo}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                    setSessionDetails({
+                      ...sessionDetails,
+                      sessionInfo: event.target.value,
+                    })
+                  }
+                />
+              </FormControl>
             </Stack>
             <Stack>
-              <InputLabel>Session Details:</InputLabel>
+              <InputLabel sx={{ width: { sm: "81%" }, mx: { sm: "auto" } }}>
+                Session Details:
+              </InputLabel>
               <Editor
                 editorState={editorState}
                 toolbarClassName="toolbarClassName"
@@ -261,16 +325,26 @@ const CreateSessionScreen: React.FC = () => {
               />
             </Stack>
           </Box>
-          <Button
-            variant="contained"
-            // disabled
-            onClick={
-              sessionId ? () => onEditSession() : () => onCreateSession()
-            }
-            sx={{ margin: "20px 0" }}
-          >
-            {sessionId ? "Edit Session" : "Create New Session"}
-          </Button>
+          <Box sx={{ width: { sm: "81%" }, mx: { sm: "auto" } }}>
+            <Button
+              variant="contained"
+              // disabled
+              onClick={
+                sessionId ? () => onEditSession() : () => onCreateSession()
+              }
+              sx={{
+                margin: "20px 0",
+                fontSize: "16px",
+                "&:hover": {
+                  color: "white",
+                  backgroundColor: "darkblue",
+                },
+                backgroundColor: "#000",
+              }}
+            >
+              {sessionId ? "Edit Session" : "Create New Session"}
+            </Button>
+          </Box>
         </Box>
       </Box>
     </LocalizationProvider>

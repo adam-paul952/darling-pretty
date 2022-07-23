@@ -45,7 +45,7 @@ const Checkout = () => {
   const { id, date, availableTimes, bookings, _version } = session;
   const { firstName, lastName } = clientDetails;
 
-  const sessionStartTime = moment(sessionTime).format("hh:mm A");
+  const sessionStartTime = moment(sessionTime).format("h:mm A");
 
   const version = _version!;
   const clientName = `${firstName} ${lastName}`;

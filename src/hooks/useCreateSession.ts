@@ -4,7 +4,7 @@ import moment from "moment";
 import htmlToDraft from "html-to-draftjs";
 
 import useSessionInfo, { ISessionInfo } from "./useSessionInfo";
-import { EditorState, ContentState, convertToRaw } from "draft-js";
+import { EditorState, ContentState } from "draft-js";
 
 const useCreateSession = () => {
   const {

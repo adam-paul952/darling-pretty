@@ -1,3 +1,4 @@
+// import React from "react";
 import { Storage } from "aws-amplify";
 
 interface IImageObject {
@@ -23,13 +24,18 @@ const useImageStorage = () => {
 
   const listStorageItems = async () => {
     try {
-      const images: IImageObject[] = [];
+      const images: any[] = [];
       const storageImages = await Storage.list("");
-      storageImages.forEach((image) => {
-        if (image.size! > 0) {
-          images.push(image);
-        }
-      });
+      for (let i = 1; i < storageImages.length; i++) {
+        // console.log(storageImages[i]);
+        const imageUrl: string = await Storage.get(storageImages[i].key!);
+        images.push({ key: storageImages[i].key!, url: imageUrl });
+      }
+      // storageImages.forEach((image) => {
+      //   if (image.size! > 0) {
+      //     images.push(image);
+      //   }
+      // });
       return images;
     } catch (error) {
       console.log(error);
@@ -39,6 +45,7 @@ const useImageStorage = () => {
   return {
     uploadImageToStorage,
     listStorageItems,
+    // listOfImages,
   };
 };
 

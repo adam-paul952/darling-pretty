@@ -20,6 +20,10 @@ interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
 }
 
+interface IDashboardHeaderProps extends IDashboardChildrenProps {
+  unreadMessages: number;
+}
+
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
 })<AppBarProps>(({ theme, open }) => ({
@@ -38,7 +42,7 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
-const DashboardHeader = (props: IDashboardChildrenProps) => {
+const DashboardHeader = (props: IDashboardHeaderProps) => {
   const { open, toggleDrawer, unreadMessages } = props;
 
   return (

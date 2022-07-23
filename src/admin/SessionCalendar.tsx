@@ -8,10 +8,8 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 
-import useSessionInfo, {
-  ISessionInfo,
-  IBookingInfo,
-} from "../hooks/useSessionInfo";
+import { ISessionInfo, IBookingInfo } from "../hooks/useSessionInfo";
+import { useSessionContext } from "../context/SessionContext";
 interface IEvents {
   title: string;
   start?: Date;
@@ -20,51 +18,47 @@ interface IEvents {
 }
 
 const SessionCalendar = () => {
-  const { getAllSessions } = useSessionInfo();
-  const [sessions, setSessions] = React.useState<IEvents[]>([]);
+  const { sessions } = useSessionContext();
+  const [listOfSessions, setSessions] = React.useState<IEvents[]>([]);
+
+  const formatDate = (date: string) => {
+    return moment(date, "ddd, MMMM Do YYYY").format("YYYY-MM-DD");
+  };
 
   React.useEffect(() => {
     const fetchSessions = async () => {
       const currentSessions: any[] = [];
-      try {
-        const allSessions = await getAllSessions();
-        allSessions.forEach((session: ISessionInfo) => {
-          session.bookings?.forEach((booking: IBookingInfo) => {
-            const clientStart = `${session.date}T${moment(
-              booking.startTime,
-              "hh:mm A"
-            ).format("HH:mm:ss")}`;
+      sessions?.forEach((session: ISessionInfo) => {
+        session.bookings?.forEach((booking: IBookingInfo) => {
+          const clientStart = `${formatDate(session.date)}T${moment(
+            booking.startTime,
+            "hh:mm A"
+          ).format("HH:mm:ss")}`;
 
-            const clientEnd = moment(clientStart)
-              .add(session.sessionLength, "m")
-              .format("YYYY-MM-DDTHH:mm");
-
-            const formatClientDate =
-              moment(clientStart).format("YYYY-MM-DDTHH:mm");
-
-            currentSessions.push({
-              title: booking.clientName,
-              start: formatClientDate,
-              end: clientEnd,
-            });
-          });
+          const clientEnd = moment(clientStart)
+            .add(session.sessionLength, "m")
+            .format("YYYY-MM-DDTHH:mm");
 
           currentSessions.push({
-            title: session.name,
-            allDay: true,
-            start: session.date,
+            title: booking.clientName,
+            start: moment(clientStart).format("YYYY-MM-DDTHH:mm"),
+            end: clientEnd,
           });
         });
 
-        setSessions(currentSessions);
-      } catch (error) {
-        console.log(error);
-      }
+        currentSessions.push({
+          title: session.name,
+          allDay: true,
+          start: formatDate(session.date),
+        });
+      });
+
+      setSessions(currentSessions);
     };
 
     fetchSessions();
     //eslint-disable-next-line
-  }, []);
+  }, [sessions]);
 
   return (
     <Box
@@ -75,11 +69,11 @@ const SessionCalendar = () => {
             ? theme.palette.grey[100]
             : theme.palette.grey[900],
         flexGrow: 1,
-        marginTop: { sm: "65px" },
+        marginTop: { sm: "20px" },
       }}
     >
       <Toolbar />
-      <Box sx={{ paddingLeft: "1%", paddingRight: "1%" }}>
+      <Box sx={{ paddingLeft: "2%", paddingRight: "2%" }}>
         <FullCalendar
           contentHeight={630}
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -94,9 +88,12 @@ const SessionCalendar = () => {
           selectMirror={true}
           dayMaxEvents={true}
           initialDate={new Date()}
-          events={sessions}
+          events={listOfSessions}
           nowIndicator={true}
           slotDuration="00:20:00"
+          slotMinTime={"08:00:00"}
+          slotMaxTime={"19:00:00"}
+          eventMinHeight={30}
         />
       </Box>
     </Box>

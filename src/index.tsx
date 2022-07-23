@@ -13,6 +13,7 @@ import reportWebVitals from "./reportWebVitals";
 import DarlingPrettyRouter from "./Routes";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import { AuthProvider } from "./context/AuthContext";
+import { SessionProvider } from "./context/SessionContext";
 
 import { Amplify } from "aws-amplify";
 import awsExports from "./aws-exports";
@@ -29,19 +30,21 @@ const theme = createTheme({
 });
 
 ReactDOM.render(
-  <AuthProvider>
-    <ThemeProvider theme={theme}>
-      <PayPalScriptProvider
-        options={{
-          "client-id": process.env.REACT_APP_PAYPAL_CLIENT_ID,
-          currency: "CAD",
-        }}
-      >
-        <CssBaseline />
-        <DarlingPrettyRouter />
-      </PayPalScriptProvider>
-    </ThemeProvider>
-  </AuthProvider>,
+  <SessionProvider>
+    <AuthProvider>
+      <ThemeProvider theme={theme}>
+        <PayPalScriptProvider
+          options={{
+            "client-id": process.env.REACT_APP_PAYPAL_CLIENT_ID,
+            currency: "CAD",
+          }}
+        >
+          <CssBaseline />
+          <DarlingPrettyRouter />
+        </PayPalScriptProvider>
+      </ThemeProvider>
+    </AuthProvider>
+  </SessionProvider>,
   document.getElementById("root")
 );
 

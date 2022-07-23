@@ -1,52 +1,21 @@
 import React from "react";
 
-import moment from "moment";
 import { Box, CircularProgress, Container, Grid, Paper } from "@mui/material";
 
 import SessionOverview from "./components/SessionOverview";
 import RecentClients from "./components/RecentClients";
-import useSessionInfo, { ISessionInfo } from "../hooks/useSessionInfo";
 import useClientInfo, { IClientInfo } from "../hooks/useClientInfo";
 
 export interface IDashboardChildrenProps {
   open: boolean;
   toggleDrawer: () => void;
-  unreadMessages?: number;
 }
 
 const AdminDashboard = () => {
-  const { getAllSessions } = useSessionInfo();
   const { getRecentClientOrders } = useClientInfo();
 
-  const [sessions, setSessions] = React.useState<ISessionInfo[]>([]);
   const [clients, setClients] = React.useState<IClientInfo[]>([]);
   const [loading, setLoading] = React.useState<boolean>(true);
-
-  const formatDate = React.useCallback((date: string) => {
-    const formattedDate = moment(date).format("MMMM DD YYYY");
-    return formattedDate;
-  }, []);
-
-  React.useEffect(() => {
-    const fetchSessions = async () => {
-      setLoading(true);
-      try {
-        const allSessions = await getAllSessions();
-        allSessions.sort(
-          (a: ISessionInfo, b: ISessionInfo) =>
-            Date.parse(a.date) - Date.parse(b.date)
-        );
-        setSessions(allSessions);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchSessions();
-    //eslint-disable-next-line
-  }, []);
 
   React.useEffect(() => {
     const fetchRecentClients = async () => {
@@ -103,10 +72,7 @@ const AdminDashboard = () => {
             <Grid container spacing={3} sx={{ height: "100%" }}>
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-                  <SessionOverview
-                    sessions={sessions}
-                    formatDate={formatDate}
-                  />
+                  <SessionOverview />
                 </Paper>
               </Grid>
               <Grid item xs={12}>

@@ -1,6 +1,5 @@
 import React from "react";
 
-// import axios from "axios";
 import { Box } from "@mui/material";
 
 import Hero from "./components/Hero";

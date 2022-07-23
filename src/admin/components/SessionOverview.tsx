@@ -16,17 +16,13 @@ import {
 
 import NoInfoAvailable from "./NoInfoAvailable";
 import { ISessionInfo } from "../../hooks/useSessionInfo";
+import { useSessionContext } from "../../context/SessionContext";
 
-interface ISessionOverviewProps {
-  sessions: ISessionInfo[];
-  formatDate: (date: string) => string;
-}
-
-const SessionOverview: React.FC<ISessionOverviewProps> = (props) => {
-  const { sessions, formatDate } = props;
+const SessionOverview: React.FC = () => {
+  const { sessions } = useSessionContext();
   return (
     <>
-      {sessions.length === 0 ? (
+      {sessions !== null && sessions.length === 0 ? (
         <Grid
           item
           sx={{
@@ -47,12 +43,12 @@ const SessionOverview: React.FC<ISessionOverviewProps> = (props) => {
           />
           <Container maxWidth="md" component="main">
             <Grid container spacing={5}>
-              {sessions.map((session: ISessionInfo) => (
+              {sessions?.map((session: ISessionInfo) => (
                 <Grid item key={session.name} xs={12} md={4}>
                   <Card>
                     <CardHeader
                       title={session.name}
-                      subheader={formatDate(session.date)}
+                      subheader={session.date}
                       titleTypographyProps={{ align: "center" }}
                       subheaderTypographyProps={{
                         align: "center",
@@ -93,7 +89,7 @@ const SessionOverview: React.FC<ISessionOverviewProps> = (props) => {
                         >
                           Start Time:&nbsp;
                           {moment(session.startTime, "hh:mm:ss A").format(
-                            "hh:mm A"
+                            "h:mm A"
                           )}
                         </Typography>
                         <Typography
@@ -101,7 +97,10 @@ const SessionOverview: React.FC<ISessionOverviewProps> = (props) => {
                           variant="subtitle1"
                           align="center"
                         >
-                          End Time: {session.endTime}
+                          End Time:{" "}
+                          {moment(session.endTime, "hh:mm:ss A").format(
+                            "h:mm A"
+                          )}
                         </Typography>
                       </ul>
                     </CardContent>
