@@ -20,6 +20,7 @@ const HeroSkeletonLoading = () => {
           paddingTop: { xs: "62px" },
           display: { sm: "flex" },
           alignItems: { sm: "center" },
+          justifyContent: { sm: "space-evenly" },
         }}
       >
         <Stack

@@ -81,8 +81,12 @@ const useCreateSession = () => {
     } else {
       const session = await getSessionById(sessionId);
       const { bucket, key } = session.sessionImage;
-
-      setSessionDetails(session);
+      console.log(session);
+      setSessionDetails({
+        ...session,
+        startTime: moment(session.startTime, "h:mm:ss A"),
+        endTime: moment(session.endTime, "h:mm:ss A"),
+      });
       setImagePreview(`https://${bucket}.s3.amazonaws.com/${key}`);
       // Convert HTML string to draft
       const contentBlock = htmlToDraft(session.sessionDetails);

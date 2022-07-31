@@ -1,6 +1,7 @@
 import React from "react";
 
-import { Box, Grid, Typography } from "@mui/material";
+import { Paper, Typography } from "@mui/material";
+import Carousel from "mui-carousel";
 
 import DisplayServicesOfferedLoading from "../skeletonScreens/DisplayServicesOfferedLoading";
 import useContentful from "../hooks/useContentful";
@@ -13,7 +14,6 @@ const query = /* GraphQL */ `
         serviceImage {
           url
         }
-        serviceDescription
       }
     }
   }
@@ -27,49 +27,35 @@ const DisplayServicesOffered: React.FC = () => {
       {loading ? (
         <DisplayServicesOfferedLoading />
       ) : (
-        <Box
+        <Carousel
           sx={{
-            maxWidth: "100%",
-            flexGrow: 1,
-            flexDirection: "column",
-            paddingTop: "25px",
+            mt: 3,
           }}
+          autoPlay
+          centerMode
+          infinity
+          showSlides={4}
+          spacing={2}
+          speed={3000}
         >
-          <Grid
-            container
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              width: "100%",
-            }}
-          >
-            {data.servicesOfferedCollection?.items.map((service: any) => (
-              <Grid
-                item
-                xs={10}
-                md={3}
-                sm={7}
-                key={service.serviceName}
-                sx={{
-                  backgroundColor: "#f2f0f1",
-                  textAlign: "center",
-                  padding: "30px",
-                  width: "200px",
-                  borderRadius: "10px",
-                  margin: "10px !important",
-                }}
-              >
-                <Typography variant="h5" sx={{ padding: "10px" }}>
-                  {service.serviceName}
-                </Typography>
-                <img src={service.serviceImage.url} />
-                <Typography sx={{ padding: "10px" }}>
-                  {service.serviceDescription}
-                </Typography>
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
+          {data.servicesOfferedCollection?.items.map((service: any) => (
+            <Paper
+              key={service.serviceName}
+              sx={{
+                backgroundColor: "#f2f0f1",
+                textAlign: "center",
+                padding: 2,
+                borderRadius: "10px",
+                margin: 1,
+              }}
+            >
+              <Typography variant="h5" sx={{ padding: 1 }}>
+                {service.serviceName}
+              </Typography>
+              <img src={service.serviceImage.url} />
+            </Paper>
+          ))}
+        </Carousel>
       )}
     </>
   );

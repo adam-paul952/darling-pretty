@@ -53,7 +53,7 @@ const DisplaySessions: React.FC<IDisplaySessionsProps> = (props) => {
           <CardMedia
             component="img"
             sx={{
-              flex: { sm: 0.5 },
+              flex: { sm: 0.5, xl: 0.25 },
               padding: "20px",
               display: { xs: "block" },
             }}

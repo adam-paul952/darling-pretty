@@ -1,12 +1,12 @@
 // import React from "react";
 import { Storage } from "aws-amplify";
 
-interface IImageObject {
-  key?: string;
-  eTag?: string;
-  lastModified?: Date;
-  size?: number;
-}
+// interface IImageObject {
+//   key?: string;
+//   eTag?: string;
+//   lastModified?: Date;
+//   size?: number;
+// }
 
 const useImageStorage = () => {
   const uploadImageToStorage = async (imageData: any) => {

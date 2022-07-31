@@ -18,7 +18,7 @@ const DisplayAvailableSessions = () => {
         container
         rowSpacing={3}
         sx={{
-          marginTop: { md: "20px", sm: "5%", xs: "10%" },
+          marginTop: { sm: "5%", xs: "10%" },
           justifyContent: "center",
           minHeight: { md: "75vh", sm: "60vh", xs: "72vh" },
           alignItems: "center",

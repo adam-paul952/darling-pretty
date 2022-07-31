@@ -69,10 +69,6 @@ const CreateSessionScreen: React.FC = () => {
     // eslint-disable-next-line
   }, []);
 
-  React.useEffect(() => {
-    console.log(listOfImages);
-  }, [listOfImages]);
-
   return (
     <LocalizationProvider dateAdapter={AdapterMoment}>
       <Box

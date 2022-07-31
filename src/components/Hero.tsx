@@ -42,7 +42,7 @@ const Hero: React.FC = () => {
         >
           <Container
             sx={{
-              paddingTop: { xs: "62px" },
+              paddingTop: { xs: 8 },
               display: { sm: "flex" },
               alignItems: { sm: "center" },
             }}
@@ -50,7 +50,7 @@ const Hero: React.FC = () => {
             <Stack
               sx={{
                 alignItems: { xs: "center" },
-                padding: { xs: "10px 0" },
+                padding: { xs: 1 },
               }}
             >
               <Typography variant="h3" sx={{ alignSelf: "flex-start" }}>
@@ -66,7 +66,7 @@ const Hero: React.FC = () => {
                 sx={{
                   width: "200px",
                   fontSize: "16px",
-                  marginTop: "25px",
+                  marginTop: 4,
                   "&:hover": {
                     color: "white",
                     backgroundColor: "darkblue",
@@ -80,7 +80,7 @@ const Hero: React.FC = () => {
             </Stack>
             <Stack
               sx={{
-                padding: { xs: "10px 10px 30px", sm: "10px 10px" },
+                padding: { xs: "10px 10px 30px", sm: 1 },
                 flexBasis: { sm: "fit-content" },
               }}
             >
