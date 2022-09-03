@@ -3,6 +3,7 @@ import React from "react";
 import { Grid, TextField, Typography } from "@mui/material";
 
 import { IClientInfoProps } from "./ContactInformation";
+import { formatPostalCode } from "../../util/formatStrings";
 
 const BillingInformation: React.FC<IClientInfoProps> = (props) => {
   const {
@@ -13,6 +14,19 @@ const BillingInformation: React.FC<IClientInfoProps> = (props) => {
     // province,
     // country
   } = props.newClient;
+
+  const textError = (input: string) => {
+    if (input.length >= 0 && input.length <= 7) {
+      return false;
+    }
+    if (
+      !postalCode.match(
+        /^[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ]( )?\d[ABCEGHJKLMNPRSTVWXYZ]\d$/i
+      )
+    ) {
+      return true;
+    } else return false;
+  };
 
   return (
     <React.Fragment>
@@ -100,9 +114,11 @@ const BillingInformation: React.FC<IClientInfoProps> = (props) => {
             onChange={(e: any) => {
               props.setNewClient({
                 ...props.newClient,
-                postalCode: e.target.value,
+                postalCode: formatPostalCode(e.target.value),
               });
             }}
+            inputProps={{ maxLength: 7 }}
+            // error={textError(postalCode)}
           />
         </Grid>
         <Grid item xs={12} sm={6}>

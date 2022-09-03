@@ -33,6 +33,38 @@ const CheckoutStepper = (props: ICheckoutStepperProps) => {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
+
+  const disableButton = (step: number, clientDetails: any) => {
+    const {
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      addressOne,
+      city,
+      postalCode,
+    } = clientDetails;
+    if (step === 0) {
+      if (!firstName || !lastName || !email || phoneNumber.length < 14) {
+        return true;
+      }
+    } else if (step === 1) {
+      if (!addressOne || !city || postalCode.length !== 7) {
+        return true;
+      }
+    } else {
+      return false;
+    }
+  };
+
+  // React.useEffect(() => {
+  //   console.log(clientDetails);
+  // }, [clientDetails]);
+
+  React.useEffect(() => {
+    console.log(clientDetails.postalCode);
+  }, [clientDetails.postalCode]);
+
   return (
     <>
       {getStepContent(activeStep, clientDetails, setClientDetails, session)}
@@ -52,6 +84,7 @@ const CheckoutStepper = (props: ICheckoutStepperProps) => {
           <Button
             variant="contained"
             onClick={handleNext}
+            // disabled={disableButton(activeStep, clientDetails)}
             sx={{
               mt: 3,
               ml: 1,
