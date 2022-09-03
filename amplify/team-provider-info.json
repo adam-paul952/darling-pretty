@@ -1,39 +1,36 @@
 {
-  "dev": {
-    "awscloudformation": {
-      "AuthRoleName": "amplify-darlingpretty-dev-163848-authRole",
-      "UnauthRoleArn": "arn:aws:iam::318571327234:role/amplify-darlingpretty-dev-163848-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::318571327234:role/amplify-darlingpretty-dev-163848-authRole",
-      "Region": "ca-central-1",
-      "DeploymentBucketName": "amplify-darlingpretty-dev-163848-deployment",
-      "UnauthRoleName": "amplify-darlingpretty-dev-163848-unauthRole",
-      "StackName": "amplify-darlingpretty-dev-163848",
-      "StackId": "arn:aws:cloudformation:ca-central-1:318571327234:stack/amplify-darlingpretty-dev-163848/c222d320-e8f0-11ec-a70f-0a831d0e4748",
-      "AmplifyAppId": "d39vzlhubvd4cd"
-    },
-    "categories": {
-      "auth": {
-        "darlingpretty6659593d": {},
-        "true": {}
-      },
-      "function": {
-        "contactFormUploader": {
-          "sesEmail": "adam.paul@live.com",
-          "deploymentBucketName": "amplify-darlingpretty-dev-163848-deployment",
-          "s3Key": "amplify-builds/contactFormUploader-4844585458517948327a-build.zip"
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-darlingpretty-dev-163848-authRole",
+            "UnauthRoleArn": "arn:aws:iam::318571327234:role/amplify-darlingpretty-dev-163848-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::318571327234:role/amplify-darlingpretty-dev-163848-authRole",
+            "Region": "ca-central-1",
+            "DeploymentBucketName": "amplify-darlingpretty-dev-163848-deployment",
+            "UnauthRoleName": "amplify-darlingpretty-dev-163848-unauthRole",
+            "StackName": "amplify-darlingpretty-dev-163848",
+            "StackId": "arn:aws:cloudformation:ca-central-1:318571327234:stack/amplify-darlingpretty-dev-163848/c222d320-e8f0-11ec-a70f-0a831d0e4748",
+            "AmplifyAppId": "d39vzlhubvd4cd"
         },
-        "orderConfirmationSender": {
-          "deploymentBucketName": "amplify-darlingpretty-dev-163848-deployment",
-          "s3Key": "amplify-builds/orderConfirmationSender-694651682f5434726968-build.zip",
-          "sesEmail": "adam.paul@live.com"
+        "categories": {
+            "auth": {
+                "darlingpretty6659593d": {}
+            },
+            "function": {
+                "contactFormUploader": {
+                    "deploymentBucketName": "amplify-darlingpretty-dev-163848-deployment",
+                    "s3Key": "amplify-builds/contactFormUploader-4844585458517948327a-build.zip"
+                },
+                "orderConfirmationSender": {
+                    "deploymentBucketName": "amplify-darlingpretty-dev-163848-deployment",
+                    "s3Key": "amplify-builds/orderConfirmationSender-694651682f5434726968-build.zip"
+                }
+            },
+            "hosting": {
+                "amplifyhosting": {
+                    "appId": "d39vzlhubvd4cd",
+                    "type": "manual"
+                }
+            }
         }
-      },
-      "hosting": {
-        "amplifyhosting": {
-          "appId": "d39vzlhubvd4cd",
-          "type": "manual"
-        }
-      }
     }
-  }
 }
