@@ -5,4 +5,6 @@ const plugins = [
   ],
 ];
 
-module.exports = { plugins };
+const presets = ["@babel/preset-env", "@babel/preset-react"];
+
+module.exports = { plugins, presets };

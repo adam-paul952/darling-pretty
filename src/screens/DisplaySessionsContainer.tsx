@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet";
 
 import { Grid } from "@mui/material";
 
@@ -14,6 +15,13 @@ const DisplayAvailableSessions = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Darling Pretty Photography - Sessions</title>
+        <meta
+          name="description"
+          content="View all available sessions offered by Darling Pretty Photography"
+        ></meta>
+      </Helmet>
       <Grid
         container
         rowSpacing={3}

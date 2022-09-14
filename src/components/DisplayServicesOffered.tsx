@@ -1,7 +1,10 @@
 import React from "react";
+import Slider from "react-slick";
 
 import { Paper, Typography } from "@mui/material";
 import Carousel from "mui-carousel";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 import DisplayServicesOfferedLoading from "../skeletonScreens/DisplayServicesOfferedLoading";
 import useContentful from "../hooks/useContentful";
@@ -22,22 +25,33 @@ const query = /* GraphQL */ `
 const DisplayServicesOffered: React.FC = () => {
   const { data, loading } = useContentful(query);
 
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 3000,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    autoplay: true,
+    arrows: false,
+    draggable: false,
+    pauseOnHover: false,
+  };
   return (
     <>
       {loading ? (
         <DisplayServicesOfferedLoading />
       ) : (
-        <Carousel
-          sx={{
-            mt: 3,
-          }}
-          autoPlay
-          centerMode
-          infinity
-          showSlides={4}
-          spacing={2}
-          speed={3000}
-        >
+        // <Carousel
+        //   sx={{
+        //     mt: 3,
+        //   }}
+        //   autoPlay
+        //   infinity={true}
+        //   showSlides={4}
+        //   spacing={2}
+        //   speed={3000}
+        // >
+        <Slider {...settings}>
           {data.servicesOfferedCollection?.items.map((service: any) => (
             <Paper
               key={service.serviceName}
@@ -55,7 +69,8 @@ const DisplayServicesOffered: React.FC = () => {
               <img src={service.serviceImage.url} />
             </Paper>
           ))}
-        </Carousel>
+        </Slider>
+        // </Carousel>
       )}
     </>
   );
