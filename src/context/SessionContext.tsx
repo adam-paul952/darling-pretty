@@ -40,13 +40,13 @@ const useSessionContext = () => {
     fetchSessions();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  return { sessions };
+  return { sessions, setSessions };
 };
 
 const SessionProvider = ({ children }: { children: React.ReactNode }) => {
-  const { sessions } = useSessionContext();
+  const { sessions, setSessions } = useSessionContext();
   return (
-    <SessionContext.Provider value={{ sessions }}>
+    <SessionContext.Provider value={{ sessions, setSessions }}>
       {children}
     </SessionContext.Provider>
   );

@@ -15,11 +15,17 @@ import {
 } from "@mui/material";
 
 import NoInfoAvailable from "./NoInfoAvailable";
-import { ISessionInfo } from "../../hooks/useSessionInfo";
+import useSessionInfo, { ISessionInfo } from "../../hooks/useSessionInfo";
 import { useSessionContext } from "../../context/SessionContext";
 
 const SessionOverview: React.FC = () => {
-  const { sessions } = useSessionContext();
+  const { sessions, setSessions } = useSessionContext();
+  const { removeSession } = useSessionInfo();
+
+  const deleteSession = (id: string) => {
+    if (id !== undefined) removeSession(id);
+    setSessions(() => sessions!.filter((session) => session.id !== id));
+  };
   return (
     <>
       {sessions !== null && sessions.length === 0 ? (
@@ -122,6 +128,24 @@ const SessionOverview: React.FC = () => {
                         }}
                       >
                         Edit Session
+                      </Button>
+                    </CardActions>
+                    <CardActions>
+                      <Button
+                        fullWidth
+                        onClick={() => deleteSession(session.id!)}
+                        variant="outlined"
+                        sx={{
+                          color: "red",
+                          border: "1px solid red",
+                          "&:hover": {
+                            color: "red",
+                            border: "1px solid red",
+                            backgroundColor: "rgba(0, 0, 0, 0.04)",
+                          },
+                        }}
+                      >
+                        Delete Session
                       </Button>
                     </CardActions>
                   </Card>

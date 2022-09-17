@@ -25,6 +25,8 @@ const DisplaySessions: React.FC<IDisplaySessionsProps> = (props) => {
             transition: "all 0.2s ease-in-out",
             "&:hover": { transform: "scale(1.03)" },
             flexDirection: { xs: "column", sm: "row" },
+            // width: { lg: "70%", md: "90%" },
+            margin: "auto",
           }}
         >
           <CardContent
@@ -37,25 +39,24 @@ const DisplaySessions: React.FC<IDisplaySessionsProps> = (props) => {
               justifyContent: "center",
             }}
           >
-            <Typography component="h2" variant="h5">
-              {session.name}
-            </Typography>
+            <Typography variant="h5">{session.name}</Typography>
             <Typography variant="subtitle1" color="text.secondary">
               {session.date}
             </Typography>
             <Typography variant="subtitle1" paragraph>
               {session.price}
             </Typography>
-            <Typography variant="h5" color="primary" sx={{ color: "#000" }}>
+            <Typography color="primary" sx={{ color: "#000" }}>
               Check Availabilities
             </Typography>
           </CardContent>
           <CardMedia
             component="img"
             sx={{
-              flex: { sm: 0.5, xl: 0.25 },
+              // flex: { sm: 0.5, xl: 0.25 },
               padding: "20px",
               display: { xs: "block" },
+              width: "50%",
             }}
             src={session.sessionImage.name}
             alt="Darling Pretty Logo"

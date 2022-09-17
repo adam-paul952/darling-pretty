@@ -105,7 +105,7 @@ const Checkout = () => {
       <Container
         component="main"
         maxWidth="sm"
-        sx={{ my: 4, minHeight: { md: "66vh" } }}
+        sx={{ marginTop: { lg: "75px", sm: "80px" }, marginBottom: 4 }}
       >
         <Paper
           elevation={5}

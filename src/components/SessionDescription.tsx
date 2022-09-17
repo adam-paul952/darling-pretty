@@ -27,7 +27,7 @@ const SessionDescription: React.FC<ISessionDescriptionProps> = (props) => {
   });
 
   return (
-    <Container sx={{ marginTop: { xs: "75px" }, minHeight: { md: "68vh" } }}>
+    <Container sx={{ marginTop: { lg: "75px", sm: "80px", xs: "75px" } }}>
       <Paper elevation={5} sx={{ padding: { xs: "20px 10px" } }}>
         <Grid
           container

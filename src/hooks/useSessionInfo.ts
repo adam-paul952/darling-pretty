@@ -1,9 +1,15 @@
 import React from "react";
+
 import { API, graphqlOperation } from "aws-amplify";
-import { createSessions, updateSessions } from "../graphql/mutations";
+import {
+  createSessions,
+  updateSessions,
+  deleteSessions,
+} from "../graphql/mutations";
 import { getSessions } from "../graphql/queries";
 import { listCompleteSessions } from "../graphql/customQueries";
 import awsmobile from "../aws-exports";
+
 import useImageStorage from "./useImageStorage";
 import moment from "moment";
 
@@ -21,6 +27,8 @@ export interface ISessionInfo {
   availableTimes?: string[];
   bookings?: IBookingInfo[];
   _version?: number;
+  updatedAt?: Date;
+  createdAt?: Date;
 }
 
 export type ImageUploadT = {
@@ -50,10 +58,12 @@ const useSessionInfo = () => {
 
   const [isLoading, setLoading] = React.useState<boolean>(false);
 
+  // construct available bookings array for session
   const getAvailableBookings = (
     startTime: string,
     endTime: string,
-    length: number
+    length: number,
+    bookings?: IBookingInfo[]
   ) => {
     const availableBookings: string[] = [];
     const start = moment(startTime, "HH:mm:ss A");
@@ -71,9 +81,17 @@ const useSessionInfo = () => {
         );
       }
     }
+    if (bookings !== undefined)
+      if (bookings.length === 0) return availableBookings;
+      else
+        for (let i = 0; i < bookings.length + 1; i++) {
+          availableBookings.filter((time) => time !== bookings[i].startTime);
+          return availableBookings;
+        }
     return availableBookings;
   };
 
+  // create new session
   const createNewSession = async (newSession: ISessionInfo) => {
     setLoading(true);
     const { name, type } = newSession.sessionImage;
@@ -110,6 +128,7 @@ const useSessionInfo = () => {
     }
   };
 
+  // get all available sessions from DB
   const getAllSessions = async () => {
     setLoading(true);
     try {
@@ -125,6 +144,7 @@ const useSessionInfo = () => {
     }
   };
 
+  // get particular session by ID
   const getSessionById = async (sessionId: string) => {
     try {
       const session: any = await API.graphql(
@@ -136,25 +156,26 @@ const useSessionInfo = () => {
     }
   };
 
+  // update session details
   const adminUpateSession = async (session: ISessionInfo) => {
     setLoading(true);
     try {
       const updateSession: any = await API.graphql(
         graphqlOperation(updateSessions, {
-          input: {
-            session,
-          },
+          input: session,
         })
       );
 
       return updateSession;
     } catch (error) {
       console.log(error);
+      return error;
     } finally {
       setLoading(false);
     }
   };
 
+  // update bookings array with client info
   const updateBookingWithClient = async (
     updatedSessionDetails: IUpdateSessionWithClientProps
   ) => {
@@ -179,6 +200,16 @@ const useSessionInfo = () => {
     }
   };
 
+  const removeSession = async (id: string) => {
+    try {
+      await API.graphql(graphqlOperation(deleteSessions, { input: { id } }));
+      console.log(`Session successfull deleted`);
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
+  };
+
   return {
     isLoading,
     createNewSession,
@@ -187,6 +218,7 @@ const useSessionInfo = () => {
     updateBookingWithClient,
     adminUpateSession,
     getAvailableBookings,
+    removeSession,
   };
 };
 

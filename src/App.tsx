@@ -5,9 +5,15 @@ import { Box } from "@mui/material";
 import Hero from "./components/Hero";
 import DisplayServicesOffered from "./components/DisplayServicesOffered";
 
+import useContentful from "./hooks/useContentful";
+import { heroQuery, servicesQuery } from "./util/contentfulQuery";
+
 // import { Authenticator } from "@aws-amplify/ui-react";
 
 const App: React.FC = () => {
+  const heroData = useContentful(heroQuery);
+  const servicesData = useContentful(servicesQuery);
+
   return (
     <>
       <Helmet>
@@ -17,17 +23,11 @@ const App: React.FC = () => {
           content="Home page view services offered by Darling Pretty Photography"
         ></meta>
       </Helmet>
-      <Box
-        sx={{
-          maxWidth: "100%",
-          width: "100%",
-          height: "100%",
-          maxHeight: "100%",
-        }}
-      >
+
+      <Box>
         {/* <Authenticator hideSignUp={true}> */}
-        <Hero />
-        <DisplayServicesOffered />
+        <Hero heroData={heroData} />
+        <DisplayServicesOffered servicesData={servicesData} />
         {/* </Authenticator> */}
       </Box>
     </>

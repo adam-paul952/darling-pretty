@@ -23,7 +23,8 @@ const theme = createTheme({
   components: {
     MuiCssBaseline: {
       styleOverrides: {
-        body: { backgroundColor: "gainsboro" },
+        html: { height: "100vh" },
+        body: { backgroundColor: "gainsboro", minHeight: "100%" },
       },
     },
   },

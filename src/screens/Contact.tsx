@@ -57,14 +57,6 @@ const ContactForm = () => {
       </Helmet>
 
       <Container sx={{ backgroundColor: "gainsboro", mt: { xs: 10 } }}>
-        {/* <Box
-        sx={{
-          // flexGrow: 1,
-          padding: "12px",
-          maxWidth: "755px",
-          margin: "6px auto 12px",
-        }}
-      > */}
         <Paper elevation={4} sx={{ p: { xs: 2 } }}>
           <Typography variant="h4" sx={{ textAlign: "center" }}>
             Reach out with any questions or comments!
@@ -150,6 +142,9 @@ const ContactForm = () => {
                   marginLeft: "auto",
                   marginRight: "auto",
                   padding: "0 !important",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
                 }}
               >
                 <ReCAPTCHAV2
@@ -182,7 +177,6 @@ const ContactForm = () => {
             )}
           </Box>
         </Paper>
-        {/* </Box> */}
       </Container>
     </>
   );

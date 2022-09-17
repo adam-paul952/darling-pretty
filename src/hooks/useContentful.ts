@@ -17,6 +17,7 @@ const useContentful = (query: string) => {
       Accept: "application/json",
     },
   };
+
   const getPageData = async () => {
     setLoading(true);
     try {

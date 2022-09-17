@@ -1,11 +1,36 @@
 import React from "react";
+import Slider from "react-slick";
 
 import { Paper, Skeleton } from "@mui/material";
-import Carousel from "mui-carousel";
 
 const DisplayServicesOfferedLoading = () => {
+  const settings = {
+    slidesToShow: 4,
+    autoplay: false,
+    responsive: [
+      {
+        breakpoint: 1023,
+        settings: {
+          slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
+  };
+
   return (
-    <Carousel showSlides={4} autoPlay={false} sx={{ mt: 4 }} spacing={2}>
+    <Slider {...settings}>
       {Array.from(Array(4).keys()).map((_, index) => (
         <Paper
           key={index}
@@ -30,7 +55,7 @@ const DisplayServicesOfferedLoading = () => {
           />
         </Paper>
       ))}
-    </Carousel>
+    </Slider>
   );
 };
 

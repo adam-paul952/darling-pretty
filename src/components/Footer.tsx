@@ -5,24 +5,7 @@ import { FacebookRounded } from "@mui/icons-material";
 
 import useContentful from "../hooks/useContentful";
 
-const query = /* GraphQL */ `
-  query {
-    footerCollection {
-      items {
-        name
-        navLinksCollection {
-          items {
-            navLink
-            linkText
-          }
-        }
-        email
-        phoneNumber
-        facebookLink
-      }
-    }
-  }
-`;
+import { footerQuery } from "../util/contentfulQuery";
 
 interface INavLinkCollectionDetails {
   linkText: string;
@@ -30,7 +13,7 @@ interface INavLinkCollectionDetails {
 }
 
 const Footer = () => {
-  const { data, loading } = useContentful(query);
+  const { data, loading } = useContentful(footerQuery);
 
   if (loading) {
     return null;
@@ -92,9 +75,9 @@ const Footer = () => {
           md={3}
           sx={{
             display: "flex",
-            flexDirection: { xs: "column" },
+            flexDirection: { xs: "row", md: "column" },
             alignItems: { xs: "center" },
-            justifyContent: { md: "center" },
+            justifyContent: { xs: "space-evenly", md: "center" },
           }}
         >
           <Typography sx={{ color: "#fff", paddingTop: { md: "6px" } }}>

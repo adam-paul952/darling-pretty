@@ -16,27 +16,12 @@ import { Menu } from "@mui/icons-material";
 
 import useContentful from "../hooks/useContentful";
 import MobileHeaderDrawer from "./MobileHeaderDrawer";
-
-const query = /* GraphQL */ `
-  query {
-    headerCollection {
-      items {
-        name
-        navLinksCollection {
-          items {
-            linkText
-            navLink
-          }
-        }
-      }
-    }
-  }
-`;
+import { headerQuery } from "../util/contentfulQuery";
 
 const drawerWidth = 200;
 
 const Header: React.FC = () => {
-  const { data, loading } = useContentful(query);
+  const { data, loading } = useContentful(headerQuery);
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {

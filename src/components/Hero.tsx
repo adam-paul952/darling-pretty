@@ -3,26 +3,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Container, Paper, Stack, Typography } from "@mui/material";
 
-import useContentful from "../hooks/useContentful";
 import HeroSkeletonLoading from "../skeletonScreens/HeroLoading";
 
-const query = /* GraphQL */ `
-  query {
-    heroSectionCollection {
-      items {
-        heroTitle
-        heroSubTitle
-        heroButtonText
-        heroImage {
-          url
-        }
-      }
-    }
-  }
-`;
+interface IHeroProps {
+  heroData: { data: any; loading: boolean };
+}
 
-const Hero: React.FC = () => {
-  const { data, loading } = useContentful(query);
+const Hero = (props: IHeroProps) => {
+  const { data, loading } = props.heroData;
 
   return (
     <>
@@ -86,7 +74,7 @@ const Hero: React.FC = () => {
             >
               <img
                 src={data.heroSectionCollection?.items[0].heroImage.url}
-                alt="Darling Pretty Logo"
+                alt={data.heroSectionCollection?.items[0].imageAltText}
                 className="img-fluid"
               />
             </Stack>

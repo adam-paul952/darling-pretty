@@ -6,13 +6,17 @@ import htmlToDraft from "html-to-draftjs";
 import useSessionInfo, { ISessionInfo } from "./useSessionInfo";
 import { EditorState, ContentState } from "draft-js";
 
+import useImageStorage from "../hooks/useImageStorage";
+
 const useCreateSession = () => {
   const {
     createNewSession,
     getSessionById,
-    // adminUpateSession,
+    adminUpateSession,
     getAvailableBookings,
   } = useSessionInfo();
+
+  const { listStorageItems } = useImageStorage();
 
   const initialSessionState = {
     id: "",
@@ -51,20 +55,23 @@ const useCreateSession = () => {
     });
   };
 
+  const availableBookings = getAvailableBookings(
+    sessionDetails.startTime,
+    sessionDetails.endTime,
+    sessionDetails.sessionLength,
+    sessionDetails.bookings
+  );
+
+  const sessionData = {
+    ...sessionDetails,
+    date: moment(sessionDetails.date).format("YYYY-MM-DD"),
+    startTime: moment(sessionDetails.startTime).format("h:mm:ss A"),
+    endTime: moment(sessionDetails.endTime).format("h:mm:ss A"),
+    availableTimes: availableBookings,
+  };
+
   const onCreateSession = async () => {
-    const availableBookings = getAvailableBookings(
-      sessionDetails.startTime,
-      sessionDetails.endTime,
-      sessionDetails.sessionLength
-    );
     try {
-      const sessionData = {
-        ...sessionDetails,
-        date: moment(sessionDetails.date).format("YYYY-MM-DD"),
-        startTime: moment(sessionDetails.startTime).format("h:mm:ss A"),
-        endTime: moment(sessionDetails.endTime).format("h:mm:ss A"),
-        availableTimes: availableBookings,
-      };
       await createNewSession(sessionData);
       resetFormData();
       alert("Session created successfully");
@@ -100,6 +107,17 @@ const useCreateSession = () => {
   };
 
   const onEditSession = async () => {
+    const editedSession = { ...sessionData };
+    delete editedSession.createdAt;
+    delete editedSession.updatedAt;
+
+    try {
+      const updated = await adminUpateSession(editedSession);
+      console.log(`Session updated successfully`);
+      console.log(updated);
+    } catch (err) {
+      console.log(err);
+    }
     return null;
   };
 
@@ -107,6 +125,13 @@ const useCreateSession = () => {
     setSessionDetails(initialSessionState);
     setImagePreview("");
     setEditorState(EditorState.createEmpty());
+  };
+
+  const [listOfImages, setListOfImages] = React.useState<any>([]);
+
+  const listItemsFromStorage = async () => {
+    const items = await listStorageItems();
+    setListOfImages(items);
   };
 
   return {
@@ -121,6 +146,8 @@ const useCreateSession = () => {
     checkForEdit,
     onEditSession,
     isLoading,
+    listItemsFromStorage,
+    listOfImages,
   };
 };
 

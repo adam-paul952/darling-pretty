@@ -16,5 +16,3 @@ const router = () => {
 };
 
 export default router;
-
-// TODO: Suspense fallback component for skeleton loading screens

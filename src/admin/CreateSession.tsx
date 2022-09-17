@@ -21,7 +21,6 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 
-import useImageStorage from "../hooks/useImageStorage";
 import useCreateSession from "../hooks/useCreateSession";
 
 interface ICreateSessionLocation {
@@ -29,7 +28,6 @@ interface ICreateSessionLocation {
 }
 
 const CreateSessionScreen: React.FC = () => {
-  const { listStorageItems } = useImageStorage();
   const { sessionId } = useLocation().state as ICreateSessionLocation;
 
   const {
@@ -43,9 +41,10 @@ const CreateSessionScreen: React.FC = () => {
     onCreateSession,
     checkForEdit,
     onEditSession,
+    listItemsFromStorage,
+    listOfImages,
   } = useCreateSession();
 
-  const [listOfImages, setListOfImages] = React.useState<any>([]);
   const [dropdownText, setDropdownText] = React.useState<string>(
     "Previously Uploaded Images"
   );
@@ -57,14 +56,6 @@ const CreateSessionScreen: React.FC = () => {
 
   React.useEffect(() => {
     checkForEdit(sessionId);
-    // eslint-disable-next-line
-  }, []);
-
-  React.useEffect(() => {
-    const listItemsFromStorage = async () => {
-      const items = await listStorageItems();
-      setListOfImages(items);
-    };
     listItemsFromStorage();
     // eslint-disable-next-line
   }, []);
@@ -92,8 +83,8 @@ const CreateSessionScreen: React.FC = () => {
           }}
         >
           <Typography
-            variant="h3"
-            sx={{ textAlign: "center", marginTop: "70px" }}
+            variant="h4"
+            sx={{ textAlign: "center", marginTop: "75px" }}
           >
             {sessionId ? "Edit Session" : "Create Session"}
           </Typography>
