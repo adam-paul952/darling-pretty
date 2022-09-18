@@ -24,7 +24,7 @@ const App: React.FC = () => {
         ></meta>
       </Helmet>
 
-      <Box>
+      <Box sx={{ paddingBottom: { xxl: 39.5 } }}>
         {/* <Authenticator hideSignUp={true}> */}
         <Hero heroData={heroData} />
         <DisplayServicesOffered servicesData={servicesData} />

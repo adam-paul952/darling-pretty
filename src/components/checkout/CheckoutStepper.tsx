@@ -75,6 +75,13 @@ const CheckoutStepper = (props: ICheckoutStepperProps) => {
           </Button>
         )}
         {activeStep === stepLength - 1 ? (
+          // <Button
+          //   onClick={() => {
+          //     setStatus({ status: "COMPLETED" });
+          //   }}
+          // >
+          //   Test Client Add
+          // </Button>
           <Paypal
             price={session.price!.toString()}
             sessionName={session.name}
@@ -84,7 +91,7 @@ const CheckoutStepper = (props: ICheckoutStepperProps) => {
           <Button
             variant="contained"
             onClick={handleNext}
-            // disabled={disableButton(activeStep, clientDetails)}
+            disabled={disableButton(activeStep, clientDetails)}
             sx={{
               mt: 3,
               ml: 1,

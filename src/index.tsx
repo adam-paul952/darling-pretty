@@ -19,13 +19,30 @@ import { Amplify } from "aws-amplify";
 import awsExports from "./aws-exports";
 Amplify.configure(awsExports);
 
+declare module "@mui/material/styles" {
+  export interface BreakpointOverrides {
+    xxl: true;
+  }
+}
+
 const theme = createTheme({
   components: {
     MuiCssBaseline: {
       styleOverrides: {
         html: { height: "100vh" },
         body: { backgroundColor: "gainsboro", minHeight: "100%" },
+        "#root": { minHeight: "100vh" },
       },
+    },
+  },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
+      xxl: 1700,
     },
   },
 });

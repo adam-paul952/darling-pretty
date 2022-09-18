@@ -31,7 +31,6 @@ const DisplayAvailableSessions = () => {
           sx={{
             marginTop: { sm: "5%", xs: "10%" },
             justifyContent: "center",
-            // minHeight: { md: "75vh", sm: "60vh", xs: "72vh" },
             alignItems: "center",
           }}
         >

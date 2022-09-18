@@ -25,7 +25,6 @@ const DisplaySessions: React.FC<IDisplaySessionsProps> = (props) => {
             transition: "all 0.2s ease-in-out",
             "&:hover": { transform: "scale(1.03)" },
             flexDirection: { xs: "column", sm: "row" },
-            // width: { lg: "70%", md: "90%" },
             margin: "auto",
           }}
         >

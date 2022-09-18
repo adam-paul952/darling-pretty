@@ -27,7 +27,12 @@ const SessionDescription: React.FC<ISessionDescriptionProps> = (props) => {
   });
 
   return (
-    <Container sx={{ marginTop: { lg: "75px", sm: "80px", xs: "75px" } }}>
+    <Container
+      sx={{
+        marginTop: { lg: "75px", sm: "80px", xs: "75px" },
+        paddingBottom: 2.8,
+      }}
+    >
       <Paper elevation={5} sx={{ padding: { xs: "20px 10px" } }}>
         <Grid
           container
@@ -54,7 +59,9 @@ const SessionDescription: React.FC<ISessionDescriptionProps> = (props) => {
               sx={{ padding: "10px 0" }}
               dangerouslySetInnerHTML={sanitizeData()}
             />
-            <Typography sx={{ padding: "10px 0" }}>{session.date}</Typography>
+            <Typography sx={{ padding: "10px 0", fontWeight: 600 }}>
+              {session.date}
+            </Typography>
             <Typography sx={{ padding: "5px 0" }}>Available Times:</Typography>
             <ShowAvailableTime
               session={session}

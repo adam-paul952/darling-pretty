@@ -12,13 +12,14 @@ import awsmobile from "../aws-exports";
 
 import useImageStorage from "./useImageStorage";
 import moment from "moment";
+import useCheckout from "./useCheckout";
 
 export interface ISessionInfo {
   id?: string;
   name: string;
   date: string;
-  startTime: string;
-  endTime: string;
+  startTime: string | null;
+  endTime: string | null;
   sessionLength: number;
   sessionInfo: string;
   price: number | undefined;
@@ -55,21 +56,23 @@ export interface IBookingInfo {
 
 const useSessionInfo = () => {
   const { uploadImageToStorage } = useImageStorage();
+  const { filterAvailableTimes } = useCheckout();
 
   const [isLoading, setLoading] = React.useState<boolean>(false);
 
   // construct available bookings array for session
   const getAvailableBookings = (
-    startTime: string,
-    endTime: string,
+    startTime: string | null,
+    endTime: string | null,
     length: number,
     bookings?: IBookingInfo[]
   ) => {
-    const availableBookings: string[] = [];
+    let availableBookings: string[] = [];
     const start = moment(startTime, "HH:mm:ss A");
     const end = moment(endTime, "HH:mm:ss A");
     const numberOfSessions =
       moment.duration(end.diff(start)).asMinutes() / length;
+
     for (let i = 0; i < Math.round(numberOfSessions) + 1; i++) {
       if (i === 0) {
         availableBookings.push(start.format("hh:mm A"));
@@ -81,13 +84,19 @@ const useSessionInfo = () => {
         );
       }
     }
-    if (bookings !== undefined)
+
+    if (bookings !== undefined) {
       if (bookings.length === 0) return availableBookings;
-      else
-        for (let i = 0; i < bookings.length + 1; i++) {
-          availableBookings.filter((time) => time !== bookings[i].startTime);
+      else {
+        for (let i = 0; i < bookings.length; i++) {
+          availableBookings = filterAvailableTimes(
+            availableBookings,
+            bookings[i].startTime
+          );
           return availableBookings;
         }
+      }
+    }
     return availableBookings;
   };
 

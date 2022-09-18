@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 
-import { Navigate, useLocation, Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { Box } from "@mui/material";
 
 import { useAuthContext } from "../context/AuthContext";
@@ -12,7 +12,6 @@ import Loading from "./Loading";
 const ProtectedRoute: React.FC = () => {
   const { unreadMessage } = useContactForm();
   const { authState } = useAuthContext();
-  const location = useLocation();
 
   const [open, setOpen] = React.useState(false);
 
@@ -33,7 +32,7 @@ const ProtectedRoute: React.FC = () => {
       </Suspense>
     </Box>
   ) : (
-    <Navigate to="/login" replace state={{ pathname: location.pathname }} />
+    <Navigate to="/login" replace state={{ pathname: "/admin/dashboard" }} />
   );
 };
 

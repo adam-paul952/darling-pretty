@@ -18,8 +18,7 @@ import {
 } from "@mui/material";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import { DatePicker, MobileTimePicker } from "@mui/x-date-pickers";
 
 import useCreateSession from "../hooks/useCreateSession";
 
@@ -78,8 +77,7 @@ const CreateSessionScreen: React.FC = () => {
           sx={{
             height: "inherit",
             maxWidth: "80%",
-            marginLeft: "auto",
-            marginRight: "auto",
+            mx: "auto",
           }}
         >
           <Typography
@@ -106,10 +104,10 @@ const CreateSessionScreen: React.FC = () => {
                   disableMaskedInput
                   value={sessionDetails.date}
                   onChange={(newValue: any) => {
-                    setSessionDetails({
-                      ...sessionDetails,
+                    setSessionDetails((prev) => ({
+                      ...prev,
                       date: newValue,
-                    });
+                    }));
                   }}
                   renderInput={(params) => (
                     <TextField {...params} error={false} />
@@ -123,10 +121,10 @@ const CreateSessionScreen: React.FC = () => {
                   variant="outlined"
                   value={sessionDetails.name}
                   onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                    setSessionDetails({
-                      ...sessionDetails,
+                    setSessionDetails((prev) => ({
+                      ...prev,
                       name: event.target.value,
-                    })
+                    }))
                   }
                 />
               </FormControl>
@@ -137,10 +135,10 @@ const CreateSessionScreen: React.FC = () => {
                   variant="outlined"
                   value={sessionDetails.price === 0 ? "" : sessionDetails.price}
                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                    setSessionDetails({
-                      ...sessionDetails,
+                    setSessionDetails((prev) => ({
+                      ...prev,
                       price: parseInt(event.target.value, 10),
-                    });
+                    }));
                   }}
                 />
               </FormControl>
@@ -156,33 +154,35 @@ const CreateSessionScreen: React.FC = () => {
               }}
             >
               <FormControl sx={{ width: "30%" }}>
-                <TimePicker
+                <MobileTimePicker
                   label="Start Time"
                   value={sessionDetails.startTime}
-                  onChange={(newValue: any) => {
-                    setSessionDetails({
-                      ...sessionDetails,
+                  onChange={(newValue: string | null) => {
+                    setSessionDetails((prev) => ({
+                      ...prev,
                       startTime: newValue,
-                    });
+                    }));
                   }}
-                  renderInput={(params) => (
-                    <TextField {...params} error={false} />
-                  )}
+                  renderInput={(params) => <TextField {...params} />}
+                  minutesStep={15}
+                  closeOnSelect
                 />
               </FormControl>
               <FormControl sx={{ width: "30%" }}>
-                <TimePicker
+                <MobileTimePicker
                   label="End Time"
                   value={sessionDetails.endTime}
-                  onChange={(newValue: any) => {
-                    setSessionDetails({
-                      ...sessionDetails,
+                  onChange={(newValue: string | null) =>
+                    setSessionDetails((prev) => ({
+                      ...prev,
                       endTime: newValue,
-                    });
-                  }}
+                    }))
+                  }
                   renderInput={(params) => (
                     <TextField {...params} error={false} />
                   )}
+                  minutesStep={15}
+                  closeOnSelect
                 />
               </FormControl>
               <FormControl sx={{ width: "30%" }}>
@@ -196,10 +196,10 @@ const CreateSessionScreen: React.FC = () => {
                       : sessionDetails.sessionLength
                   }
                   onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                    setSessionDetails({
-                      ...sessionDetails,
+                    setSessionDetails((prev) => ({
+                      ...prev,
                       sessionLength: parseInt(event.target.value, 10),
-                    })
+                    }))
                   }
                 />
               </FormControl>
@@ -283,10 +283,10 @@ const CreateSessionScreen: React.FC = () => {
                   variant="outlined"
                   value={sessionDetails.sessionInfo}
                   onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                    setSessionDetails({
-                      ...sessionDetails,
+                    setSessionDetails((prev) => ({
+                      ...prev,
                       sessionInfo: event.target.value,
-                    })
+                    }))
                   }
                 />
               </FormControl>
@@ -302,12 +302,12 @@ const CreateSessionScreen: React.FC = () => {
                 editorClassName="editor"
                 onEditorStateChange={(newState: any) => {
                   setEditorState(newState);
-                  setSessionDetails({
-                    ...sessionDetails,
+                  setSessionDetails((prev) => ({
+                    ...prev,
                     sessionDetails: draftToHtml(
                       convertToRaw(newState.getCurrentContent())
                     ),
-                  });
+                  }));
                 }}
               />
             </Stack>

@@ -5,7 +5,7 @@ import { Box, Button, Typography } from "@mui/material";
 
 const OrderConfirmation = ({ orderId }: { orderId: string }) => {
   return (
-    <Box>
+    <Box sx={{ marginBottom: "139px" }}>
       <Typography variant="h5" gutterBottom>
         Thank you for your order.
       </Typography>

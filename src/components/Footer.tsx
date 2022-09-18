@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Button, Grid, Link, Typography } from "@mui/material";
+import { Button, Box, Grid, Link, Typography } from "@mui/material";
 import { FacebookRounded } from "@mui/icons-material";
 
 import useContentful from "../hooks/useContentful";
@@ -20,7 +20,7 @@ const Footer = () => {
   }
 
   return (
-    <>
+    <Box>
       <hr style={{ marginTop: "30px" }} />
       <Grid
         container
@@ -125,7 +125,10 @@ const Footer = () => {
             alignSelf: { md: "center" },
           }}
         >
-          <Link href={data.footerCollection?.items[0].facebookLink}>
+          <Link
+            href={data.footerCollection?.items[0].facebookLink}
+            target="_blank"
+          >
             <FacebookRounded
               sx={{
                 color: "#fff",
@@ -136,7 +139,7 @@ const Footer = () => {
           </Link>
         </Grid>
       </Grid>
-    </>
+    </Box>
   );
 };
 

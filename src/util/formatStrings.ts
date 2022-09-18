@@ -19,32 +19,22 @@ export const formatPhoneNumber = (value: string) => {
 };
 
 export const formatPostalCode = (value: string) => {
-  if (!value) return value;
+  if (value === undefined) return value;
 
-  const postalCode = value.replace(
-    /^[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ]( )?\d[ABCEGHJKLMNPRSTVWXYZ]\d$/i,
-    ""
-  );
+  const postalCode = value
+    .toUpperCase()
+    .replace(
+      /^[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ](\s)?\d[ABCEGHJKLMNPRSTVWXYZ]\d$/i,
+      "$&"
+    );
+
   if (postalCode.length < 3) {
     return postalCode;
   }
-  if (postalCode.length < 7) {
-    return `${postalCode.slice(0, 3)} ${postalCode.slice(3)}`;
-  }
-  return `${postalCode.slice(0, 3)} ${postalCode.slice(3, 6)}`;
-  // const postalCode = value.match(
-  //   /^[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ]( )?\d[ABCEGHJKLMNPRSTVWXYZ]\d$/i
-  // );
 
-  // if (postalCode !== null) {
-  //   if (value === postalCode[0]) {
-  //     return (value = `${postalCode[0].slice(0, 3)} ${postalCode[0].slice(
-  //       3,
-  //       6
-  //     )}`.toUpperCase());
-  //   }
-  // } else {
-  //   return value.toUpperCase();
-  // }
-  // return value;
+  if (postalCode.length < 6) {
+    return `${postalCode.slice(0, 3)}${postalCode.slice(3)}`;
+  }
+
+  return `${postalCode.slice(0, 3)} ${postalCode.slice(3, 7)}`;
 };

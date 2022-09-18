@@ -29,8 +29,14 @@ const useImageStorage = () => {
       for (let i = 1; i < storageImages.length; i++) {
         // console.log(storageImages[i]);
         const imageUrl: string = await Storage.get(storageImages[i].key!);
-        images.push({ key: storageImages[i].key!, url: imageUrl });
+        images.push({
+          key: storageImages[i].key!,
+          url: imageUrl,
+          size: storageImages[i].size!,
+          lastModified: storageImages[i].lastModified!,
+        });
       }
+
       // storageImages.forEach((image) => {
       //   if (image.size! > 0) {
       //     images.push(image);

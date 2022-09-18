@@ -8,6 +8,24 @@ import { EditorState, ContentState } from "draft-js";
 
 import useImageStorage from "../hooks/useImageStorage";
 
+const initialSessionState = {
+  id: "",
+  date: "",
+  startTime: null,
+  endTime: null,
+  sessionLength: 0,
+  name: "",
+  sessionInfo: "",
+  price: 0,
+  sessionDetails: "",
+  sessionImage: {
+    name: "",
+    size: 0,
+    type: "",
+    lastModified: 0,
+  },
+};
+
 const useCreateSession = () => {
   const {
     createNewSession,
@@ -17,24 +35,6 @@ const useCreateSession = () => {
   } = useSessionInfo();
 
   const { listStorageItems } = useImageStorage();
-
-  const initialSessionState = {
-    id: "",
-    date: "",
-    startTime: "",
-    endTime: "",
-    sessionLength: 0,
-    name: "",
-    sessionInfo: "",
-    price: 0,
-    sessionDetails: "",
-    sessionImage: {
-      name: "",
-      size: 0,
-      type: "",
-      lastModified: 0,
-    },
-  };
 
   const [isLoading, setLoading] = React.useState<boolean>(true);
 
@@ -55,22 +55,19 @@ const useCreateSession = () => {
     });
   };
 
-  const availableBookings = getAvailableBookings(
-    sessionDetails.startTime,
-    sessionDetails.endTime,
-    sessionDetails.sessionLength,
-    sessionDetails.bookings
-  );
-
-  const sessionData = {
-    ...sessionDetails,
-    date: moment(sessionDetails.date).format("YYYY-MM-DD"),
-    startTime: moment(sessionDetails.startTime).format("h:mm:ss A"),
-    endTime: moment(sessionDetails.endTime).format("h:mm:ss A"),
-    availableTimes: availableBookings,
-  };
-
   const onCreateSession = async () => {
+    const availableBookings = getAvailableBookings(
+      sessionDetails.startTime,
+      sessionDetails.endTime,
+      sessionDetails.sessionLength
+    );
+    const sessionData = {
+      ...sessionDetails,
+      date: moment(sessionDetails.date).format("YYYY-MM-DD"),
+      startTime: moment(sessionDetails.startTime).format("h:mm:ss A"),
+      endTime: moment(sessionDetails.endTime).format("h:mm:ss A"),
+      availableTimes: availableBookings,
+    };
     try {
       await createNewSession(sessionData);
       resetFormData();
@@ -107,18 +104,33 @@ const useCreateSession = () => {
   };
 
   const onEditSession = async () => {
-    const editedSession = { ...sessionData };
-    delete editedSession.createdAt;
-    delete editedSession.updatedAt;
+    // format available times to make sure previous booked sessions are still unavailable in timepicker
+    const availableBookings = getAvailableBookings(
+      sessionDetails.startTime,
+      sessionDetails.endTime,
+      sessionDetails.sessionLength,
+      sessionDetails.bookings
+    );
+    // ensure session properties are formatted correctly
+    const sessionData = {
+      ...sessionDetails,
+      date: moment(sessionDetails.date).format("YYYY-MM-DD"),
+      startTime: moment(sessionDetails.startTime).format("h:mm:ss A"),
+      endTime: moment(sessionDetails.endTime).format("h:mm:ss A"),
+      availableTimes: availableBookings,
+    };
+    // remove AWS timestamp properties
+    delete sessionData.createdAt;
+    delete sessionData.updatedAt;
 
     try {
-      const updated = await adminUpateSession(editedSession);
+      await adminUpateSession(sessionData);
       console.log(`Session updated successfully`);
-      console.log(updated);
-    } catch (err) {
-      console.log(err);
+      alert(`Session successfully updated`);
+    } catch (error) {
+      console.log(error);
+      alert(error);
     }
-    return null;
   };
 
   const resetFormData = () => {

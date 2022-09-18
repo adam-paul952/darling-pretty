@@ -1,9 +1,16 @@
 import React from "react";
 
-import { Grid, TextField, Typography } from "@mui/material";
+import {
+  IconButton,
+  Grid,
+  InputAdornment,
+  TextField,
+  Typography,
+} from "@mui/material";
 
 import { IClientInfoProps } from "./ContactInformation";
 import { formatPostalCode } from "../../util/formatStrings";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 const BillingInformation: React.FC<IClientInfoProps> = (props) => {
   const {
@@ -15,21 +22,34 @@ const BillingInformation: React.FC<IClientInfoProps> = (props) => {
     // country
   } = props.newClient;
 
+  const [error, setError] = React.useState<boolean>(false);
+
   const textError = (input: string) => {
-    if (input.length >= 0 && input.length <= 7) {
-      return false;
-    }
-    if (
-      !postalCode.match(
-        /^[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ]( )?\d[ABCEGHJKLMNPRSTVWXYZ]\d$/i
-      )
-    ) {
-      return true;
-    } else return false;
+    // if (input.length >= 0 && input.length <= 7) {
+    //   return false;
+    // }
+    if (input.length === 0) return;
+    const test =
+      /^[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ](\s)?\d[ABCEGHJKLMNPRSTVWXYZ]\d$/i.test(
+        input
+      );
+    console.log(test);
+
+    if (test === false) setError(true);
+    else setError(false);
+
+    // if (
+    //   !postalCode.match(
+
+    //   )
+    // ) {
+    //   return true;
+    // } else return false;
+    // return true;
   };
 
   return (
-    <React.Fragment>
+    <>
       <Typography variant="h6" gutterBottom>
         Shipping address
       </Typography>
@@ -46,10 +66,10 @@ const BillingInformation: React.FC<IClientInfoProps> = (props) => {
             variant="standard"
             value={addressOne}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              props.setNewClient({
-                ...props.newClient,
+              props.setNewClient((prev) => ({
+                ...prev,
                 addressOne: e.target.value,
-              });
+              }));
             }}
           />
         </Grid>
@@ -64,10 +84,10 @@ const BillingInformation: React.FC<IClientInfoProps> = (props) => {
             variant="standard"
             value={addressTwo!}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              props.setNewClient({
-                ...props.newClient,
+              props.setNewClient((prev) => ({
+                ...prev,
                 addressTwo: e.target.value,
-              });
+              }));
             }}
           />
         </Grid>
@@ -82,10 +102,10 @@ const BillingInformation: React.FC<IClientInfoProps> = (props) => {
             variant="standard"
             value={city}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              props.setNewClient({
-                ...props.newClient,
+              props.setNewClient((prev) => ({
+                ...prev,
                 city: e.target.value,
-              });
+              }));
             }}
           />
         </Grid>
@@ -112,13 +132,34 @@ const BillingInformation: React.FC<IClientInfoProps> = (props) => {
             variant="standard"
             value={postalCode}
             onChange={(e: any) => {
-              props.setNewClient({
-                ...props.newClient,
+              props.setNewClient((prev) => ({
+                ...prev,
                 postalCode: formatPostalCode(e.target.value),
-              });
+              }));
+              textError(e.target.value);
             }}
             inputProps={{ maxLength: 7 }}
-            // error={textError(postalCode)}
+            error={error}
+            helperText={error ? "Invalid postal code format" : ""}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => {
+                      props.setNewClient((prev) => ({
+                        ...prev,
+                        postalCode: "",
+                      }));
+                      setError(false);
+                    }}
+                    edge="end"
+                    sx={{ visibility: postalCode ? "visible" : "hidden" }}
+                  >
+                    <CancelIcon />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -131,7 +172,7 @@ const BillingInformation: React.FC<IClientInfoProps> = (props) => {
           />
         </Grid>
       </Grid>
-    </React.Fragment>
+    </>
   );
 };
 
